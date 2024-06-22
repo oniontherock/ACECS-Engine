@@ -1,24 +1,22 @@
-﻿#include <cstdint>
+﻿
+#include <set>
 #include <iostream>
-#include <functional>
-
-#include "../ECS/Components/Component.hpp"
-#include "../ECS/Components/ComponentManager.hpp"
-
-#include "../ECS/Entities/Entity.hpp"
-#include "../ECS/Entities/EntityManager.hpp"
-
-#include "../ECS/Systems/SystemManager.hpp"
-
-#include "../User/Registry.hpp"
 
 int main() {
 
-	Components::initialize();
-	EntityEvents::initialize();
-	SystemRegistry::createSystems();
+	struct Test {
+		int testVal;
+	};
 
-	EntityManager::updateEntities();
+	Test test1 = Test();
+	test1.testVal = 0;
+	Test test2 = Test();
+	test2.testVal = 0;
+
+	std::set<Test> set;
+
+	set.insert(test1);
+
 
 	return 0;
 }
