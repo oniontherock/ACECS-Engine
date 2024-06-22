@@ -2,20 +2,15 @@
 #include <set>
 #include <iostream>
 
+#include "../Include/"
+
+#include "SFML/Graphics.hpp"
+
+
 int main() {
 
-	struct Test {
-		int testVal;
-	};
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Window"));
 
-	Test test1 = Test();
-	test1.testVal = 0;
-	Test test2 = Test();
-	test2.testVal = 0;
-
-	std::set<Test> set;
-
-	set.insert(test1);
 
 
 	return 0;

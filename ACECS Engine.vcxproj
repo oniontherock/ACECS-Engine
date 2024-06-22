@@ -144,7 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Include\ECS\ECSManager.cpp" />
-    <ClCompile Include="Include\Input\KeyRecorder.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Include\User\Registry.cpp" />
   </ItemGroup>
@@ -163,7 +162,7 @@
     <ClInclude Include="Include\ECS\Systems\SystemManager.hpp" />
     <ClInclude Include="Include\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Include\Include Helpers\ECSDependences.hpp" />
-    <ClInclude Include="Include\Input\KeyRecorder.hpp" />
+    <ClInclude Include="Include\Input\InputRecorder.hpp" />
     <ClInclude Include="Include\User\Registry.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
