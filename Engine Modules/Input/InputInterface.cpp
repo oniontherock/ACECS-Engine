@@ -53,3 +53,22 @@ void InputInterface::updateInput() {
 	KeyRecorder::updateKeys();
 	InputManager::updateInputEvents();
 }
+
+void InputInterface::handleEvents(sf::RenderWindow& window) {
+
+	sf::Event event;
+
+	while (window.pollEvent(event)) {
+		switch (event.type) {
+		case sf::Event::Closed:
+			window.close();
+			break;
+		case sf::Event::MouseMoved:
+			updateMousePosition(sf::Vector2i(window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y))));
+			break;
+		case sf::Event::MouseWheelScrolled:
+			updateMouseScrollAmount(event.mouseWheelScroll.delta);
+			break;
+		}
+	}
+}

@@ -21,6 +21,8 @@ namespace InputInterface {
 	void registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
 
 	void updateInput();
+
+	void handleEvents(sf::RenderWindow& window);
 }
 
 #endif
