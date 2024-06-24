@@ -6,7 +6,7 @@
 #include "Key Events/KeyEventDefinitions.hpp"
 
 namespace InputInterface {
-	bool getInputActive(InputName name);
+	bool getInputActive(const InputName& name);
 
 	sf::Vector2i getMousePosition();
 	float getMouseScrollAmount();
@@ -16,9 +16,9 @@ namespace InputInterface {
 	void updateMousePosition(uint16_t x, uint16_t y);
 
 	// registers an InputEvent to inputs
-	void registerInput(InputName name, KeySet keys);
+	void registerInput(const InputName& name, const KeySet& keys);
 	// registers an InputEvent to inputs
-	void registerInput(InputName name, KeySet keys, InputKeyLogic keyLogic);
+	void registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
 
 	void updateInput();
 }

@@ -2,10 +2,8 @@
 #include <set>
 #include <iostream>
 
-#include "../Engine Modules/Input/InputInterface.hpp"
-
-//#include "SFML/Graphics.hpp"
-
+#include "../Engine Modules/Include/ECSDependencies.hpp"
+#include "../Engine Modules/Include/InputDependencies.hpp"
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Window");

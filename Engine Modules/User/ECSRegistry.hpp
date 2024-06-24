@@ -1,7 +1,8 @@
-#ifndef __REGISTRY_H__
-#define __REGISTRY_H__
-#include "../Include/ECSDependences.hpp"
+#ifndef __ECS_REGISTRY_H__
+#define __ECS_REGISTRY_H__
+
 #include <functional>
+#include "../Include/ECSDependencies.hpp"
 
 #pragma region Systems
 struct SystemRegistry {

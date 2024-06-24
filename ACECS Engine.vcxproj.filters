@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine Modules\User\Registry.cpp">
+    <ClCompile Include="Engine Modules\User\ECSRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
@@ -24,9 +24,12 @@
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine Modules\Include\InputDependencies.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine Modules\User\Registry.hpp">
+    <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp">
@@ -65,7 +68,7 @@
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\Include\ECSDependences.hpp">
+    <ClInclude Include="Engine Modules\Include\ECSDependencies.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp">

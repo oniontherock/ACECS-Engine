@@ -1,4 +1,4 @@
-#include "Registry.hpp"
+#include "ECSRegistry.hpp"
 
 #pragma region Systems
 

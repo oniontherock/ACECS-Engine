@@ -66,15 +66,15 @@ namespace InputManager {
 	}
 
 	// registers an InputEvent to inputs
-	inline void registerInput(InputName name, KeySet keys) {
+	inline void registerInput(const InputName& name, const KeySet& keys) {
 		inputs.push_back(InputEvent(name, keys));
 	}
 	// registers an InputEvent to inputs
-	inline void registerInput(InputName name, KeySet keys, InputKeyLogic keyLogic) {
+	inline void registerInput(const InputName& name, const KeySet& keys, const InputKeyLogic keyLogic) {
 		inputs.push_back(InputEvent(name, keys, keyLogic));
 	}
 
-	inline uint16_t getIndexFromName(InputName name) {
+	inline uint16_t& getIndexFromName(const InputName& name) {
 		return namesToIndexesMap[name];
 	}
 }

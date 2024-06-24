@@ -2,8 +2,22 @@
 
 #include "Input Events/InputManager.hpp"
 
-bool InputInterface::getInputActive(InputName name) {
-	return InputManager::inputs[InputManager::getIndexFromName(name)].isActive;
+bool InputInterface::getInputActive(const InputName& name) {
+	try {
+
+		const uint16_t& indexFromName = InputManager::getIndexFromName(name);
+
+		if (indexFromName < InputManager::inputs.size()) {
+			return InputManager::inputs[indexFromName].isActive;
+		}
+		else {
+			throw (std::invalid_argument(name));
+		}
+	}
+	catch (const std::invalid_argument& e) {
+		std::cout << "ERROR, INVALID INPUT NAME: " << "\"" << e.what() << "\"" << std::endl;
+		return false;
+	}
 }
 
 sf::Vector2i InputInterface::getMousePosition() {
@@ -23,13 +37,13 @@ void InputInterface::updateMouseScrollAmount(float scrollAmount) {
 	InputManager::mouseData.scrollAmount = scrollAmount;
 }
 
-void InputInterface::registerInput(InputName name, KeySet keys) {
+void InputInterface::registerInput(const InputName& name, const KeySet& keys) {
 	KeyRecorder::registerKeySet(keys);
 	InputManager::namesToIndexesMap.insert({ name, uint16_t(InputManager::inputs.size()) });
 	InputManager::inputs.push_back(InputEvent(name, keys));
 }
 
-void InputInterface::registerInput(InputName name, KeySet keys, InputKeyLogic keyLogic) {
+void InputInterface::registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic) {
 	KeyRecorder::registerKeySet(keys);
 	InputManager::namesToIndexesMap.insert({ name, uint16_t(InputManager::inputs.size()) });
 	InputManager::inputs.push_back(InputEvent(name, keys, keyLogic));
