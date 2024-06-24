@@ -24,7 +24,13 @@
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine Modules\Include\InputDependencies.hpp">
+    <ClCompile Include="Engine Modules\Input.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\User\InputRegistry.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\User\InputRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +74,7 @@
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\Include\ECSDependencies.hpp">
+    <ClInclude Include="Engine Modules\ECS.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp">

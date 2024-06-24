@@ -2,7 +2,7 @@
 #define __ECS_REGISTRY_H__
 
 #include <functional>
-#include "../Include/ECSDependencies.hpp"
+#include "../ECS.hpp"
 
 #pragma region Systems
 struct SystemRegistry {

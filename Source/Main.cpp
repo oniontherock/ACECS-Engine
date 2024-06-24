@@ -2,8 +2,8 @@
 #include <set>
 #include <iostream>
 
-#include "../Engine Modules/Include/ECSDependencies.hpp"
-#include "../Engine Modules/Include/InputDependencies.hpp"
+#include "../Engine Modules/ECS.hpp"
+#include "../Engine Modules/Input.hpp"
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Window");

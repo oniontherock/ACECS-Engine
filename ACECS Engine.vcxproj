@@ -143,8 +143,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine Modules\Include\InputDependencies.hpp" />
+    <ClCompile Include="Engine Modules\Input.hpp" />
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp" />
+    <ClCompile Include="Engine Modules\User\InputRegistry.cpp" />
+    <ClCompile Include="Engine Modules\User\InputRegistry.hpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Engine Modules\User\ECSRegistry.cpp" />
   </ItemGroup>
@@ -161,7 +163,7 @@
     <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\Systems\SystemManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
-    <ClInclude Include="Engine Modules\Include\ECSDependencies.hpp" />
+    <ClInclude Include="Engine Modules\ECS.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp" />
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp" />
