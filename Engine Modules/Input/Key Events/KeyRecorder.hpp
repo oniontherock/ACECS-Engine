@@ -16,9 +16,9 @@
 // records input and assigns it a transition type
 namespace KeyRecorder {
 
-	// set of keys from the previous frame
-	std::unordered_set<KeyName> keyNamesPrev;
-	// set of keys from the current frame
+    // set of keys from the previous frame
+    std::unordered_set<KeyName> keyNamesPrev;
+    // set of keys from the current frame
     std::unordered_set<KeyName> keyNames;
     std::set<KeyName> registeredKeyNames;
 
@@ -26,7 +26,7 @@ namespace KeyRecorder {
 
     KeySet keyEvents{};
 
-    std::unordered_map<KeyName, sf::Keyboard::Key> nameToKeyMap {
+    std::unordered_map<KeyName, sf::Keyboard::Key> nameToKeyMap{
         { "Unknown", sf::Keyboard::Unknown },
         { "A", sf::Keyboard::A },
         { "B", sf::Keyboard::B },
@@ -133,7 +133,7 @@ namespace KeyRecorder {
     std::unordered_map<sf::Keyboard::Key, KeyName> keyToNameMap;
 
 
-    std::unordered_map<KeyName, sf::Mouse::Button> nameToButtonMap {
+    std::unordered_map<KeyName, sf::Mouse::Button> nameToButtonMap{
         { "Mouse Left", sf::Mouse::Left },
         { "Mouse Middle", sf::Mouse::Middle },
         { "Mouse Right", sf::Mouse::Right },
@@ -153,21 +153,21 @@ namespace KeyRecorder {
         }
     }
 
-	// sets an InputEvent's transitionType,
-	inline KeyEvent getKeyEvent(KeyName key) {
+    // sets an InputEvent's transitionType,
+    inline KeyEvent getKeyEvent(const KeyName& key) {
 
-		bool activePrev = keyNamesPrev.count(key);
-		bool activeNow = keyNames.count(key);
+        bool activePrev = keyNamesPrev.count(key);
+        bool activeNow = keyNames.count(key);
 
-		// we get the keyTransition by getting the difference in key presses between now and last frame
-		// this works because:
-		// 0 - 1 = -1|Released
-		// 1 - 1 = 0|Held
-		// 1 - 0 = 1|Pressed
-		uint8_t keyTransition = (activeNow - activePrev) + 1;
-	
-		return KeyEvent(key, static_cast<KeyTransition>(keyTransition));
-	}
+        // we get the keyTransition by getting the difference in key presses between now and last frame
+        // this works because:
+        // 0 - 1 = -1|Released
+        // 1 - 1 = 0|Held
+        // 1 - 0 = 1|Pressed
+        uint8_t keyTransition = (activeNow - activePrev) + 1;
+
+        return KeyEvent(key, static_cast<KeyTransition>(keyTransition));
+    }
 
     inline bool isKeyNameActiveKeyboard(KeyName name) {
         return sf::Keyboard::isKeyPressed(nameToKeyMap[name]);
@@ -177,8 +177,8 @@ namespace KeyRecorder {
     }
 
 
-	// records every input in "event"
-	inline void updateKeys() {
+    // records every input in "event"
+    inline void updateKeys() {
 
         keyEvents.clear();
 
@@ -204,22 +204,22 @@ namespace KeyRecorder {
         std::unordered_set<KeyName> inputsAll = keyNames;
         inputsAll.insert(keyNamesPrev.begin(), keyNamesPrev.end());
 
-		for (KeyName curInput : inputsAll) {
-			keyEvents.insert(getKeyEvent(curInput));
-		}
-	}
+        for (const KeyName& curInput : inputsAll) {
+            keyEvents.insert(getKeyEvent(curInput));
+        }
+    }
 
-    inline void registerKeyName(KeyName name) {
+    inline void registerKeyName(const KeyName& name) {
         registeredKeyNames.insert(name);
     }
 
-    inline void registerKeySet(KeySet keySet) {
+    inline void registerKeySet(const KeySet& keySet) {
         for (const KeyEvent& curKeyEvent : keySet) {
             registeredKeyNames.insert(curKeyEvent.keyName);
         }
     }
 
-    inline KeySet getKeys() {
+    inline const KeySet& getKeys() {
         return keyEvents;
     }
 }

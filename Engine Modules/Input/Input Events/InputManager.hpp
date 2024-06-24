@@ -74,7 +74,7 @@ namespace InputManager {
 		inputs.push_back(InputEvent(name, keys, keyLogic));
 	}
 
-	inline uint16_t& getIndexFromName(const InputName& name) {
+	inline uint16_t getIndexFromName(const InputName& name) {
 		return namesToIndexesMap[name];
 	}
 }
