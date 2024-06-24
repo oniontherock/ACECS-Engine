@@ -1,0 +1,26 @@
+#ifndef __INPUT_INTERFACE_H__
+#define __INPUT_INTERFACE_H__
+
+#include "SFML/Graphics.hpp"
+#include "Input Events/InputEventDefinitions.hpp"
+#include "Key Events/KeyEventDefinitions.hpp"
+
+namespace InputInterface {
+	bool getInputActive(InputName name);
+
+	sf::Vector2i getMousePosition();
+	float getMouseScrollAmount();
+
+	void updateMouseScrollAmount(float scrollAmount);
+	void updateMousePosition(sf::Vector2i position);
+	void updateMousePosition(uint16_t x, uint16_t y);
+
+	// registers an InputEvent to inputs
+	void registerInput(InputName name, KeySet keys);
+	// registers an InputEvent to inputs
+	void registerInput(InputName name, KeySet keys, InputKeyLogic keyLogic);
+
+	void updateInput();
+}
+
+#endif

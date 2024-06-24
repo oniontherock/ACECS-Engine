@@ -15,63 +15,72 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Include\User\Registry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\ECS\ECSManager.cpp">
+    <ClCompile Include="Engine Modules\User\Registry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine Modules\Input\InputInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\User\Registry.hpp">
+    <ClInclude Include="Engine Modules\User\Registry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Components\IDs\ComponentIDAllocator.hpp">
+    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Components\IDs\ComponentIDs.hpp">
+    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Components\Component.hpp">
+    <ClInclude Include="Engine Modules\ECS\Components\Component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Components\ComponentManager.hpp">
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Entities\Entity.hpp">
+    <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Entities\EntityManager.hpp">
+    <ClInclude Include="Engine Modules\ECS\Entities\EntityManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Events\IDs\EventIDAllocator.hpp">
+    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDAllocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Events\IDs\EventIDs.hpp">
+    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Events\Event.hpp">
+    <ClInclude Include="Engine Modules\ECS\Events\Event.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Events\EventManager.hpp">
+    <ClInclude Include="Engine Modules\ECS\Events\EventManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\Systems\SystemManager.hpp">
+    <ClInclude Include="Engine Modules\ECS\Systems\SystemManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\ECSManager.hpp">
+    <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\ECS\TypeDefinitions.hpp">
+    <ClInclude Include="Engine Modules\Include\ECSDependences.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Include Helpers\ECSDependences.hpp">
+    <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Input\InputRecorder.hpp">
+    <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\Input\InputInterface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

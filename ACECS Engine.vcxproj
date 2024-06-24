@@ -77,12 +77,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -95,14 +95,14 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -113,12 +113,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -131,39 +131,42 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\boost\boost_1_85_0;$(SolutionDir)\SFMLLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Include\ECS\ECSManager.cpp" />
+    <ClCompile Include="Engine Modules\Input\InputInterface.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Include\User\Registry.cpp" />
+    <ClCompile Include="Engine Modules\User\Registry.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\ECS\Components\Component.hpp" />
-    <ClInclude Include="Include\ECS\Components\ComponentManager.hpp" />
-    <ClInclude Include="Include\ECS\Components\IDs\ComponentIDAllocator.hpp" />
-    <ClInclude Include="Include\ECS\Components\IDs\ComponentIDs.hpp" />
-    <ClInclude Include="Include\ECS\ECSManager.hpp" />
-    <ClInclude Include="Include\ECS\Entities\Entity.hpp" />
-    <ClInclude Include="Include\ECS\Entities\EntityManager.hpp" />
-    <ClInclude Include="Include\ECS\Events\Event.hpp" />
-    <ClInclude Include="Include\ECS\Events\EventManager.hpp" />
-    <ClInclude Include="Include\ECS\Events\IDs\EventIDAllocator.hpp" />
-    <ClInclude Include="Include\ECS\Events\IDs\EventIDs.hpp" />
-    <ClInclude Include="Include\ECS\Systems\SystemManager.hpp" />
-    <ClInclude Include="Include\ECS\TypeDefinitions.hpp" />
-    <ClInclude Include="Include\Include Helpers\ECSDependences.hpp" />
-    <ClInclude Include="Include\Input\InputRecorder.hpp" />
-    <ClInclude Include="Include\User\Registry.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\Component.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentManager.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDs.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Entities\EntityManager.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Events\Event.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Events\EventManager.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDAllocator.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Systems\SystemManager.hpp" />
+    <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\Include\ECSDependences.hpp" />
+    <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
+    <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp" />
+    <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp" />
+    <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\User\Registry.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

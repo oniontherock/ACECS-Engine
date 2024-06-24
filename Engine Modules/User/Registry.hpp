@@ -1,6 +1,6 @@
 #ifndef __REGISTRY_H__
 #define __REGISTRY_H__
-#include "../Include Helpers/ECSDependences.hpp"
+#include "../Include/ECSDependences.hpp"
 #include <functional>
 
 #pragma region Systems
