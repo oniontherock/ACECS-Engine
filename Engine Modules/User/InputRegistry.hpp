@@ -3,10 +3,10 @@
 
 #include "../Input/InputInterface.hpp"
 
-class InputRegistry {
+void initializeInput();
+
+namespace InputRegistry {
 	void registerInputs();
 };
-
-
 
 #endif

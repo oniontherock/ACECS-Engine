@@ -1,5 +1,11 @@
 #include "ECSRegistry.hpp"
 
+void initializeECS() {
+	SystemRegistry::createSystems();
+	EntityEvents::initialize();
+	Components::initialize();
+}
+
 #pragma region Systems
 
 using namespace Components;

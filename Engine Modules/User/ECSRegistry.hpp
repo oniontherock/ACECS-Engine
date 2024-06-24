@@ -1,8 +1,10 @@
 #ifndef __ECS_REGISTRY_H__
 #define __ECS_REGISTRY_H__
 
-#include <functional>
 #include "../ECS.hpp"
+#include <functional>
+
+void initializeECS();
 
 #pragma region Systems
 struct SystemRegistry {
