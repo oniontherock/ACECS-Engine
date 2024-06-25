@@ -51,13 +51,13 @@ namespace EventManager {
 	// retrieves a event from the event array and casts it to T, includes a check to make sure that the entity has the event
 	template <typename T>
 	inline T* getEventCastedSafe(EntityID entityID) {
-		return castEvent<T>(getEventSafe(entityID, getEventTypeID<T>()));
+		return castEvent<T>(getEventSafe<T>(entityID));
 	}
 
 	// retrieves a event from the event array and casts it to T
 	template <typename T>
 	inline T* getEventCastedUnsafe(EntityID entityID) {
-		return castEvent<T>(getEventUnsafe(entityID, getEventTypeID<T>()));
+		return castEvent<T>(getEventUnsafe<T>(entityID));
 	}
 
 	// adds a event to the EventMap corresponding to the eventType

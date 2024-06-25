@@ -2,7 +2,7 @@
 
 #include "Input Events/InputManager.hpp"
 
-bool InputInterface::getInputActive(const InputName& name) {
+bool Input::Interface::getInputActive(const InputName& name) {
 	try {
 
 		const uint16_t& indexFromName = InputManager::getIndexFromName(name);
@@ -20,41 +20,41 @@ bool InputInterface::getInputActive(const InputName& name) {
 	}
 }
 
-sf::Vector2i InputInterface::getMousePosition() {
+sf::Vector2i Input::Interface::getMousePosition() {
 	return InputManager::mouseData.position;
 }
-float InputInterface::getMouseScrollAmount() {
+float Input::Interface::getMouseScrollAmount() {
 	return InputManager::mouseData.scrollAmount;
 }
 
-void InputInterface::updateMousePosition(sf::Vector2i position) {
+void Input::Interface::updateMousePosition(sf::Vector2i position) {
 	InputManager::mouseData.position = position;
 }
-void InputInterface::updateMousePosition(uint16_t x, uint16_t y) {
+void Input::Interface::updateMousePosition(uint16_t x, uint16_t y) {
 	InputManager::mouseData.position = sf::Vector2i(x, y);
 }
-void InputInterface::updateMouseScrollAmount(float scrollAmount) {
+void Input::Interface::updateMouseScrollAmount(float scrollAmount) {
 	InputManager::mouseData.scrollAmount = scrollAmount;
 }
 
-void InputInterface::registerInput(const InputName& name, const KeySet& keys) {
+void Input::Interface::registerInput(const InputName& name, const KeySet& keys) {
 	KeyRecorder::registerKeySet(keys);
 	InputManager::namesToIndexesMap.insert({ name, uint16_t(InputManager::inputs.size()) });
 	InputManager::inputs.push_back(InputEvent(name, keys));
 }
 
-void InputInterface::registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic) {
+void Input::Interface::registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic) {
 	KeyRecorder::registerKeySet(keys);
 	InputManager::namesToIndexesMap.insert({ name, uint16_t(InputManager::inputs.size()) });
 	InputManager::inputs.push_back(InputEvent(name, keys, keyLogic));
 }
 
-void InputInterface::updateInput() {
+void Input::Interface::updateInput() {
 	KeyRecorder::updateKeys();
 	InputManager::updateInputEvents();
 }
 
-void InputInterface::handleEvents(sf::RenderWindow& window) {
+void Input::Interface::handleEvents(sf::RenderWindow& window) {
 
 	sf::Event event;
 

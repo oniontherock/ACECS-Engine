@@ -1,7 +1,7 @@
 #ifndef __INPUT_REGISTRY_H__
 #define __INPUT_REGISTRY_H__
 
-#include "../Input/InputInterface.hpp"
+#include "../Input.hpp"
 
 void initializeInput();
 

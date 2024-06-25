@@ -48,7 +48,7 @@ namespace EntityManager {
 		);
 	}
 
-	inline EntityID createEntity(EntityUpdateType updateType) {
+	inline EntityID createEntity(EntityUpdateType updateType = EntityUpdateType::Frame) {
 
 
 		Entity* entity = new Entity(getAvailableID(), updateType);

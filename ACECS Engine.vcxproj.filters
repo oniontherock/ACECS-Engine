@@ -18,9 +18,6 @@
     <ClCompile Include="Engine Modules\User\ECSRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,5 +89,14 @@
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\Debug\ACECS Engine.exp" />
+    <None Include="x64\Debug\ACECS Engine.pdb" />
+    <None Include="x64\Debug\openal32.dll" />
+    <None Include="x64\Debug\sfml-audio-d-2.dll" />
+    <None Include="x64\Debug\sfml-graphics-d-2.dll" />
+    <None Include="x64\Debug\sfml-system-d-2.dll" />
+    <None Include="x64\Debug\sfml-window-d-2.dll" />
   </ItemGroup>
 </Project>
