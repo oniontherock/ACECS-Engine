@@ -33,13 +33,9 @@ namespace EntityManager {
 		for (Components::ComponentTypeID curComponentType : entities[entityID]->componentTypesWithSystemsList) {
 			SystemManager::callSystem(entityID, curComponentType);
 		}
-
-		entities[entityID]->eventTypesList.clear();
 	}
 
 	inline void updateEntities() {
-		auto it = entities.begin();
-
 		std::for_each(
 			entities.begin(), entities.end(),
 			[](std::pair<EntityID, Entity*> pair) {

@@ -92,6 +92,32 @@ namespace EventManager {
 
 		EntityManager::entities[entityID]->eventTypesList.erase(getEventTypeID<T>());
 	}
+
+	// deletes a event and removes it from the corresponding EventMap
+	inline void removeEventUnsafe(EntityID entityID, EntityEvents::EventTypeID eventId) {
+
+
+		delete eventArray[eventId][entityID];
+		eventArray[eventId].erase(entityID);
+
+		EntityManager::entities[entityID]->eventTypesList.erase(eventId);
+	}
+
+	inline void removeEntityEvents(EntityID entityID) {
+		for (EntityEvents::EventTypeID curEventType : EntityManager::entities[entityID]->eventTypesList) {
+			removeEventUnsafe(entityID, curEventType);
+		}
+	}
+
+	inline void removeAllEvents() {
+		std::for_each(
+			EntityManager::entities.begin(), EntityManager::entities.end(),
+			[](std::pair<EntityID, Entity*> pair) {
+				removeEntityEvents(pair.second->ID);
+			}
+		);
+	}
+
 };
 
 #endif
