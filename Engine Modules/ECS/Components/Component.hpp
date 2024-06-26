@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <map>
+#include <set>
 #include <functional>
 #include <string>
 #include <iostream>
@@ -16,8 +17,10 @@ namespace Components {
 
 	// base component class,
 	struct Component {
-		virtual void system(Entity& entity) {}
+		bool hasSystem;
 	};
+
+	inline std::vector<std::function<void(Entity&)>> systems;
 
 	// used to initialize component IDs, defined in the ComponentRegistry file
 	void initialize();
