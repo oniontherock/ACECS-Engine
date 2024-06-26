@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)\SFMLInclude;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,16 +153,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Components\ComponentManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp" />
     <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\EntityManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\Events\Event.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Events\EventManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDAllocator.hpp" />
     <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Systems\SystemManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />

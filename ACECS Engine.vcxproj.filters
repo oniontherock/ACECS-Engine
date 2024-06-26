@@ -44,9 +44,6 @@
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Components\ComponentManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,12 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Events\Event.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Events\EventManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Systems\SystemManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp">

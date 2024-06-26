@@ -12,9 +12,7 @@ using namespace Components;
 using namespace EntityEvents;
 using EID = EntityID;
 
-using namespace ComponentManager;
 using namespace EntityManager;
-using namespace EventManager;
 
 /// System convention:
 

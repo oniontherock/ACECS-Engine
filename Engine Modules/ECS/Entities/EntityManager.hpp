@@ -11,13 +11,11 @@
 
 #include "Entity.hpp"
 
-#include "../Systems/SystemManager.hpp"
-
 #include "../TypeDefinitions.hpp"
 
 namespace EntityManager {
 
-	inline std::unordered_map<EntityID, Entity*> entities{};
+	inline std::unordered_map<EntityID, Entity> entities{};
 
 	inline uint16_t entityCount = 0;
 	inline std::set<EntityID> availableIDs{ 0 };
@@ -29,25 +27,16 @@ namespace EntityManager {
 		return lowestAvailableID;
 	}
 
-	inline void runComponents(EntityID entityID) {
-		for (Components::ComponentTypeID curComponentType : entities[entityID]->componentTypesWithSystemsList) {
-			SystemManager::callSystem(entityID, curComponentType);
-		}
-	}
-
 	inline void updateEntities() {
-		std::for_each(
-			entities.begin(), entities.end(),
-			[](std::pair<EntityID, Entity*> pair) {
-				runComponents(pair.second->ID);
-			}
-		);
+		for (auto& [key, value] : entities) {
+			value.update();
+		}
 	}
 
 	inline EntityID createEntity(EntityUpdateType updateType = EntityUpdateType::Frame) {
 
 
-		Entity* entity = new Entity(getAvailableID(), updateType);
+		Entity entity = Entity(getAvailableID(), updateType);
 
 		EntityID entityID = getAvailableID();
 
@@ -58,7 +47,7 @@ namespace EntityManager {
 		return entityID;
 	}
 	inline void deleteEntity(EntityID entityID) {
-		delete entities[entityID];
+		//delete entities[entityID];
 		entities.erase(entityID);
 		availableIDs.insert(entityID);
 	}

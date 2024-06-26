@@ -14,7 +14,6 @@ namespace Components {
 	// ComponentTypesHolder is a sort of helper struct that holds the ComponentTypeID of every type of component,
 	// an ID is simply an integer assigned uniquely to every child of base class "Component",
 	// the way you get the ID of a component type is like this: "ComponentIDHolder<TYPE>::ID".
-	// component IDs are used for a few things, primaryily for iterating through component types in the ComponentManager
 	template <class T>
 	struct ComponentIDs {
 		static ComponentTypeID ID;

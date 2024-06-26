@@ -8,14 +8,18 @@
 #include <iostream>
 #include <vector>
 
+#include "../TypeDefinitions.hpp"
+
+struct Entity;
 
 namespace Components {
 
 	// base component class,
 	struct Component {
+		virtual void system(Entity& entity) {}
 	};
 
-	// used to initalize component IDs, defined in the ComponentRegistry file
+	// used to initialize component IDs, defined in the ComponentRegistry file
 	void initialize();
 };
 

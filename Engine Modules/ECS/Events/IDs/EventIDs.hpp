@@ -14,7 +14,6 @@ namespace EntityEvents {
 	// EventTypesHolder is a sort of helper struct that holds the EventTypeID of every type of event,
 	// an ID is simply an integer assigned uniquely to every child of base class "Event",
 	// the way you get the ID of a event type is like this: "EventIDHolder<TYPE>::ID".
-	// event IDs are used for a few things, primaryily for iterating through event types in the EventManager
 	template <class T>
 	struct EventIDs {
 		static EventTypeID ID;
