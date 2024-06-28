@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <array>
 #include <vector>
 #include <set>
 #include <queue>
@@ -21,14 +22,24 @@ struct Entity {
 		ID = 0;
 	};
 	Entity(EntityID id, EntityUpdateType _updateType) : ID(id), updateType(_updateType) {
-		initializeEventsMap();
+		initializeEvents();
 	};
 	~Entity() {
 		clearComponents();
 		clearEvents();
 	};
 
-	inline void initializeEventsMap() {
+	inline void initializeComponents() {
+
+		componentsMap = new Components::Component*[Components::maxID+1];
+
+		for (uint16_t i = 0; i < Components::maxID; i ++) {
+
+			componentsMap.insert(nullptr);
+		}
+	};
+
+	inline void initializeEvents() {
 		std::queue<EntityEvents::Event*> allEvents = EntityEvents::getAllEvents();
 
 		while (allEvents.size() > 0) {
@@ -41,8 +52,7 @@ struct Entity {
 
 	EntityID ID;
 
-	std::vector<Components::Component*> componentsMap;
-	std::set<Components::ComponentTypeID> componentsWithSystems;
+	Components::Component** componentsMap;
 
 	std::vector<EntityEvents::Event*> eventsMap;
 	bool hasAnyEvent = false;

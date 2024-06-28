@@ -20,7 +20,11 @@ public:
 
     template <class T>
     void registerComponent() {
-        Components::ComponentIDs<T>::ID = totalAllocatedTypes;
+        Components::ComponentIDs<T>::setID(totalAllocatedTypes);
+
+        if (totalAllocatedTypes > Components::maxID) Components::maxID = totalAllocatedTypes;
+
+        Components::totalComponents = totalAllocatedTypes + 1;
 
         totalAllocatedTypes++;
     }
