@@ -17,7 +17,10 @@ namespace Components {
 
 	// base component class,
 	struct Component {
-		bool hasSystem;
+		virtual void system(Entity& entity) {
+		}
+
+		bool hasSystem = false;
 	};
 
 	inline std::vector<std::function<void(Entity&)>> systems;

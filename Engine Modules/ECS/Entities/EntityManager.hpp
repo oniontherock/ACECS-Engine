@@ -2,12 +2,9 @@
 #include <unordered_set>
 #include <string>
 #include <functional>
-#include <set>
+#include <vector>
 #include <unordered_map>
 #include <algorithm>
-
-#include "../Components/IDs/ComponentIDs.hpp"
-#include "../Components/IDs/ComponentIDAllocator.hpp"
 
 #include "Entity.hpp"
 
@@ -15,40 +12,30 @@
 
 namespace EntityManager {
 
-	inline std::unordered_map<EntityID, Entity> entities{};
+	inline std::vector<Entity> entities = std::vector<Entity>(MAX_ENTITIES);
 
-	inline uint16_t entityCount = 0;
-	inline std::set<EntityID> availableIDs{ 0 };
-
-	inline EntityID getAvailableID() {
-
-		EntityID lowestAvailableID = *std::min_element(availableIDs.begin(), availableIDs.end());
-
-		return lowestAvailableID;
-	}
+	inline uint32_t entityCount = 0;
 
 	inline void updateEntities() {
-		for (auto& [key, value] : entities) {
-			value.update();
+		for (uint32_t i = 0; i < entityCount; i++) {
+			entities[i].update();
 		}
 	}
 
 	inline EntityID createEntity(EntityUpdateType updateType = EntityUpdateType::Frame) {
+		EntityID entityID = entityCount;
 
+		Entity entity = Entity(entityID, updateType);
 
-		Entity entity = Entity(getAvailableID(), updateType);
+		entities[entityID] = entity;
 
-		EntityID entityID = getAvailableID();
-
-		availableIDs.erase(entityID);
-		entities.insert({ entityID, entity });
-		availableIDs.insert(EntityID(entities.size()));
+		entityCount++;
 
 		return entityID;
 	}
 	inline void deleteEntity(EntityID entityID) {
-		//delete entities[entityID];
-		entities.erase(entityID);
-		availableIDs.insert(entityID);
+		entities[entityID].clear();
+		std::swap(entities[entityID], entities[entityCount - 1]);
+		entityCount--;
 	}
 };

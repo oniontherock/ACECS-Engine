@@ -35,10 +35,10 @@
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp">
+    <ClInclude Include="Engine Modules\ECS\TypeIDAllocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDs.hpp">
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentIDs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp">
@@ -50,10 +50,7 @@
     <ClInclude Include="Engine Modules\ECS\Entities\EntityManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDAllocator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp">
+    <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Events\Event.hpp">
@@ -78,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\User\ECSConstants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,36 +1,13 @@
 #include "ECSRegistry.hpp"
 
 void initializeECS() {
-	SystemRegistry::createSystems();
-	EntityEvents::initialize();
 	Components::initialize();
+	EntityEvents::initialize();
 }
 
-#pragma region Systems
-
-using namespace Components;
-using namespace EntityEvents;
-using EID = EntityID;
-
-using namespace EntityManager;
-
-/// System convention:
-
-///static System createSystemConvention() {
-///	return [](EID ID) {
-///		// data goes here
-///	};
-///}
-
-void SystemRegistry::createSystems() {
-	
-	/// add system convention
-	/// SystemManager::addSystem(createSystemConvention(), getComponentTypeID<ComponentConvention>());
-}
-#pragma endregion Systems
 #pragma region Events
 /*
-registers all eventss
+registers all events
 registering an event gives it an ID which dictates it's update order, lower ID, sooner update.
 
 the order of registry is very important, as it heavily dictates the behavior of events,
@@ -39,14 +16,15 @@ for example:
 REGISTER(Event, EventA)
 REGISTER(Event, EventB)
 
-in this example, EventtA is ALWAYS updated BEFORE EventB,
-which is very important, because if EventA sends and event, EventB will always recieve it,
-but if the order were swapped, EventB would never recieve it
+in this example, EventA is ALWAYS updated BEFORE EventB,
+which is very important, because if EventA sends and event, EventB will always receive it,
+but if the order were swapped, EventB would never receive it
 */
 void EntityEvents::initialize() {
 	/// registry convention:
-	///REGISTER_EVENT_ID(Event, EventConvention);
+	TypeIDAllocator<Event>::registerType<EventIDs<EventExample>>();
 }
+
 #pragma endregion Events
 #pragma region Components
 /*
@@ -60,11 +38,28 @@ REGISTER(Component, ComponentA)
 REGISTER(Component, ComponentB)
 
 in this example, ComponentA is ALWAYS updated BEFORE ComponentB,
-which is very important, because if ComponentA sends and event, ComponentB will always recieve it,
-but if the order were swapped, ComponentB would never recieve it
+which is very important, because if ComponentA sends and event, ComponentB will always receive it,
+but if the order were swapped, ComponentB would never receive it
 */
+
+
 void Components::initialize() {
 	/// registry convention:
-	///REGISTER_COMPONENT_ID(Component, ComponentConvention);
+	TypeIDAllocator<Component>::registerType<ComponentIDs<ComponentExample>>();
 }
+
 #pragma endregion Components
+#pragma region Systems
+
+#include "../Input/InputInterface.hpp"
+
+using namespace Components;
+using namespace EntityEvents;
+
+Input::Interface inputInterface{};
+
+void ComponentExample::system(Entity& entity) {
+
+}
+
+#pragma endregion Systems

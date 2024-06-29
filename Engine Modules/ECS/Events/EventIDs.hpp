@@ -4,6 +4,7 @@
 // this file simply holds the event IDs, there really isn't much going on in here,
 // and it should probably remain unchanged
 
+#include <vector>
 #include <cstdint>
 
 namespace EntityEvents {
@@ -11,12 +12,30 @@ namespace EntityEvents {
 	// an ID representing a certain TYPE of Event, NOT a specific event instance
 	typedef uint16_t EventTypeID;
 
+	// the maximum value for any ID
+	inline static EventTypeID maxID = 0;
+	// the total amount of components
+	inline static EventTypeID totalComponents = 0;
+	
+	static std::vector<Event*> allEvents;
+
+
 	// EventTypesHolder is a sort of helper struct that holds the EventTypeID of every type of event,
 	// an ID is simply an integer assigned uniquely to every child of base class "Event",
 	// the way you get the ID of a event type is like this: "EventIDHolder<TYPE>::ID".
 	template <class T>
 	struct EventIDs {
 		static EventTypeID ID;
+
+		static void setID(EventTypeID  value) {
+			ID = value;
+
+			if (ID > maxID) maxID = ID;
+
+			if (ID + 1 > totalComponents) totalComponents = ID + 1;
+
+			allEvents.push_back(new T());
+		}
 	};
 
 	// define EventIDHolder's ID variable as 0 for every type.

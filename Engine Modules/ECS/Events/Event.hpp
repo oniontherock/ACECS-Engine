@@ -11,8 +11,6 @@ namespace EntityEvents {
 		bool isActive = false;
 	};
 
-	std::queue<Event*> getAllEvents();
-
 	void initialize();
 }
 

@@ -4,8 +4,8 @@
 // components
 #include "ECS/Components/Component.hpp"
 // component IDs
-#include "ECS/Components/IDs/ComponentIDAllocator.hpp"
-#include "ECS/Components/IDs/ComponentIDs.hpp"
+#include "ECS/TypeIDAllocator.hpp"
+#include "ECS/Components/ComponentIDs.hpp"
 
 // entities
 #include "ECS/Entities/EntityManager.hpp"
@@ -14,8 +14,7 @@
 // events
 #include "ECS/Events/Event.hpp"
 // event IDs
-#include "ECS/Events/IDs/EventIDAllocator.hpp"
-#include "ECS/Events/IDs/EventIDs.hpp"
+#include "ECS/Events/EventIDs.hpp"
 
 // general
 #include "ECS/TypeDefinitions.hpp"

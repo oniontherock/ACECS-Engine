@@ -153,13 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDAllocator.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Components\IDs\ComponentIDs.hpp" />
+    <ClInclude Include="Engine Modules\ECS\TypeIDAllocator.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\EntityManager.hpp" />
     <ClInclude Include="Engine Modules\ECS\Events\Event.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDAllocator.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Events\IDs\EventIDs.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
@@ -167,6 +166,7 @@
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp" />
     <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\User\ECSConstants.hpp" />
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp" />
   </ItemGroup>
   <ItemGroup>

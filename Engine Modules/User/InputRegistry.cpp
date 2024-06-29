@@ -5,11 +5,13 @@ void initializeInput() {
 }
 
 void InputRegistry::registerInputs() {
-	//InputInterface::registerInput("Left", KeySet{ KeyEvent("A", Held) });
-	//InputInterface::registerInput("Right", KeySet{ KeyEvent("D", Held) });
-	//InputInterface::registerInput("Up", KeySet{ KeyEvent("W", Held) });
-	//InputInterface::registerInput("Down", KeySet{ KeyEvent("S", Held) });
-	//InputInterface::registerInput("Set Position", KeySet{ KeyEvent("Mouse Left", Held), KeyEvent("LControl", Held) }, InputKeyLogic::And);
+	//Input::Interface inputInterface{};
 
-	//InputInterface::registerInput("Window Close", KeySet{ KeyEvent("Escape", KeyTransition::Released) });
+	//inputInterface.registerInput("Left", KeySet{ KeyEvent("A", Held) });
+	//inputInterface.registerInput("Right", KeySet{ KeyEvent("D", Held) });
+	//inputInterface.registerInput("Up", KeySet{ KeyEvent("W", Held) });
+	//inputInterface.registerInput("Down", KeySet{ KeyEvent("S", Held) });
+	//inputInterface.registerInput("Set Position", KeySet{ KeyEvent("Mouse Left", Held), KeyEvent("LControl", Held) }, InputKeyLogic::And);
+
+	//inputInterface.registerInput("Window Close", KeySet{ KeyEvent("Escape", KeyTransition::Pressed) });
 }

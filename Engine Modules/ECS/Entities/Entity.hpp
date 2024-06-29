@@ -8,10 +8,10 @@
 
 
 #include "../Components/Component.hpp"
-#include "../Components/IDs/ComponentIDs.hpp"
+#include "../Components/ComponentIDs.hpp"
 
 #include "../Events/Event.hpp"
-#include "../Events/IDs/EventIDs.hpp"
+#include "../Events/EventIDs.hpp"
 
 #include "../TypeDefinitions.hpp"
 
@@ -20,31 +20,32 @@ struct Entity {
 	Entity() {
 		updateType = EntityUpdateType::Frame;
 		ID = 0;
+		componentsMap = std::vector<Components::Component*>(0);
 	};
 	Entity(EntityID id, EntityUpdateType _updateType) : ID(id), updateType(_updateType) {
+		initializeComponents();
 		initializeEvents();
 	};
-	~Entity() {
+	~Entity() {};
+
+	inline void clear() {
 		clearComponents();
 		clearEvents();
-	};
+	}
 
 	inline void initializeComponents() {
+		componentsMap = std::vector<Components::Component*>(Components::totalComponents);
 
-		componentsMap = new Components::Component*[Components::maxID+1];
-
-		for (uint16_t i = 0; i < Components::maxID; i ++) {
-
-			componentsMap.insert(nullptr);
+		for (uint16_t i = 0; i < Components::totalComponents; i++) {
+			componentsMap[i] = nullptr;
 		}
 	};
 
 	inline void initializeEvents() {
-		std::queue<EntityEvents::Event*> allEvents = EntityEvents::getAllEvents();
+		auto& allEvents = EntityEvents::allEvents;
 
-		while (allEvents.size() > 0) {
-			eventsMap.push_back(allEvents.front());
-			allEvents.pop();
+		for (uint16_t i = 0; i < allEvents.size(); i++) {
+			eventsMap.push_back(allEvents[i]);
 		}
 	};
 
@@ -52,7 +53,7 @@ struct Entity {
 
 	EntityID ID;
 
-	Components::Component** componentsMap;
+	std::vector<Components::Component*> componentsMap;
 
 	std::vector<EntityEvents::Event*> eventsMap;
 	bool hasAnyEvent = false;
@@ -68,14 +69,7 @@ struct Entity {
 	}
 	template <class T>
 	inline void addComponent(Components::Component* component) {
-
-		uint16_t ID = Components::ComponentIDs<T>::ID;
-
-		if (ID >= componentsMap.size()) {
-			componentsMap.resize(uint16_t(ID + 1), nullptr);
-		}
-
-		componentsMap[ID] = component;
+		componentsMap[Components::ComponentIDs<T>::ID] = component;
 	}
 	template <class T>
 	inline void removeComponent() {
@@ -108,27 +102,31 @@ struct Entity {
 		eventsMap[EntityEvents::EventIDs<T>::ID]->isActive = false;
 	}
 
-
 	inline void update() {
 		updateComponents();
 		if (hasAnyEvent) clearEvents();
 	}
 	inline void updateComponents() {
-		for (uint16_t i = 0; i < componentsMap.size(); i++) {
+		for (uint16_t i = 0; i < Components::totalComponents; i++) {
 
-			if (componentsMap[i] == nullptr) return;
-			if (!componentsMap[i]->hasSystem) return;
+			if (componentsMap[i] == nullptr) continue;
+			if (!componentsMap[i]->hasSystem) continue;
 
-			std::invoke(Components::systems[i], *this);
+			componentsMap[i]->system(*this);
 		}
 	}
 
 	inline void clearComponents() {
-		for (const auto& curComponent : componentsMap) {
-			if (curComponent == nullptr) continue;
-			delete curComponent;
+		std::cout << componentsMap[0] << std::endl;
+		for (uint16_t i = 0; i < Components::totalComponents; i++) {
+
+			bool notNull = componentsMap[i] != nullptr;
+
+			if (notNull) {
+				delete componentsMap[i];
+				componentsMap[i] = nullptr;
+			}
 		}
-		componentsMap.clear();
 	}
 	inline void clearEvents() {
 		for (uint16_t i = 0; i < eventsMap.size(); i++) {

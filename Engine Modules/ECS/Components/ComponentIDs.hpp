@@ -12,9 +12,9 @@ namespace Components {
 	typedef uint16_t ComponentTypeID;
 
 	// the maximum value for any ID
-	inline ComponentTypeID maxID = 0;
+	inline ComponentTypeID maxID;
 	// the total amount of components
-	inline ComponentTypeID totalComponents = 0;
+	inline ComponentTypeID totalComponents;
 
 	// ComponentTypesHolder is a sort of helper struct that holds the ComponentTypeID of every type of component,
 	// an ID is simply an integer assigned uniquely to every child of base class "Component",
@@ -25,6 +25,10 @@ namespace Components {
 
 		static void setID(ComponentTypeID value) {
 			ID = value;
+
+			if (ID > maxID) maxID = ID;
+
+			if (ID + 1 > totalComponents) totalComponents = ID + 1;
 		}
 	};
 
