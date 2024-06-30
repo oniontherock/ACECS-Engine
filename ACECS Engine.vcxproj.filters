@@ -30,6 +30,9 @@
     <ClCompile Include="Engine Modules\User\InputRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine Modules\User\GameStateInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
@@ -78,6 +81,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\User\ECSConstants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\User\GameStateInterface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\GameState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

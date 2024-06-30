@@ -34,8 +34,13 @@ namespace EntityManager {
 		return entityID;
 	}
 	inline void deleteEntity(EntityID entityID) {
-		entities[entityID].clear();
-		std::swap(entities[entityID], entities[entityCount - 1]);
+		entities[entityID].terminate();
+		std::swap(entities[entityID], entities[uint16_t(entityCount - 1)]);
 		entityCount--;
+	}
+	inline void deleteAllEntities() {
+		for (uint16_t i = 0; i < entityCount; i++) {
+			entities[i].terminate();
+		}
 	}
 };

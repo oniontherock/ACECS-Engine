@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Engine Modules\Input.hpp" />
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp" />
+    <ClCompile Include="Engine Modules\User\GameStateInterface.cpp" />
     <ClCompile Include="Engine Modules\User\InputRegistry.cpp" />
     <ClCompile Include="Engine Modules\User\InputRegistry.hpp" />
     <ClCompile Include="Engine Modules\User\ECSRegistry.cpp" />
@@ -161,6 +162,8 @@
     <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
+    <ClInclude Include="Engine Modules\GameState.hpp" />
+    <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp" />
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp" />
@@ -168,6 +171,7 @@
     <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp" />
     <ClInclude Include="Engine Modules\User\ECSConstants.hpp" />
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp" />
+    <ClInclude Include="Engine Modules\User\GameStateInterface.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\Debug\ACECS Engine.exp" />

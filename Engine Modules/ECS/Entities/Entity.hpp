@@ -28,11 +28,6 @@ struct Entity {
 	};
 	~Entity() {};
 
-	inline void clear() {
-		clearComponents();
-		clearEvents();
-	}
-
 	inline void initializeComponents() {
 		componentsMap = std::vector<Components::Component*>(Components::totalComponents);
 
@@ -116,23 +111,38 @@ struct Entity {
 		}
 	}
 
-	inline void clearComponents() {
-		std::cout << componentsMap[0] << std::endl;
-		for (uint16_t i = 0; i < Components::totalComponents; i++) {
-
-			bool notNull = componentsMap[i] != nullptr;
-
-			if (notNull) {
-				delete componentsMap[i];
-				componentsMap[i] = nullptr;
-			}
-		}
-	}
 	inline void clearEvents() {
 		for (uint16_t i = 0; i < eventsMap.size(); i++) {
 			eventsMap[i]->isActive = false;
 		}
 
 		hasAnyEvent = false;
+	}
+
+	inline void deleteComponents() {
+		for (uint16_t i = 0; i < Components::totalComponents; i++) {
+
+			if (componentsMap[i] != nullptr) {
+				delete componentsMap[i];
+				componentsMap[i] = nullptr;
+			}
+		}
+	}
+
+	inline void deleteEvents() {
+		for (uint16_t i = 0; i < eventsMap.size(); i++) {
+
+			if (eventsMap[i] != nullptr) {
+				delete eventsMap[i];
+				eventsMap[i] = nullptr;
+			}
+		}
+
+		hasAnyEvent = false;
+	}
+
+	inline void terminate() {
+		deleteComponents();
+		deleteEvents();
 	}
 };

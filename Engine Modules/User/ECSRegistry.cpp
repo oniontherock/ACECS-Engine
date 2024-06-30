@@ -4,6 +4,13 @@ void initializeECS() {
 	Components::initialize();
 	EntityEvents::initialize();
 }
+void terminateECS() {
+	for (uint16_t i = 0; i < EntityEvents::allEvents.size(); i++) {
+		delete EntityEvents::allEvents[i];
+	}
+	EntityManager::deleteAllEntities();
+}
+
 
 #pragma region Events
 /*
@@ -51,7 +58,7 @@ void Components::initialize() {
 #pragma endregion Components
 #pragma region Systems
 
-#include "../Input/InputInterface.hpp"
+#include "../Input.hpp"
 
 using namespace Components;
 using namespace EntityEvents;

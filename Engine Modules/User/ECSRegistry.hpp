@@ -9,6 +9,7 @@
 #include <functional>
 
 void initializeECS();
+void terminateECS();
 
 // avoid having undefined constructor arguments for events or components,
 // as it's more convenient to not have to define every event/component all the time

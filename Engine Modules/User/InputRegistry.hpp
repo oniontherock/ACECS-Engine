@@ -4,6 +4,7 @@
 #include "../Input.hpp"
 
 void initializeInput();
+void terminateInput();
 
 namespace InputRegistry {
 	void registerInputs();

@@ -1,5 +1,5 @@
-#ifndef __ECS_DEPENDENCES_H__
-#define __ECS_DEPENDENCES_H__
+#ifndef __ECS_H__
+#define __ECS_H__
 
 // components
 #include "ECS/Components/Component.hpp"
