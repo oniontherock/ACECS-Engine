@@ -37,11 +37,11 @@ namespace {
 	class GameStateHandler {
 		static inline std::unordered_map<GameStateName, GameState*> gameStates;
 
-		static inline GameStateName curGameStateName = "";
+		static inline GameStateName gameStateCurName = "";
 
-		static inline void updateState() {
+		static inline void gameStateUpdate() {
 
-			auto& curGameState = gameStates[curGameStateName];
+			auto& curGameState = gameStates[gameStateCurName];
 
 			Input::Interface inputInterface{};
 
@@ -54,42 +54,42 @@ namespace {
 				for (uint16_t curTransitionInputInd = 0; curTransitionInputInd < curTransition.transitionInputs.size(); curTransitionInputInd++) {
 					// check if the current input of the current transition is active, if it is, transition to that state, and end the check
 					if (inputInterface.getInputActive(curTransition.transitionInputs[curTransitionInputInd])) {
-						curGameStateName = curTransition.toStateName;
+						gameStateCurName = curTransition.toStateName;
 						return;
 					}
 				}
 			}
 		}
 
-		static inline const void runState() {
-			std::invoke(gameStates[curGameStateName]->updateFunc);
+		static inline const void gameStateRun() {
+			std::invoke(gameStates[gameStateCurName]->updateFunc);
 		}
 	public:
 
-		static inline void process() {
-			if (std::strcmp(curGameStateName, "") == 0) {
-				std::cout << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
+		static inline void gameStateProcess() {
+			if (std::strcmp(gameStateCurName, "") == 0) {
+				std::cerr << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
 				return;
 			}
-			else if (!gameStates.count(curGameStateName)) {
-				std::cout << "ERROR: Unknown game state: " << "\"" << curGameStateName << "\"" << std::endl;
+			else if (!gameStates.count(gameStateCurName)) {
+				std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateCurName << "\"" << std::endl;
 				return;
 			}
-			updateState();
-			runState();
+			gameStateUpdate();
+			gameStateRun();
 		}
 
-		static inline void deleteGameState(GameStateName name) {
+		static inline void gameStateDelete(GameStateName name) {
 			delete gameStates[name];
 			gameStates.erase(name);
 		}
 
-		static inline void addGameState(GameStateName name, std::vector<GameStateTransition> transitions, std::function<void()> updateFunc) {
+		static inline void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::function<void()> updateFunc) {
 			gameStates.insert({ name, new GameState(transitions, updateFunc) });
 		}
 
-		static inline void forceSetGameState(GameStateName gameStateName) {
-			curGameStateName = gameStateName;
+		static inline void gameStateForceSet(GameStateName gameStateName) {
+			gameStateCurName = gameStateName;
 		}
 	};
 }

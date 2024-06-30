@@ -1,16 +1,15 @@
 #include "ECSRegistry.hpp"
 
-void initializeECS() {
+void ECSRegistry::initializeECS() {
 	Components::initialize();
 	EntityEvents::initialize();
 }
-void terminateECS() {
+void ECSRegistry::terminateECS() {
 	for (uint16_t i = 0; i < EntityEvents::allEvents.size(); i++) {
 		delete EntityEvents::allEvents[i];
 	}
 	EntityManager::deleteAllEntities();
 }
-
 
 #pragma region Events
 /*

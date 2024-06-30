@@ -24,15 +24,6 @@
     <ClCompile Include="Engine Modules\Input.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine Modules\User\InputRegistry.hpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine Modules\User\InputRegistry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine Modules\User\GameStateInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
@@ -80,16 +71,13 @@
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\User\ECSConstants.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\User\GameStateInterface.hpp">
+    <ClInclude Include="Engine Modules\GameState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\GameState.hpp">
+    <ClInclude Include="Engine Modules\User\ACECS.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,15 +1,31 @@
 #ifndef __ECS_REGISTRY_H__
 #define __ECS_REGISTRY_H__
 
-// ECS constants must be included first, as it defines important macros for the ACECS Engine
-#include "ECSConstants.hpp"
+
+#ifdef MAX_ENTITIES
+#undef MAX_ENTITIES
+#endif
+#define MAX_ENTITIES 10000
+
+#ifdef MAX_COMPONENT_TYPES
+#undef MAX_COMPONENT_TYPES
+#endif
+#define MAX_COMPONENT_TYPES 32
+
+#ifdef MAX_EVENT_TYPES
+#undef MAX_EVENT_TYPES
+#endif
+#define MAX_EVENT_TYPES 32
+
 
 #include "../ECS.hpp"
 #include "SFML/Graphics.hpp"
 #include <functional>
 
-void initializeECS();
-void terminateECS();
+namespace ECSRegistry {
+	void initializeECS();
+	void terminateECS();
+}
 
 // avoid having undefined constructor arguments for events or components,
 // as it's more convenient to not have to define every event/component all the time
