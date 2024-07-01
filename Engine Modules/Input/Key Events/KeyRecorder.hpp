@@ -140,21 +140,21 @@ namespace KeyRecorder {
     };
     std::unordered_map<sf::Mouse::Button, KeyName> buttonToNameMap;
 
-    inline void setupButtonToNameMap() {
+    inline void buttonToNameMapInitialize() {
         for (const auto& nameButtonPair : nameToButtonMap) {
             buttonToNameMap.insert({ nameButtonPair.second, nameButtonPair.first });
         }
 
     }
 
-    inline void setupKeyToNameMap() {
+    inline void keyToNameMapInitialize() {
         for (const auto& nameKeyPair : nameToKeyMap) {
             keyToNameMap.insert({ nameKeyPair.second, nameKeyPair.first });
         }
     }
 
     // sets an InputEvent's transitionType,
-    inline KeyEvent getKeyEvent(const KeyName& key) {
+    inline KeyEvent keyEventGet(const KeyName& key) {
 
         bool activePrev = keyNamesPrev.count(key);
         bool activeNow = keyNames.count(key);
@@ -169,16 +169,16 @@ namespace KeyRecorder {
         return KeyEvent(key, static_cast<KeyTransition>(keyTransition));
     }
 
-    inline bool isKeyNameActiveKeyboard(KeyName name) {
+    inline bool keyboardIsKeyNameActive(KeyName name) {
         return sf::Keyboard::isKeyPressed(nameToKeyMap[name]);
     }
-    inline bool isKeyNameActiveMouse(KeyName name) {
+    inline bool mouseIsKeyNameActive(KeyName name) {
         return sf::Mouse::isButtonPressed(nameToButtonMap[name]);
     }
 
 
     // records every input in "event"
-    inline void updateKeys() {
+    inline void keysUpdate() {
 
         keyEvents.clear();
 
@@ -190,10 +190,10 @@ namespace KeyRecorder {
             bool keyNameIsActive = false;
 
             if (nameToKeyMap.count(curRegisteredKeyName) > 0) {
-                keyNameIsActive = isKeyNameActiveKeyboard(curRegisteredKeyName);
+                keyNameIsActive = keyboardIsKeyNameActive(curRegisteredKeyName);
             }
             else {
-                keyNameIsActive = isKeyNameActiveMouse(curRegisteredKeyName);
+                keyNameIsActive = mouseIsKeyNameActive(curRegisteredKeyName);
             }
 
             if (keyNameIsActive) {
@@ -205,21 +205,21 @@ namespace KeyRecorder {
         inputsAll.insert(keyNamesPrev.begin(), keyNamesPrev.end());
 
         for (const KeyName& curInput : inputsAll) {
-            keyEvents.insert(getKeyEvent(curInput));
+            keyEvents.insert(keyEventGet(curInput));
         }
     }
 
-    inline void registerKeyName(const KeyName& name) {
+    inline void keyNameRegister(const KeyName& name) {
         registeredKeyNames.insert(name);
     }
 
-    inline void registerKeySet(const KeySet& keySet) {
+    inline void keySetRegister(const KeySet& keySet) {
         for (const KeyEvent& curKeyEvent : keySet) {
             registeredKeyNames.insert(curKeyEvent.keyName);
         }
     }
 
-    inline const KeySet& getKeys() {
+    inline const KeySet& keysGet() {
         return keyEvents;
     }
 }

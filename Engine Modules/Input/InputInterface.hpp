@@ -8,23 +8,23 @@
 namespace Input {
 	class Interface {
 	public:
-		bool getInputActive(const InputName& name);
+		bool inputGetActive(const InputName& name);
 
-		sf::Vector2i getMousePosition();
-		float getMouseScrollAmount();
+		sf::Vector2i mousePositionGet();
+		float mouseScrollAmountGet();
 
-		void updateMouseScrollAmount(float scrollAmount);
-		void updateMousePosition(sf::Vector2i position);
-		void updateMousePosition(uint16_t x, uint16_t y);
+		void mouseScrollAmountUpdate(float scrollAmount);
+		void mousePositionUpdate(sf::Vector2i position);
+		void mousePositionUpdate(uint16_t x, uint16_t y);
 
 		// registers an InputEvent to inputs
-		void registerInput(const InputName& name, const KeySet& keys);
+		void inputRegister(const InputName& name, const KeySet& keys);
 		// registers an InputEvent to inputs
-		void registerInput(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
+		void inputRegister(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
 
-		void updateInput();
+		void inputUpdate();
 
-		void handleEvents(sf::RenderWindow& window);
+		void eventsProcess(sf::RenderWindow& window);
 	};
 }
 

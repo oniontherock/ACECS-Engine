@@ -13,13 +13,14 @@ struct GameStateTransition {
 
 	GameStateTransition(GameStateName _toStateName, std::vector<InputName> _transitionInputs) :
 		toStateName(_toStateName),
-		transitionInputs(_transitionInputs)
+		linkedInputs(_transitionInputs)
 	{}
 
 	// the name of the state that this transition leads to
 	GameStateName toStateName;
 
-	std::vector<InputName> transitionInputs;
+	// vector of inputs that trigger a transition
+	std::vector<InputName> linkedInputs;
 };
 
 struct GameState {
@@ -29,7 +30,9 @@ struct GameState {
 		updateFunc(_updateFunc)
 	{}
 
+	// vector of different GameStateTransitions linked to this GameStates
 	std::vector<GameStateTransition> transitions;
+	// this GameState's update function
 	std::function<void()> updateFunc;
 };
 
@@ -51,9 +54,9 @@ namespace {
 				auto& curTransition = curGameState->transitions[curTransitionInd];
 
 				// iterate through every input of the current transition
-				for (uint16_t curTransitionInputInd = 0; curTransitionInputInd < curTransition.transitionInputs.size(); curTransitionInputInd++) {
+				for (uint16_t curTransitionInputInd = 0; curTransitionInputInd < curTransition.linkedInputs.size(); curTransitionInputInd++) {
 					// check if the current input of the current transition is active, if it is, transition to that state, and end the check
-					if (inputInterface.getInputActive(curTransition.transitionInputs[curTransitionInputInd])) {
+					if (inputInterface.inputGetActive(curTransition.linkedInputs[curTransitionInputInd])) {
 						gameStateCurName = curTransition.toStateName;
 						return;
 					}
@@ -67,6 +70,7 @@ namespace {
 	public:
 
 		static inline void gameStateProcess() {
+
 			if (std::strcmp(gameStateCurName, "") == 0) {
 				std::cerr << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
 				return;
@@ -79,7 +83,7 @@ namespace {
 			gameStateRun();
 		}
 
-		static inline void gameStateDelete(GameStateName name) {
+		static inline void gameStateTerminate(GameStateName name) {
 			delete gameStates[name];
 			gameStates.erase(name);
 		}
@@ -90,6 +94,13 @@ namespace {
 
 		static inline void gameStateForceSet(GameStateName gameStateName) {
 			gameStateCurName = gameStateName;
+		}
+
+		static inline void gameStatesAllTerminate() {
+			for (const auto& [gameStateNameCur, gameStateNameInstanceCur] : gameStates) {
+				delete gameStateNameInstanceCur;
+			}
+			gameStates.clear();
 		}
 	};
 }

@@ -27,7 +27,7 @@ namespace EntityEvents {
 	struct EventIDs {
 		static EventTypeID ID;
 
-		static void setID(EventTypeID  value) {
+		static void IDSet(EventTypeID  value) {
 			ID = value;
 
 			if (ID > maxID) maxID = ID;

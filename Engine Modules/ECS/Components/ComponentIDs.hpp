@@ -6,7 +6,7 @@
 
 #include <cstdint>
 
-namespace Components {
+namespace EntityComponents {
 
 	// an ID representing a certain TYPE of component, NOT a specific component instance
 	typedef uint16_t ComponentTypeID;
@@ -23,7 +23,7 @@ namespace Components {
 	struct ComponentIDs {
 		static ComponentTypeID ID;
 
-		static void setID(ComponentTypeID value) {
+		static void IDSet(ComponentTypeID value) {
 			ID = value;
 
 			if (ID > maxID) maxID = ID;

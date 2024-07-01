@@ -16,13 +16,13 @@ namespace EntityManager {
 
 	inline uint32_t entityCount = 0;
 
-	inline void updateEntities() {
+	inline void entitiesUpdate() {
 		for (uint32_t i = 0; i < entityCount; i++) {
-			entities[i].update();
+			entities[i].entityUpdate();
 		}
 	}
 
-	inline EntityID createEntity(EntityUpdateType updateType = EntityUpdateType::Frame) {
+	inline EntityID entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame) {
 		EntityID entityID = entityCount;
 
 		Entity entity = Entity(entityID, updateType);
@@ -33,12 +33,12 @@ namespace EntityManager {
 
 		return entityID;
 	}
-	inline void deleteEntity(EntityID entityID) {
+	inline void entityTerminate(EntityID entityID) {
 		entities[entityID].terminate();
 		std::swap(entities[entityID], entities[uint16_t(entityCount - 1)]);
 		entityCount--;
 	}
-	inline void deleteAllEntities() {
+	inline void entitiesAllDelete() {
 		for (uint16_t i = 0; i < entityCount; i++) {
 			entities[i].terminate();
 		}

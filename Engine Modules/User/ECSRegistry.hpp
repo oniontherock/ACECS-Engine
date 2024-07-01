@@ -23,8 +23,8 @@
 #include <functional>
 
 namespace ECSRegistry {
-	void initializeECS();
-	void terminateECS();
+	void ECSInitialize();
+	void ECSTerminate();
 }
 
 // avoid having undefined constructor arguments for events or components,
@@ -45,7 +45,7 @@ namespace EntityEvents {
 #pragma region Components
 // use this file to define new component types.
 // whenever you create a new type, ensure you register it in the implementation file of this header
-namespace Components {
+namespace EntityComponents {
 #pragma region user_defined_components_section
 	struct ComponentExample final : public Component {
 		void system(Entity& entity) override;

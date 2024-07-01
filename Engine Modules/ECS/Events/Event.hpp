@@ -11,7 +11,7 @@ namespace EntityEvents {
 		bool isActive = false;
 	};
 
-	void initialize();
+	void eventIDsInitialize();
 }
 
 

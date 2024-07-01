@@ -7,36 +7,44 @@
 namespace {
 	class Engine{
 	private:
-		static inline void registerInputs() {
+		// inputs are registered here
+		static inline void inputsRegister() {
 			Input::Interface inputInterface{};
 
-			inputInterface.registerInput("Example", KeySet{ KeyEvent("E", Pressed) });
+			inputInterface.inputRegister("Example", KeySet{ KeyEvent("E", Pressed) });
 		}
 		
-		static inline void registerGameState() {
-			GameStateHandler::gameStateAdd("Play",
+		// game states are registered here
+		static inline void gameStateRegister() {
+			GameStateHandler::gameStateAdd("Example State",
 				std::vector<GameStateTransition>{
-				GameStateTransition("Pause", std::vector<InputName>{ "Pause" })
+				GameStateTransition("Other Example State", std::vector<InputName>{ "Example Button" })
 			},
 				[]() {
-					std::cout << "hello sire" << std::endl;
+					// ... update game state specific things here ...
 				}
 			);
 		}
 	public:
-		static inline void initialize() {
-			registerInputs();
-			ECSRegistry::initializeECS();
+		// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.
+		// of course, certain modules do not have to be initialized if the user does not want them to be
+		static inline void engineInitialize() {
+			inputsRegister();
+			ECSRegistry::ECSInitialize();
+			gameStateRegister();
 		}
-		static inline void update() {
-			Input::Interface inputInterface{};
-
-			inputInterface.updateInput();
+		// update certain modules of the engine, like the input system, and the game state.
+		// note that certain modules, like the ECS system, are updated inside the GameStateHandler,
+		// because you don't want to update the ECS system if the GameState is currently paused, for example.
+		static inline void engineUpdate() {
+			 Input::Interface().inputUpdate();
 
 			GameStateHandler::gameStateProcess();
 		}
-		static inline void terminate() {
-			ECSRegistry::terminateECS();
+		// terminates certain engine modules, like the ECS or GameStateHandler
+		static inline void engineTerminate() {
+			ECSRegistry::ECSTerminate();
+			GameStateHandler::gameStatesAllTerminate();
 		}
 
 	};

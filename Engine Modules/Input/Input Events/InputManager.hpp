@@ -26,7 +26,7 @@ namespace InputManager {
 	
 	inline MouseData mouseData;
 
-	inline bool findKeyInKeySet(const KeySet& set, const KeyEvent& keyEvent) {
+	inline bool keySetContains(const KeySet& set, const KeyEvent& keyEvent) {
 		for (const auto& curSetKeyEvent : set) {
 			if (keyEvent == curSetKeyEvent) {
 				return true;
@@ -36,9 +36,9 @@ namespace InputManager {
 		return false;
 	}
 
-	inline bool checkActivateInputEvent(const InputEvent& inputEvent, const KeySet& keySet) {
+	inline bool inputEventIsActive(const InputEvent& inputEvent, const KeySet& keySet) {
 		for (KeyEvent curInputKey : inputEvent.linkedKeyEvents) {
-			if (findKeyInKeySet(keySet, curInputKey)) {
+			if (keySetContains(keySet, curInputKey)) {
 				if (inputEvent.keyLogic == Or) {
 					return true;
 				}
@@ -53,28 +53,28 @@ namespace InputManager {
 		return inputEvent.keyLogic == And;
 	}
 
-	inline void updateInputEvents() {
+	inline void inputEventsUpdate() {
 		for (InputEvent& curInput : inputs) {
 			curInput.isActive = false;
 		}
 
-		KeySet keys = KeyRecorder::getKeys();
+		KeySet keys = KeyRecorder::keysGet();
 
 		for (InputEvent& curInputEvent : inputs) {
-			curInputEvent.isActive = checkActivateInputEvent(curInputEvent, keys);
+			curInputEvent.isActive = inputEventIsActive(curInputEvent, keys);
 		}
 	}
 
 	// registers an InputEvent to inputs
-	inline void registerInput(const InputName& name, const KeySet& keys) {
+	inline void inputRegister(const InputName& name, const KeySet& keys) {
 		inputs.push_back(InputEvent(name, keys));
 	}
 	// registers an InputEvent to inputs
-	inline void registerInput(const InputName& name, const KeySet& keys, const InputKeyLogic keyLogic) {
+	inline void inputRegister(const InputName& name, const KeySet& keys, const InputKeyLogic keyLogic) {
 		inputs.push_back(InputEvent(name, keys, keyLogic));
 	}
 
-	inline uint16_t getIndexFromName(const InputName& name) {
+	inline uint16_t inputIndexFind(const InputName& name) {
 		return namesToIndexesMap[name];
 	}
 }

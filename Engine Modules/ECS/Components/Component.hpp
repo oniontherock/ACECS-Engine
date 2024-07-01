@@ -13,7 +13,7 @@
 
 struct Entity;
 
-namespace Components {
+namespace EntityComponents {
 
 	// base component class,
 	struct Component {
@@ -23,10 +23,8 @@ namespace Components {
 		bool hasSystem = false;
 	};
 
-	inline std::vector<std::function<void(Entity&)>> systems;
-
-	// used to initialize component IDs, defined in the ComponentRegistry file
-	void initialize();
+	// used to initialize component IDs, defined in the ECSRegistry.cpp file
+	void componentIDsInitialize();
 };
 
 #endif

@@ -1,14 +1,14 @@
 #include "ECSRegistry.hpp"
 
-void ECSRegistry::initializeECS() {
-	Components::initialize();
-	EntityEvents::initialize();
+void ECSRegistry::ECSInitialize() {
+	EntityComponents::componentIDsInitialize();
+	EntityEvents::eventIDsInitialize();
 }
-void ECSRegistry::terminateECS() {
+void ECSRegistry::ECSTerminate() {
 	for (uint16_t i = 0; i < EntityEvents::allEvents.size(); i++) {
 		delete EntityEvents::allEvents[i];
 	}
-	EntityManager::deleteAllEntities();
+	EntityManager::entitiesAllDelete();
 }
 
 #pragma region Events
@@ -26,9 +26,9 @@ in this example, EventA is ALWAYS updated BEFORE EventB,
 which is very important, because if EventA sends and event, EventB will always receive it,
 but if the order were swapped, EventB would never receive it
 */
-void EntityEvents::initialize() {
+void EntityEvents::eventIDsInitialize() {
 	/// registry convention:
-	TypeIDAllocator<Event>::registerType<EventIDs<EventExample>>();
+	TypeIDAllocator<Event>::typeRegister<EventIDs<EventExample>>();
 }
 
 #pragma endregion Events
@@ -49,9 +49,9 @@ but if the order were swapped, ComponentB would never receive it
 */
 
 
-void Components::initialize() {
+void EntityComponents::componentIDsInitialize() {
 	/// registry convention:
-	TypeIDAllocator<Component>::registerType<ComponentIDs<ComponentExample>>();
+	TypeIDAllocator<Component>::typeRegister<ComponentIDs<ComponentExample>>();
 }
 
 #pragma endregion Components
@@ -59,7 +59,7 @@ void Components::initialize() {
 
 #include "../Input.hpp"
 
-using namespace Components;
+using namespace EntityComponents;
 using namespace EntityEvents;
 
 Input::Interface inputInterface{};
