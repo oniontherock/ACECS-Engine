@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Engine Modules\Input.hpp" />
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp" />
+    <ClCompile Include="Engine Modules\Panels\Panel.cpp" />
     <ClCompile Include="Engine Modules\User\ECSRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,8 @@
     <ClInclude Include="Engine Modules\Input\Key Events\KeyEventDefinitions.hpp" />
     <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\Panels\Panel.hpp" />
+    <ClInclude Include="Engine Modules\Panels\Textures.hpp" />
     <ClInclude Include="Engine Modules\User\ACECS.hpp" />
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp" />
   </ItemGroup>
