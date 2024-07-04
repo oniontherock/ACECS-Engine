@@ -5,7 +5,9 @@
 #include <functional>
 #include <cstdint>
 #include <iostream>
-#include "../Input.hpp"
+#include "../Graphics/Panel.hpp"
+#include "../Graphics/PanelManager.hpp"
+#include "../Input/InputInterface.hpp"
 
 typedef const char* GameStateName;
 
@@ -25,24 +27,29 @@ struct GameStateTransition {
 
 struct GameState {
 
-	GameState(std::vector<GameStateTransition> _transitions, std::function<void()> _updateFunc) :
+	GameState(std::vector<GameStateTransition> _transitions, std::function<void()> _updateFunc, std::vector<PanelName> _panelNames) :
 		transitions(_transitions),
-		updateFunc(_updateFunc)
+		updateFunc(_updateFunc),
+		panelNames(_panelNames)
 	{}
 
 	// vector of different GameStateTransitions linked to this GameStates
 	std::vector<GameStateTransition> transitions;
+	// vector of different PanelNames belonging to this GameState
+	std::vector<PanelName> panelNames;
 	// this GameState's update function
 	std::function<void()> updateFunc;
 };
 
+
 namespace {
 	class GameStateHandler {
-		static inline std::unordered_map<GameStateName, GameState*> gameStates;
 
-		static inline GameStateName gameStateCurName = "";
+		static inline std::unordered_map<GameStateName, GameState*> gameStates = std::unordered_map<GameStateName, GameState*>();
 
-		static inline void gameStateUpdate() {
+		static inline GameStateName gameStateCurName = 0;
+
+		static void gameStateUpdate() {
 
 			auto& curGameState = gameStates[gameStateCurName];
 
@@ -64,13 +71,17 @@ namespace {
 			}
 		}
 
-		static inline const void gameStateRun() {
+		static const void gameStateRun() {
 			std::invoke(gameStates[gameStateCurName]->updateFunc);
 		}
-	public:
+		static void gameStateDrawToWindow(sf::RenderWindow& renderWindowMain) {
+			for (uint16_t i = 0; i < gameStates[gameStateCurName]->panelNames.size(); i++) {
+				PanelManager::panelGet(gameStates[gameStateCurName]->panelNames[i])->panelRender(renderWindowMain);
+				PanelManager::panelGet(gameStates[gameStateCurName]->panelNames[i])->panelClear();
+			}
+		}
 
-		static inline void gameStateProcess() {
-
+		static void gameStateNameCheckValid() {
 			if (std::strcmp(gameStateCurName, "") == 0) {
 				std::cerr << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
 				return;
@@ -79,24 +90,35 @@ namespace {
 				std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateCurName << "\"" << std::endl;
 				return;
 			}
+		}
+
+	public:
+
+		static void gameStateProcess() {
+			gameStateNameCheckValid();
 			gameStateUpdate();
 			gameStateRun();
 		}
 
-		static inline void gameStateTerminate(GameStateName name) {
+		static void gameStateRender(sf::RenderWindow& renderWindowMain) {
+			gameStateNameCheckValid();
+			gameStateDrawToWindow(renderWindowMain);
+		}
+
+		static void gameStateTerminate(GameStateName name) {
 			delete gameStates[name];
 			gameStates.erase(name);
 		}
 
-		static inline void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::function<void()> updateFunc) {
-			gameStates.insert({ name, new GameState(transitions, updateFunc) });
+		static void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::function<void()> updateFunc, std::vector<PanelName> panels) {
+			gameStates.insert({ name, new GameState(transitions, updateFunc, panels) });
 		}
 
-		static inline void gameStateForceSet(GameStateName gameStateName) {
+		static void gameStateForceSet(GameStateName gameStateName) {
 			gameStateCurName = gameStateName;
 		}
 
-		static inline void gameStatesAllTerminate() {
+		static void gameStatesAllTerminate() {
 			for (const auto& [gameStateNameCur, gameStateNameInstanceCur] : gameStates) {
 				delete gameStateNameInstanceCur;
 			}

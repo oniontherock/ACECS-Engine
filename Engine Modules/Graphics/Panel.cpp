@@ -18,8 +18,8 @@ void Panel::panelRender(sf::RenderWindow& renderWindowMain) {
 
 	renderWindowMain.draw(sprite);
 }
-void Panel::panelClear(const sf::Color& color = sf::Color::Black) {
-	texture.clear(color);
+void Panel::panelClear() {
+	texture.clear(clearColor);
 }
 void Panel::zoomView(float zoomFactor) {
 	sf::Vector2f newSize = viewRect.getSize() * zoomFactor;
