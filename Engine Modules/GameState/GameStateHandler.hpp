@@ -44,14 +44,19 @@ struct GameState {
 
 namespace {
 	class GameStateHandler {
+	public:
+		static bool gameStateExists(GameStateName stateName) {
+			return gameStates.count(gameStateNameCur);
+		}
+	private:
 
 		static inline std::unordered_map<GameStateName, GameState*> gameStates = std::unordered_map<GameStateName, GameState*>();
 
-		static inline GameStateName gameStateCurName = 0;
+		static inline GameStateName gameStateNameCur = "";
 
 		static void gameStateUpdate() {
 
-			auto& curGameState = gameStates[gameStateCurName];
+			auto& curGameState = gameStates[gameStateNameCur];
 
 			Input::Interface inputInterface{};
 
@@ -64,7 +69,7 @@ namespace {
 				for (uint16_t curTransitionInputInd = 0; curTransitionInputInd < curTransition.linkedInputs.size(); curTransitionInputInd++) {
 					// check if the current input of the current transition is active, if it is, transition to that state, and end the check
 					if (inputInterface.inputGetActive(curTransition.linkedInputs[curTransitionInputInd])) {
-						gameStateCurName = curTransition.toStateName;
+						gameStateNameCur = curTransition.toStateName;
 						return;
 					}
 				}
@@ -72,37 +77,28 @@ namespace {
 		}
 
 		static const void gameStateRun() {
-			std::invoke(gameStates[gameStateCurName]->updateFunc);
-		}
-		static void gameStateDrawToWindow(sf::RenderWindow& renderWindowMain) {
-			for (uint16_t i = 0; i < gameStates[gameStateCurName]->panelNames.size(); i++) {
-				PanelManager::panelGet(gameStates[gameStateCurName]->panelNames[i])->panelRender(renderWindowMain);
-				PanelManager::panelGet(gameStates[gameStateCurName]->panelNames[i])->panelClear();
-			}
+			std::invoke(gameStates[gameStateNameCur]->updateFunc);
 		}
 
-		static void gameStateNameCheckValid() {
-			if (std::strcmp(gameStateCurName, "") == 0) {
+		// checks if gameStateCurName is valid, and if it is, returns true, otherwise, prints an error and returns false
+		static bool gameStateNameCurCheckValid() {
+			if (std::strcmp(gameStateNameCur, "") == 0) {
 				std::cerr << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
-				return;
 			}
-			else if (!gameStates.count(gameStateCurName)) {
-				std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateCurName << "\"" << std::endl;
-				return;
+			if (!gameStateExists(gameStateNameCur)) {
+				std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateNameCur << "\"" << std::endl;
+			} else {
+				return true;
 			}
+			return false;
 		}
 
 	public:
 
 		static void gameStateProcess() {
-			gameStateNameCheckValid();
+			if (!gameStateNameCurCheckValid()) return;
 			gameStateUpdate();
 			gameStateRun();
-		}
-
-		static void gameStateRender(sf::RenderWindow& renderWindowMain) {
-			gameStateNameCheckValid();
-			gameStateDrawToWindow(renderWindowMain);
 		}
 
 		static void gameStateTerminate(GameStateName name) {
@@ -110,19 +106,37 @@ namespace {
 			gameStates.erase(name);
 		}
 
-		static void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::function<void()> updateFunc, std::vector<PanelName> panels) {
+		static void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::vector<PanelName> panels, std::function<void()> updateFunc) {
+
+			for (const auto& panelNameCur : panels) {
+				if (!PanelManager::panelExists(panelNameCur)) {
+					std::cerr << "ERROR: Attempted to add a GameState with non-existent panel: " << "\"" << panelNameCur << "\"" << std::endl;
+				}
+			}
+
+			for (const auto& transitionCur : transitions) {
+				if (!gameStateExists(transitionCur.toStateName)) {
+					std::cerr << "ERROR: Attempted to add a GameState with non-existent transition: " << "\"" << transitionCur.toStateName
+						<< "\"" << std::endl;
+				}
+			}
+
 			gameStates.insert({ name, new GameState(transitions, updateFunc, panels) });
 		}
 
 		static void gameStateForceSet(GameStateName gameStateName) {
-			gameStateCurName = gameStateName;
+			gameStateNameCur = gameStateName;
 		}
 
 		static void gameStatesAllTerminate() {
-			for (const auto& [gameStateNameCur, gameStateNameInstanceCur] : gameStates) {
-				delete gameStateNameInstanceCur;
+			for (const auto& [key, value] : gameStates) {
+				delete value;
 			}
 			gameStates.clear();
+		}
+
+		static const std::vector<PanelName>& gameStateGetPanels() {
+			return gameStates[gameStateNameCur]->panelNames;
 		}
 	};
 }

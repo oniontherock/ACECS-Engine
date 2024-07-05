@@ -2,6 +2,7 @@
 #define __PANEL_H__
 
 #include "SFML/Graphics.hpp"
+#include <functional>
 
 typedef sf::View PanelView;
 typedef sf::RenderTexture PanelScreenTexture;
@@ -11,12 +12,9 @@ typedef const char* PanelName;
 
 struct Panel {
 
-	Panel() {
-		textureCreate();
-		viewCreate();
-	};
-	Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor) :
-		screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor)
+	Panel() {};
+	Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor) :
+		screenRect(_screenRect), viewRect(_viewRect), panelDrawFunction(_panelDrawFunction), clearColor(_clearColor)
 	{
 		textureCreate();
 		viewCreate();
@@ -24,14 +22,19 @@ struct Panel {
 
 	void textureCreate();
 	void viewCreate();
+
 	template <typename T>
 	inline void objectDraw(const T& drawableObject) {
 		texture.draw(drawableObject);
 	}
 	void vertexArrayDraw(const sf::VertexArray& vertexArray, const sf::RenderStates& states);
-	void panelRender(sf::RenderWindow& renderWindowMain);
-	void panelClear();
+
 	void zoomView(float zoomFactor);
+
+	void panelDrawObjects();
+	void panelRender(sf::RenderWindow& renderWindowMain);
+	// clears the panel with a transparent color
+	void panelClear();
 
 	// the Panel's position and dimensions on the screen
 	PanelRect screenRect{ 0, 0, 0, 0 };
@@ -40,13 +43,16 @@ struct Panel {
 	// as an example, if an object is drawn at 250x250, and the viewRect is 0x0x500x500,
 	// then the object will be drawn in the center of the screenRect
 	PanelRect viewRect{ 0, 0, 0, 0 };
+
+	// color used when clearing panel
+	sf::Color clearColor;
 private:
 	// the panel's texture, this is what is actual drawn on, and it's rendered to the main game window
 	PanelScreenTexture texture;
 	// the panel's view,
 	PanelView view;
-	// color to be used when clearing
-	sf::Color clearColor;
+
+	std::function<void(Panel& panel)> panelDrawFunction;
 
 	void viewUpdate();
 

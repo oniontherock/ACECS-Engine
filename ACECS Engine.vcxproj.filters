@@ -95,6 +95,9 @@
     <ClInclude Include="Engine Modules\Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine Modules\GameLevel\GameLevel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\Debug\ACECS Engine.exp" />

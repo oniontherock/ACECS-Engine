@@ -161,6 +161,7 @@
     <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
+    <ClInclude Include="Engine Modules\GameLevel\GameLevel.hpp" />
     <ClInclude Include="Engine Modules\GameState.hpp" />
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
     <ClInclude Include="Engine Modules\Graphics.hpp" />

@@ -9,6 +9,9 @@ void Panel::viewCreate() {
 inline void Panel::vertexArrayDraw(const sf::VertexArray& vertexArray, const sf::RenderStates& states) {
 	texture.draw(vertexArray, states);
 }
+void Panel::panelDrawObjects() {
+	std::invoke(panelDrawFunction, *this);
+}
 void Panel::panelRender(sf::RenderWindow& renderWindowMain) {
 	viewUpdate();
 	texture.display();
