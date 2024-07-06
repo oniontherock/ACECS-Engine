@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <array>
+#include <iostream>
 #include <vector>
 #include <set>
 #include <queue>
@@ -15,32 +16,53 @@
 
 #include "../TypeDefinitions.hpp"
 
+typedef std::unique_ptr<EntityComponents::Component> ComponentPtr;
+typedef std::unique_ptr<EntityEvents::Event> EventPtr;
 
 struct Entity {
-	Entity() {
+	explicit Entity() {
 		updateType = EntityUpdateType::Frame;
 		ID = 0;
-		componentsMap = std::vector<EntityComponents::Component*>(0);
 	};
-	Entity(EntityID id, EntityUpdateType _updateType) : ID(id), updateType(_updateType) {
+	Entity(Entity& other) = delete;
+	Entity& operator= (const Entity& other) = delete;
+	//~Entity() = default;
+	
+	void entityCreate(EntityID id, EntityUpdateType _updateType) {
+		ID = id;
+		updateType = _updateType;
+
 		componentsInitialize();
 		eventsInitialize();
-	};
-	~Entity() {};
+	}
+	void entityCreateFromOther(Entity& other) {
+		
+		terminate();
+		
+		entityCreate(other.ID, other.updateType);
+
+		componentsVector = std::move(other.componentsVector);
+		eventsVector = std::move(other.eventsVector);
+	}
 
 	inline void componentsInitialize() {
-		componentsMap = std::vector<EntityComponents::Component*>(EntityComponents::totalComponents);
-
-		for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
-			componentsMap[i] = nullptr;
-		}
+		componentsVector = std::vector<ComponentPtr>(EntityComponents::totalComponents);
 	};
 
 	inline void eventsInitialize() {
 		auto& allEvents = EntityEvents::allEvents;
 
 		for (uint16_t i = 0; i < allEvents.size(); i++) {
-			eventsMap.push_back(allEvents[i]);
+
+
+			std::unique_ptr<Duplicatable> duplicatablePtr = allEvents[i]->duplicate();
+			// get the raw pointer behind the duplicatablePtr
+			Duplicatable* rawPointer = duplicatablePtr.get();
+			// release the duplicatablePtr
+			duplicatablePtr.release();
+
+			eventsVector.push_back(std::unique_ptr<EntityEvents::Event>(static_cast<EntityEvents::Event*>(rawPointer)));
+			//std::cout << (*eventsVector[i].get()). << std::endl;
 		}
 	};
 
@@ -48,54 +70,61 @@ struct Entity {
 
 	EntityID ID;
 
-	std::vector<EntityComponents::Component*> componentsMap;
+	std::vector<ComponentPtr> componentsVector;
 
-	std::vector<EntityEvents::Event*> eventsMap;
+	std::vector<EventPtr> eventsVector;
 	bool hasAnyEvent = false;
 
 
 	template <class T>
 	inline T* entityComponentGet() {
-		return static_cast<T*>(componentsMap[EntityComponents::ComponentIDs<T>::ID]);
+		return static_cast<T*>(componentsVector[EntityComponents::ComponentIDs<T>::ID].get());
 	}
 	template <class T>
 	inline bool entityComponentHas() {
-		return componentsMap[EntityComponents::ComponentIDs<T>::ID] != nullptr;
+		return static_cast<bool>(componentsVector[EntityComponents::ComponentIDs<T>::ID]);
 	}
 	template <class T>
 	inline void entityComponentAdd(EntityComponents::Component* component) {
-		componentsMap[EntityComponents::ComponentIDs<T>::ID] = component;
+		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentPtr(component);
+	}
+	// checks if the entity has the component, and if not, adds it
+	template <class T>
+	inline void entityComponentAddNoOverride(EntityComponents::Component* component) {
+		if (entityComponentHas<T>()) return;
+
+		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentPtr(component);
 	}
 	template <class T>
 	inline void entityComponentTerminate() {
-		delete componentsMap[EntityComponents::ComponentIDs<T>::ID];
-		componentsMap[EntityComponents::ComponentIDs<T>::ID] = nullptr;
+		componentsVector[EntityComponents::ComponentIDs<T>::ID].reset();
 	}
 
 	template <class T>
 	inline T* entityEventGet() {
-		return static_cast<T*>(eventsMap[EntityEvents::EventIDs<T>::ID]);
+		return static_cast<T*>(eventsVector[EntityEvents::EventIDs<T>::ID].get());
 	}
 	template <class T>
 	inline bool entityEventHas() {
-		return eventsMap[EntityEvents::EventIDs<T>::ID]->isActive;
+		return eventsVector[EntityEvents::EventIDs<T>::ID]->isActive;
 	}
 	// sets an event to active
 	template <class T>
-	inline void entityEventActivate() {
+	inline void entityEventAdd() {
 		hasAnyEvent = true;
-		eventsMap[EntityEvents::EventIDs<T>::ID]->isActive = true;
+
+		eventsVector[EntityEvents::EventIDs<T>::ID]->isActive = true;
 		return;
 	}
 	// sets an event to active and returns the event so it's members may be modified
 	template <class T>
-	inline T* entityEventActivateAndReturn() {
-		entityEventActivate<T>();
+	inline T* entityEventAddAndReturn() {
+		entityEventAdd<T>();
 		return entityEventGet<T>();
 	}
 	template <class T>
 	inline void entityEventDeactivate() {
-		eventsMap[EntityEvents::EventIDs<T>::ID]->isActive = false;
+		eventsVector[EntityEvents::EventIDs<T>::ID]->isActive = false;
 	}
 
 	inline void entityUpdate() {
@@ -106,37 +135,30 @@ struct Entity {
 	inline void componentsUpdate() {
 		for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
 
-			if (componentsMap[i] == nullptr) continue;
-			if (!componentsMap[i]->hasSystem) continue;
+			if (componentsVector[i] == nullptr) continue;
+			if (!componentsVector[i]->hasSystem) continue;
 
-			componentsMap[i]->system(*this);
+			componentsVector[i]->system(*this);
 		}
 	}
 
+	inline void componentsAllTerminate() {
+		componentsVector.clear();
+	}
+
 	inline void eventsAllDeactivate() {
-		for (uint16_t i = 0; i < eventsMap.size(); i++) {
-			eventsMap[i]->isActive = false;
+		for (uint16_t i = 0; i < eventsVector.size(); i++) {
+			eventsVector[i]->isActive = false;
 		}
 
 		hasAnyEvent = false;
 	}
 
-	inline void componentsAllTerminate() {
-		for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
-
-			if (componentsMap[i] != nullptr) {
-				delete componentsMap[i];
-				componentsMap[i] = nullptr;
-			}
-		}
-	}
-
 	inline void eventsAllTerminate() {
-		for (uint16_t i = 0; i < eventsMap.size(); i++) {
+		for (uint16_t i = 0; i < eventsVector.size(); i++) {
 
-			if (eventsMap[i] != nullptr) {
-				delete eventsMap[i];
-				eventsMap[i] = nullptr;
+			if (eventsVector[i] != nullptr) {
+				eventsVector[i].reset();
 			}
 		}
 

@@ -95,7 +95,13 @@
     <ClInclude Include="Engine Modules\Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\GameLevel\GameLevel.hpp">
+    <ClInclude Include="Engine Modules\GameWorld\GameWorld.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentTemplateManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\ECS\Duplicatable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

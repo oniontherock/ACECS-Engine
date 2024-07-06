@@ -13,14 +13,14 @@ namespace EntityEvents {
 	typedef uint16_t EventTypeID;
 
 	// the maximum value for any ID
-	inline static EventTypeID maxID = 0;
+	inline EventTypeID maxID = 0;
 	// the total amount of components
-	inline static EventTypeID totalComponents = 0;
+	inline EventTypeID totalComponents = 0;
 	
-	static std::vector<Event*> allEvents;
+	inline std::vector<Event*> allEvents;
 
 
-	// EventTypesHolder is a sort of helper struct that holds the EventTypeID of every type of event,
+	// EventTypesHolder is a helper struct that holds the EventTypeID of every type of event,
 	// an ID is simply an integer assigned uniquely to every child of base class "Event",
 	// the way you get the ID of a event type is like this: "EventIDHolder<TYPE>::ID".
 	template <class T>

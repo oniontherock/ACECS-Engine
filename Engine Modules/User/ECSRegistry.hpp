@@ -34,7 +34,12 @@ namespace ECSRegistry {
 // whenever you create a new type, ensure you register it in the implementation file of this header
 namespace EntityEvents {
 #pragma region user_defined_events
-	struct EventExample : public Event {
+	struct EventExample final : public Event {
+
+		std::unique_ptr<Duplicatable> duplicate() override {
+			return std::unique_ptr<Duplicatable>(new EventExample(var));
+		}
+
 		EventExample(uint16_t _var = 0) : var(_var) {};
 
 		uint16_t var;
@@ -48,7 +53,12 @@ namespace EntityEvents {
 namespace EntityComponents {
 #pragma region user_defined_components_section
 	struct ComponentExample final : public Component {
-		void system(Entity& entity) override;
+
+		std::unique_ptr<Duplicatable> duplicate() override {
+			return std::unique_ptr<Duplicatable>(new ComponentExample(var));
+		}
+
+		void system(Entity& entity) final;
 
 		ComponentExample(uint16_t _var = 0) : var(_var) {
 			hasSystem = true;

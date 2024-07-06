@@ -153,6 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Components\ComponentTemplateManager.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Duplicatable.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeIDAllocator.hpp" />
     <ClInclude Include="Engine Modules\ECS\Components\ComponentIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp" />
@@ -161,7 +163,7 @@
     <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
-    <ClInclude Include="Engine Modules\GameLevel\GameLevel.hpp" />
+    <ClInclude Include="Engine Modules\GameWorld\GameWorld.hpp" />
     <ClInclude Include="Engine Modules\GameState.hpp" />
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
     <ClInclude Include="Engine Modules\Graphics.hpp" />

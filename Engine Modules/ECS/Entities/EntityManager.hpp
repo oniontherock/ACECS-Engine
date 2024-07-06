@@ -25,9 +25,8 @@ namespace EntityManager {
 	static EntityID entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame) {
 		EntityID entityID = entityCount;
 
-		Entity entity = Entity(entityID, updateType);
 
-		entities[entityID] = entity;
+		entities[entityID].entityCreate(entityID, updateType);
 
 		entityCount++;
 
@@ -35,7 +34,18 @@ namespace EntityManager {
 	}
 	static void entityTerminate(EntityID entityID) {
 		entities[entityID].terminate();
-		std::swap(entities[entityID], entities[uint16_t(entityCount - 1)]);
+
+		Entity temp;
+		temp.entityCreateFromOther(entities[entityID]);
+
+		entities[entityID].terminate();
+		entities[entityID].entityCreateFromOther(entities[uint16_t(entityCount - 1)]);
+
+		entities[uint16_t(entityCount - 1)].terminate();
+		entities[uint16_t(entityCount - 1)].entityCreateFromOther(temp);
+
+		temp.terminate();
+
 		entityCount--;
 	}
 	static void entitiesAllDelete() {
