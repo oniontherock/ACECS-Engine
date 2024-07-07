@@ -21,12 +21,10 @@ namespace EntityComponents {
 
 		virtual ~Component() = default;
 
-		std::unique_ptr<Duplicatable> duplicate() override {
-			return std::unique_ptr<Duplicatable>(new Component());
-		}
-
 		virtual void system(Entity& entity) {
 		}
+
+		//bool operator<
 
 		bool hasSystem = false;
 	};

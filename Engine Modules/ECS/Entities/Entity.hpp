@@ -26,7 +26,6 @@ struct Entity {
 	};
 	Entity(Entity& other) = delete;
 	Entity& operator= (const Entity& other) = delete;
-	//~Entity() = default;
 	
 	void entityCreate(EntityID id, EntityUpdateType _updateType) {
 		ID = id;
@@ -53,16 +52,7 @@ struct Entity {
 		auto& allEvents = EntityEvents::allEvents;
 
 		for (uint16_t i = 0; i < allEvents.size(); i++) {
-
-
-			std::unique_ptr<Duplicatable> duplicatablePtr = allEvents[i]->duplicate();
-			// get the raw pointer behind the duplicatablePtr
-			Duplicatable* rawPointer = duplicatablePtr.get();
-			// release the duplicatablePtr
-			duplicatablePtr.release();
-
-			eventsVector.push_back(std::unique_ptr<EntityEvents::Event>(static_cast<EntityEvents::Event*>(rawPointer)));
-			//std::cout << (*eventsVector[i].get()). << std::endl;
+			eventsVector.push_back(Duplicatable::duplicateAndConvertToType<EntityEvents::Event>(allEvents[i]));
 		}
 	};
 
@@ -90,14 +80,26 @@ struct Entity {
 	}
 	// checks if the entity has the component, and if not, adds it
 	template <class T>
-	inline void entityComponentAddNoOverride(EntityComponents::Component* component) {
+	inline void entityComponentAddNoOverwrite(EntityComponents::Component* component) {
 		if (entityComponentHas<T>()) return;
 
-		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentPtr(component);
+		entityComponentAdd<T>(component);
 	}
 	template <class T>
 	inline void entityComponentTerminate() {
 		componentsVector[EntityComponents::ComponentIDs<T>::ID].reset();
+	}
+	inline bool entityComponentHasAtIndex(EntityComponents::ComponentTypeID index) {
+		return static_cast<bool>(componentsVector[index]);
+	}
+	inline void entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
+		componentsVector[index] = ComponentPtr(component);
+	}
+	// checks if the entity has the component, and if not, adds it
+	inline void entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
+		if (entityComponentHasAtIndex(index)) return;
+
+		entityComponentAddAtIndex(component, index);
 	}
 
 	template <class T>
@@ -143,7 +145,9 @@ struct Entity {
 	}
 
 	inline void componentsAllTerminate() {
-		componentsVector.clear();
+		for (EntityComponents::ComponentTypeID i = 0; i < EntityComponents::totalComponents; i++) {
+			componentsVector[i].reset();
+		}
 	}
 
 	inline void eventsAllDeactivate() {

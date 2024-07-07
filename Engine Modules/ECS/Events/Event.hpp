@@ -12,10 +12,6 @@ namespace EntityEvents {
 
 	struct Event : public Duplicatable {
 
-		std::unique_ptr<Duplicatable> duplicate() override {
-			return std::unique_ptr<Duplicatable>(new Event());
-		}
-
 		bool isActive = false;
 	};
 
