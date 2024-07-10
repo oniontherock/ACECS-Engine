@@ -1,7 +1,11 @@
 #include "ECSRegistry.hpp"
 
+#include "../Input.hpp"
+#include <iostream>
+
 void ECSRegistry::ECSInitialize() {
 	EntityComponents::componentIDsInitialize();
+	EntityComponents::componentTemplatesInitialize();
 	EntityEvents::eventIDsInitialize();
 }
 void ECSRegistry::ECSTerminate() {
@@ -27,8 +31,11 @@ which is very important, because if EventA sends and event, EventB will always r
 but if the order were swapped, EventB would never receive it
 */
 void EntityEvents::eventIDsInitialize() {
+
+	using EventRegistry = TypeIDAllocator<Event>;
+
 	/// registry convention:
-	TypeIDAllocator<Event>::typeRegister<EventIDs<EventExample>>();
+	EventRegistry::typeRegister<EventIDs<EventExample>>();
 }
 
 #pragma endregion Events
@@ -50,14 +57,32 @@ but if the order were swapped, ComponentB would never receive it
 
 
 void EntityComponents::componentIDsInitialize() {
+
+	using ComponentRegistry = TypeIDAllocator<Component>;
+
 	/// registry convention:
-	TypeIDAllocator<Component>::typeRegister<ComponentIDs<ComponentExample>>();
+	ComponentRegistry::typeRegister<ComponentIDs<ComponentExample>>();
 }
 
 #pragma endregion Components
-#pragma region Systems
+#pragma region Component Templates
 
-#include "../Input.hpp"
+void EntityComponents::componentTemplatesInitialize() {
+	using namespace EntityComponents;
+
+	ComponentTemplateManager::componentTemplateAdd(
+
+		/// template name
+		"Example Template",
+		/// list of components in template
+		{
+			createComponentPairFromType<ComponentExample>(),
+		}
+		);
+}
+
+#pragma endregion Component Templates
+#pragma region Systems
 
 using namespace EntityComponents;
 using namespace EntityEvents;

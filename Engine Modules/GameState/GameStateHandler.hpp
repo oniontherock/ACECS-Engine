@@ -46,7 +46,7 @@ namespace {
 	class GameStateHandler {
 	public:
 		static bool gameStateExists(GameStateName stateName) {
-			return gameStates.count(gameStateNameCur);
+			return gameStates.count(stateName);
 		}
 	private:
 
@@ -114,14 +114,19 @@ namespace {
 				}
 			}
 
-			for (const auto& transitionCur : transitions) {
-				if (!gameStateExists(transitionCur.toStateName)) {
-					std::cerr << "ERROR: Attempted to add a GameState with non-existent transition: " << "\"" << transitionCur.toStateName
-						<< "\"" << std::endl;
+			gameStates.insert({ name, new GameState(transitions, updateFunc, panels) });
+		}
+
+		// does some error checking on every state, should be called after adding new game states
+		static void gameStateFinalizeAddedStates() {
+			for (const auto& [gameStateNameCur, gameStateCur] : gameStates) {
+				for (const auto& gameStateTransitionCur : gameStateCur->transitions) {
+					if (!gameStateExists(gameStateTransitionCur.toStateName)) {
+						std::cerr << "ERROR: Attempted to add a GameState with non-existent transition: " << "\"" << gameStateTransitionCur.toStateName
+							<< "\"" << std::endl;
+					}
 				}
 			}
-
-			gameStates.insert({ name, new GameState(transitions, updateFunc, panels) });
 		}
 
 		static void gameStateForceSet(GameStateName gameStateName) {

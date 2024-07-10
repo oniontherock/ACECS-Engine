@@ -24,14 +24,15 @@ namespace EntityComponents {
 		virtual void system(Entity& entity) {
 		}
 
-		//bool operator<
-
 		bool hasSystem = false;
 	};
 
 	// used to initialize component IDs, defined in the ECSRegistry.cpp file
 	void componentIDsInitialize();
-
+	void componentTemplatesInitialize();
 };
+
+typedef std::unique_ptr<EntityComponents::Component> ComponentUniquePtr;
+typedef std::shared_ptr<EntityComponents::Component> ComponentSharedPtr;
 
 #endif

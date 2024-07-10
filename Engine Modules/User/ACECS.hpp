@@ -64,8 +64,36 @@ namespace {
 				/// update function
 				// update function for this GameState, called every frame
 				GAME_STATE_FUNCTION{
+					EntityManager::entitiesUpdate();
 				}
 				);
+			GameStateHandler::gameStateAdd("Other Example State",
+				/// transitions
+				// vector of GameStateTransitions, and their inputs
+				{
+					GameStateTransition("Example State", // name of the state to transition to
+						/// transition inputs
+						// vector of inputs that trigger this transition
+						// note the commas after an input name, without commas every name will become a single string
+						{
+							"Example Input",
+						}
+					)
+				},
+				/// panels
+				// the panels belonging to this GameState,
+				// note the commas after every panel name, without commas every name will become a single string
+				{
+					"Example View",
+				},
+
+				/// update function
+				// update function for this GameState, called every frame
+				GAME_STATE_FUNCTION{
+				}
+				);
+
+			GameStateHandler::gameStateFinalizeAddedStates();
 		}
 	public:
 		// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.

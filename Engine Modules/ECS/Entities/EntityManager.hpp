@@ -12,17 +12,17 @@
 
 namespace EntityManager {
 
-	static std::vector<Entity> entities = std::vector<Entity>(MAX_ENTITIES);
+	inline std::vector<Entity> entities = std::vector<Entity>(MAX_ENTITIES);
 
-	static uint32_t entityCount = 0;
+	inline uint32_t entityCount = 0;
 
-	static void entitiesUpdate() {
+	inline void entitiesUpdate() {
 		for (uint32_t i = 0; i < entityCount; i++) {
 			entities[i].entityUpdate();
 		}
 	}
 
-	static EntityID entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame) {
+	inline EntityID entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame) {
 		EntityID entityID = entityCount;
 
 
@@ -32,7 +32,7 @@ namespace EntityManager {
 
 		return entityID;
 	}
-	static void entityTerminate(EntityID entityID) {
+	inline void entityTerminate(EntityID entityID) {
 		entities[entityID].terminate();
 
 		Entity temp;
@@ -48,7 +48,7 @@ namespace EntityManager {
 
 		entityCount--;
 	}
-	static void entitiesAllDelete() {
+	inline void entitiesAllDelete() {
 		for (uint16_t i = 0; i < entityCount; i++) {
 			entities[i].terminate();
 		}

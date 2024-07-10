@@ -16,9 +16,6 @@
 
 #include "../TypeDefinitions.hpp"
 
-typedef std::unique_ptr<EntityComponents::Component> ComponentPtr;
-typedef std::unique_ptr<EntityEvents::Event> EventPtr;
-
 struct Entity {
 	explicit Entity() {
 		updateType = EntityUpdateType::Frame;
@@ -45,7 +42,7 @@ struct Entity {
 	}
 
 	inline void componentsInitialize() {
-		componentsVector = std::vector<ComponentPtr>(EntityComponents::totalComponents);
+		componentsVector = std::vector<ComponentUniquePtr>(EntityComponents::totalComponents);
 	};
 
 	inline void eventsInitialize() {
@@ -60,7 +57,7 @@ struct Entity {
 
 	EntityID ID;
 
-	std::vector<ComponentPtr> componentsVector;
+	std::vector<ComponentUniquePtr> componentsVector;
 
 	std::vector<EventPtr> eventsVector;
 	bool hasAnyEvent = false;
@@ -76,7 +73,7 @@ struct Entity {
 	}
 	template <class T>
 	inline void entityComponentAdd(EntityComponents::Component* component) {
-		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentPtr(component);
+		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentUniquePtr(component);
 	}
 	// checks if the entity has the component, and if not, adds it
 	template <class T>
@@ -93,7 +90,7 @@ struct Entity {
 		return static_cast<bool>(componentsVector[index]);
 	}
 	inline void entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
-		componentsVector[index] = ComponentPtr(component);
+		componentsVector[index] = ComponentUniquePtr(component);
 	}
 	// checks if the entity has the component, and if not, adds it
 	inline void entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
