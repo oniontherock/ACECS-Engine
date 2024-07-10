@@ -42,14 +42,14 @@ namespace EntityComponents {
 	ComponentTypeID ComponentIDs<T>::ID{ 0 };
 
 	// a pair of ComponentTypeID and Component instance,
-	// should be used when knowing the ID of a component is necessary, but knowing the type of component is not possible
-	typedef std::pair<EntityComponents::ComponentTypeID, Component*> ComponentIndexInstancePair;
+	// should be used when knowing the ID of a component is necessary, but knowing the type of component is not possible.
+	// note that this type contains a shared_ptr, because certain usages are impossible if it is a unique_ptr, like list initialization
+	typedef std::pair<EntityComponents::ComponentTypeID, ComponentSharedPtr> ComponentIndexInstancePair;
 
 	// creates a new ComponentIndexInstancePair from the type T,
-	// note that this function returns a pair containing a raw pointer, so do not forget to delete the raw pointer
 	template <class T>
 	ComponentIndexInstancePair createComponentPairFromType() {
-		return ComponentIndexInstancePair(ComponentIDs<T>::ID, new T());
+		return ComponentIndexInstancePair(ComponentIDs<T>::ID, ComponentSharedPtr(new T()));
 	}
 };
 

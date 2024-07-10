@@ -24,7 +24,7 @@ struct Duplicatable {
 		return std::unique_ptr<T>(static_cast<T*>(rawPointer));
 	}
 	// duplicates an object, and returns a unique_ptr converted to T. Note that T must be a derived class of Duplicatable
-	// takes an instance as the object to duplicate
+	// takes a reference as the object to duplicate
 	template <class T>
 	static std::unique_ptr<T> duplicateAndConvertToType(Duplicatable& objectToDuplicate) {
 

@@ -119,7 +119,7 @@ namespace {
 
 		// does some error checking on every state, should be called after adding new game states
 		static void gameStateFinalizeAddedStates() {
-			for (const auto& [gameStateNameCur, gameStateCur] : gameStates) {
+			for (const auto& [stateNameCur, gameStateCur] : gameStates) {
 				for (const auto& gameStateTransitionCur : gameStateCur->transitions) {
 					if (!gameStateExists(gameStateTransitionCur.toStateName)) {
 						std::cerr << "ERROR: Attempted to add a GameState with non-existent transition: " << "\"" << gameStateTransitionCur.toStateName

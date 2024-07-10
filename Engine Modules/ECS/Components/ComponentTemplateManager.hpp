@@ -40,7 +40,7 @@ namespace ComponentTemplateManager {
 
 		componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
 	}
-	// this overload should generally be preferred over others, as it is fairly easy to use in one line
+	// this overload should generally be preferred over others, as it is easier to use in one line
 	inline void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplatePairVector templateComponentsMap) {
 
 		if (componentTemplatesErrorIfNameTaken(templateName)) {
@@ -49,8 +49,9 @@ namespace ComponentTemplateManager {
 
 		ComponentTemplate templateComponentsVector(EntityComponents::totalComponents);
 
-		for (uint16_t i = 0; i < templateComponentsMap.size(); i ++ ) {
-			templateComponentsVector[templateComponentsMap[i].first] = ComponentUniquePtr(templateComponentsMap[i].second);
+		for (uint16_t i = 0; i < templateComponentsMap.size(); i ++) {
+			templateComponentsVector[templateComponentsMap[i].first] =
+				Duplicatable::duplicateAndConvertToType<EntityComponents::Component>(templateComponentsMap[i].second.get());
 		}
 
 		componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
@@ -78,6 +79,12 @@ namespace ComponentTemplateManager {
 	// applies a template to an entityId
 	inline void componentTemplateApply(ComponentTemplateName templateName, EntityID entity, TemplateApplicationType applicationType = Overwrite) {
 		componentTemplateApply(templateName, EntityManager::entities[entity], applicationType);
+	}
+	inline void componentTemplateTerminate(ComponentTemplateName templateName) {
+		componentTemplates[templateName].clear();
+	}
+	inline void componentTemplatesAllTerminate() {
+		componentTemplates.clear();
 	}
 };
 
