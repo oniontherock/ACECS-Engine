@@ -134,6 +134,9 @@
     <ClInclude Include="Engine Modules\GameWorld\LevelTypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine Modules\GameWorld\LevelUpdater.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="x64\Debug\ACECS Engine.exp" />

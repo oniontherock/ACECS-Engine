@@ -177,6 +177,7 @@
     <ClInclude Include="Engine Modules\GameState.hpp" />
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
     <ClInclude Include="Engine Modules\GameWorld\LevelTypeDefinitions.hpp" />
+    <ClInclude Include="Engine Modules\GameWorld\LevelUpdater.hpp" />
     <ClInclude Include="Engine Modules\Graphics.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp" />

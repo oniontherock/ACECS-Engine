@@ -16,13 +16,6 @@ Level::Level(LevelPosition _id) :
 	Level(_id.x, _id.y, _id.z)
 {}
 
-
-void Level::entitiesUpdate() {
-	for (EntityId i = 0; i < entities.size(); i++) {
-		//EntityManager
-	}
-}
-
 void Level::entityIdAdd(const EntityId id) {
 	entities.push_back(id);
 }
@@ -101,4 +94,21 @@ Level* GameWorld::levelAdd(LevelCoordinate x, LevelCoordinate y, LevelCoordinate
 }
 Level* GameWorld::levelAdd(LevelPosition level) {
 	return levelAdd(level.x, level.y, level.z);
+}
+
+void GameWorld::levelActivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
+	
+	if (std::find(activeLevels.begin(), activeLevels.end(), LevelPosition(x, y, z)) != activeLevels.end()) return;
+
+	activeLevels.push_back(LevelPosition(x, y, z));
+}
+void GameWorld::levelActivate(LevelPosition level) {
+	levelActivate(level.x, level.y, level.z);
+}
+
+void GameWorld::levelDeactivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
+	activeLevels.erase(std::find(activeLevels.begin(), activeLevels.end(), LevelPosition(x, y, z));
+}
+void GameWorld::levelDeactivate(LevelPosition level) {
+	levelDeactivate(level.x, level.y, level.z);
 }
