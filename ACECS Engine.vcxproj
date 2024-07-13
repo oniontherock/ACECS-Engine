@@ -145,16 +145,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine Modules\ECS\Duplicatable\Duplicatable.cpp" />
+    <ClCompile Include="Engine Modules\ECS\Entities\Entity.cpp" />
+    <ClCompile Include="Engine Modules\ECS\Entities\EntityManager.cpp" />
+    <ClCompile Include="Engine Modules\ECS\Events\EventIDs.cpp" />
+    <ClCompile Include="Engine Modules\GameState\GameStateHandler.cpp" />
+    <ClCompile Include="Engine Modules\GameWorld\GameWorld.cpp" />
+    <ClCompile Include="Engine Modules\Graphics\PanelManager.cpp" />
     <ClCompile Include="Engine Modules\Graphics\PanelManager.hpp" />
     <ClCompile Include="Engine Modules\Input.hpp" />
+    <ClCompile Include="Engine Modules\Input\Input Events\InputEventDefinitions.cpp" />
+    <ClCompile Include="Engine Modules\Input\Input Events\InputManager.cpp" />
     <ClCompile Include="Engine Modules\Input\InputInterface.cpp" />
     <ClCompile Include="Engine Modules\Graphics\Panel.cpp" />
+    <ClCompile Include="Engine Modules\Input\Key Events\KeyRecorder.cpp" />
     <ClCompile Include="Engine Modules\User\ECSRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\ECS\Components\Component.hpp" />
     <ClInclude Include="Engine Modules\ECS\Components\ComponentTemplateManager.hpp" />
-    <ClInclude Include="Engine Modules\ECS\Duplicatable.hpp" />
+    <ClInclude Include="Engine Modules\ECS\Duplicatable\Duplicatable.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeIDAllocator.hpp" />
     <ClInclude Include="Engine Modules\ECS\Components\ComponentIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\Entities\Entity.hpp" />
@@ -166,6 +176,7 @@
     <ClInclude Include="Engine Modules\GameWorld\GameWorld.hpp" />
     <ClInclude Include="Engine Modules\GameState.hpp" />
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
+    <ClInclude Include="Engine Modules\GameWorld\LevelTypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\Graphics.hpp" />
     <ClInclude Include="Engine Modules\Input\InputInterface.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputManager.hpp" />
@@ -173,7 +184,6 @@
     <ClInclude Include="Engine Modules\Input\Key Events\KeyRecorder.hpp" />
     <ClInclude Include="Engine Modules\Input\Input Events\InputEventDefinitions.hpp" />
     <ClInclude Include="Engine Modules\Graphics\Panel.hpp" />
-    <ClInclude Include="Engine Modules\Graphics\Textures.hpp" />
     <ClInclude Include="Engine Modules\User\ACECS.hpp" />
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp" />
   </ItemGroup>

@@ -7,7 +7,7 @@ enum class EntityUpdateType : uint8_t {
 	Frame, // the entity is updated every frame by the entity updater
 };
 
-typedef uint32_t EntityID;
+typedef uint32_t EntityId;
 
 #ifndef MAX_ENTITIES
 #define MAX_ENTITIES 10000

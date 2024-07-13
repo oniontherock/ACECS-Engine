@@ -17,5 +17,11 @@
 #include "ECS/TypeIDAllocator.hpp"
 #include "ECS/TypeDefinitions.hpp"
 
+// overrides Duplicatable's duplicate function.
+// used when declaring custom events and components to simplify the overriding process
+#define DUPLICATE_OVERRIDE(Type) \
+	std::unique_ptr<Duplicatable> duplicate() override { \
+		return std::unique_ptr<Duplicatable>(new Type(var)); \
+	};
 
 #endif

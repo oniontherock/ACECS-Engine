@@ -1,7 +1,14 @@
 #include "Panel.hpp"
 
+Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor) :
+	screenRect(_screenRect), viewRect(_viewRect), panelDrawFunction(_panelDrawFunction), clearColor(_clearColor)
+{
+	textureCreate();
+	viewCreate();
+}
+
 void Panel::textureCreate() {
-	texture.create(screenRect.width, screenRect.height);
+	texture.create(unsigned int(screenRect.width), unsigned int(screenRect.height));
 }
 void Panel::viewCreate() {
 	view = PanelView(viewRect);

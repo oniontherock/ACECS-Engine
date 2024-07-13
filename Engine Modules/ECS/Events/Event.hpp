@@ -6,7 +6,7 @@
 #include <queue>
 #include <iostream>
 
-#include "../Duplicatable.hpp"
+#include "../Duplicatable/Duplicatable.hpp"
 
 namespace EntityEvents {
 

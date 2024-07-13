@@ -5,27 +5,24 @@
 #include "Input Events/InputEventDefinitions.hpp"
 #include "Key Events/KeyEventDefinitions.hpp"
 
-namespace Input {
-	class Interface {
-	public:
-		bool inputGetActive(const InputName& name);
+namespace InputInterface {
+	bool inputGetActive(const InputName& name);
 
-		sf::Vector2i mousePositionGet();
-		float mouseScrollAmountGet();
+	sf::Vector2i mousePositionGet();
+	float mouseScrollAmountGet();
 
-		void mouseScrollAmountUpdate(float scrollAmount);
-		void mousePositionUpdate(sf::Vector2i position);
-		void mousePositionUpdate(uint16_t x, uint16_t y);
+	void mouseScrollAmountUpdate(float scrollAmount);
+	void mousePositionUpdate(sf::Vector2i position);
+	void mousePositionUpdate(uint16_t x, uint16_t y);
 
-		// registers an InputEvent to inputs
-		void inputRegister(const InputName& name, const KeySet& keys);
-		// registers an InputEvent to inputs
-		void inputRegister(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
+	// registers an InputEvent to inputs
+	void inputRegister(const InputName& name, const KeySet& keys);
+	// registers an InputEvent to inputs
+	void inputRegister(const InputName& name, const KeySet& keys, InputKeyLogic keyLogic);
 
-		void inputUpdate();
+	void inputUpdate();
 
-		void eventsProcess(sf::RenderWindow& window);
-	};
+	void eventsProcess(sf::RenderWindow& window);
 }
 
 #endif

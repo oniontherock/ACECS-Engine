@@ -7,7 +7,6 @@
 #include <queue>
 #include <optional>
 
-
 #include "../Components/Component.hpp"
 #include "../Components/ComponentIDs.hpp"
 
@@ -16,46 +15,29 @@
 
 #include "../TypeDefinitions.hpp"
 
+#include "../../GameWorld/LevelTypeDefinitions.hpp"
+
 struct Entity {
-	explicit Entity() {
-		updateType = EntityUpdateType::Frame;
-		ID = 0;
-	};
+	explicit Entity();
 	Entity(Entity& other) = delete;
 	Entity& operator= (const Entity& other) = delete;
 	
-	void entityCreate(EntityID id, EntityUpdateType _updateType) {
-		ID = id;
-		updateType = _updateType;
+	void entityCreate(EntityId _Id, EntityUpdateType _updateType);
+	void entityCreate(EntityId _Id, EntityUpdateType _updateType, LevelPosition _levelId);
+	// terminates this entity, then sets all data to that of the other entity, and finally terminates the other entity.
+	void entityBecomeOther(Entity& other);
 
-		componentsInitialize();
-		eventsInitialize();
-	}
-	void entityCreateFromOther(Entity& other) {
-		
-		terminate();
-		
-		entityCreate(other.ID, other.updateType);
-
-		componentsVector = std::move(other.componentsVector);
-		eventsVector = std::move(other.eventsVector);
-	}
-
-	inline void componentsInitialize() {
-		componentsVector = std::vector<ComponentUniquePtr>(EntityComponents::totalComponents);
-	};
-
-	inline void eventsInitialize() {
-		auto& allEvents = EntityEvents::allEvents;
-
-		for (uint16_t i = 0; i < allEvents.size(); i++) {
-			eventsVector.push_back(Duplicatable::duplicateAndConvertToType<EntityEvents::Event>(allEvents[i]));
-		}
-	};
+	void componentsInitialize();
+	void eventsInitialize();
 
 	EntityUpdateType updateType;
 
-	EntityID ID;
+	// the Id of this entity, every entity has a unique Id.
+	// Ids are used to access entities in the EntityManager's "entities" vector
+	EntityId Id;
+	// the id of the level that this entity belongs to,
+	// if all three components are equal to the max uint32_t value, then this entity does not belong to a level
+	LevelPosition levelId;
 
 	std::vector<ComponentUniquePtr> componentsVector;
 
@@ -64,52 +46,45 @@ struct Entity {
 
 
 	template <class T>
-	inline T* entityComponentGet() {
+	T* entityComponentGet() {
 		return static_cast<T*>(componentsVector[EntityComponents::ComponentIDs<T>::ID].get());
 	}
 	template <class T>
-	inline bool entityComponentHas() {
+	bool entityComponentHas() {
 		return static_cast<bool>(componentsVector[EntityComponents::ComponentIDs<T>::ID]);
 	}
 	template <class T>
-	inline void entityComponentAdd(EntityComponents::Component* component) {
+	void entityComponentAdd(EntityComponents::Component* component) {
 		componentsVector[EntityComponents::ComponentIDs<T>::ID] = ComponentUniquePtr(component);
 	}
 	// checks if the entity has the component, and if not, adds it
 	template <class T>
-	inline void entityComponentAddNoOverwrite(EntityComponents::Component* component) {
+	void entityComponentAddNoOverwrite(EntityComponents::Component* component) {
 		if (entityComponentHas<T>()) return;
 
 		entityComponentAdd<T>(component);
 	}
 	template <class T>
-	inline void entityComponentTerminate() {
+	void entityComponentTerminate() {
 		componentsVector[EntityComponents::ComponentIDs<T>::ID].reset();
 	}
-	inline bool entityComponentHasAtIndex(EntityComponents::ComponentTypeID index) {
-		return static_cast<bool>(componentsVector[index]);
-	}
-	inline void entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
-		componentsVector[index] = ComponentUniquePtr(component);
-	}
+	bool entityComponentHasAtIndex(EntityComponents::ComponentTypeID index);
+	void entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index);
 	// checks if the entity has the component, and if not, adds it
-	inline void entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
-		if (entityComponentHasAtIndex(index)) return;
+	void entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* component, EntityComponents::ComponentTypeID index);
 
-		entityComponentAddAtIndex(component, index);
-	}
 
 	template <class T>
-	inline T* entityEventGet() {
+	T* entityEventGet() {
 		return static_cast<T*>(eventsVector[EntityEvents::EventIDs<T>::ID].get());
 	}
 	template <class T>
-	inline bool entityEventHas() {
+	bool entityEventHas() {
 		return eventsVector[EntityEvents::EventIDs<T>::ID]->isActive;
 	}
 	// sets an event to active
 	template <class T>
-	inline void entityEventAdd() {
+	void entityEventAdd() {
 		hasAnyEvent = true;
 
 		eventsVector[EntityEvents::EventIDs<T>::ID]->isActive = true;
@@ -117,57 +92,20 @@ struct Entity {
 	}
 	// sets an event to active and returns the event so it's members may be modified
 	template <class T>
-	inline T* entityEventAddAndReturn() {
+	T* entityEventAddAndReturn() {
 		entityEventAdd<T>();
 		return entityEventGet<T>();
 	}
 	template <class T>
-	inline void entityEventDeactivate() {
+	void entityEventDeactivate() {
 		eventsVector[EntityEvents::EventIDs<T>::ID]->isActive = false;
 	}
 
-	inline void entityUpdate() {
-		componentsUpdate();
-		// deactivating all events is basically just clearing the entity's events
-		if (hasAnyEvent) eventsAllDeactivate();
-	}
-	inline void componentsUpdate() {
-		for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
 
-			if (componentsVector[i] == nullptr) continue;
-			if (!componentsVector[i]->hasSystem) continue;
-
-			componentsVector[i]->system(*this);
-		}
-	}
-
-	inline void componentsAllTerminate() {
-		for (EntityComponents::ComponentTypeID i = 0; i < EntityComponents::totalComponents; i++) {
-			componentsVector[i].reset();
-		}
-	}
-
-	inline void eventsAllDeactivate() {
-		for (uint16_t i = 0; i < eventsVector.size(); i++) {
-			eventsVector[i]->isActive = false;
-		}
-
-		hasAnyEvent = false;
-	}
-
-	inline void eventsAllTerminate() {
-		for (uint16_t i = 0; i < eventsVector.size(); i++) {
-
-			if (eventsVector[i] != nullptr) {
-				eventsVector[i].reset();
-			}
-		}
-
-		hasAnyEvent = false;
-	}
-
-	inline void terminate() {
-		componentsAllTerminate();
-		eventsAllTerminate();
-	}
+	void entityUpdate();
+	void componentsUpdate();
+	void componentsAllTerminate();
+	void eventsAllDeactivate();
+	void eventsAllTerminate();
+	void terminate();
 };

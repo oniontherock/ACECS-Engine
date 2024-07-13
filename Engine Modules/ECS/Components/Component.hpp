@@ -10,7 +10,7 @@
 #include <vector>
 
 #include "../TypeDefinitions.hpp"
-#include "../Duplicatable.hpp"
+#include "../Duplicatable/Duplicatable.hpp"
 
 struct Entity;
 
@@ -21,8 +21,7 @@ namespace EntityComponents {
 
 		virtual ~Component() = default;
 
-		virtual void system(Entity&) {
-		}
+		virtual void system(Entity&) = 0;
 
 		bool hasSystem = false;
 	};

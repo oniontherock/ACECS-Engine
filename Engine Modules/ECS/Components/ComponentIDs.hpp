@@ -1,9 +1,6 @@
 #ifndef __COMPONENT_IDS_H__
 #define __COMPONENT_IDS_H__
 
-// this file simply holds the component IDs, there really isn't much going on in here,
-// and it should probably remain unchanged
-
 #include <cstdint>
 #include "Component.hpp"
 

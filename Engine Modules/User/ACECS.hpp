@@ -13,9 +13,8 @@ namespace {
 	private:
 		// inputs are registered here
 		static inline void inputsRegister() {
-			Input::Interface inputInterface{};
 
-			inputInterface.inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });
+			InputInterface::inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });
 		}
 
 		// game states are registered here
@@ -66,7 +65,7 @@ namespace {
 				GAME_STATE_FUNCTION{
 					EntityManager::entitiesUpdate();
 				}
-				);
+			);
 			GameStateHandler::gameStateAdd("Other Example State",
 				/// transitions
 				// vector of GameStateTransitions, and their inputs
@@ -106,8 +105,8 @@ namespace {
 		}
 		// updates the engines input
 		static inline void engineInputUpdate(sf::RenderWindow& window) {
-			Input::Interface().inputUpdate();
-			Input::Interface().eventsProcess(window);
+			InputInterface::inputUpdate();
+			InputInterface::eventsProcess(window);
 		}
 		// update certain modules of the engine, like the input system, and the game state.
 		// note that certain modules, like the ECS system, are updated inside the GameStateHandler,

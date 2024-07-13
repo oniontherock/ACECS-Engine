@@ -30,6 +30,36 @@
     <ClCompile Include="Engine Modules\Graphics\PanelManager.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine Modules\GameWorld\GameWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\GameState\GameStateHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\Graphics\PanelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\ECS\Entities\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\ECS\Events\EventIDs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\ECS\Duplicatable\Duplicatable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\ECS\Entities\EntityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\Input\Input Events\InputEventDefinitions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\Input\Input Events\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\Input\Key Events\KeyRecorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
@@ -89,9 +119,6 @@
     <ClInclude Include="Engine Modules\Graphics\Panel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\Graphics\Textures.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine Modules\Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -101,7 +128,10 @@
     <ClInclude Include="Engine Modules\ECS\Components\ComponentTemplateManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\ECS\Duplicatable.hpp">
+    <ClInclude Include="Engine Modules\ECS\Duplicatable\Duplicatable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\GameWorld\LevelTypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

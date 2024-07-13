@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <cstdint>
+#include "Event.hpp"
 
 namespace EntityEvents {
 
@@ -13,11 +14,12 @@ namespace EntityEvents {
 	typedef uint16_t EventTypeID;
 
 	// the maximum value for any ID
-	inline EventTypeID maxID = 0;
+	extern EventTypeID maxID;
 	// the total amount of components
-	inline EventTypeID totalComponents = 0;
+	extern EventTypeID totalEventTypes;
 	
-	inline std::vector<Event*> allEvents;
+	extern std::vector<Event*> allEvents;
+	void allEventsTerminate();
 
 
 	// EventTypesHolder is a helper struct that holds the EventTypeID of every type of event,
@@ -32,7 +34,7 @@ namespace EntityEvents {
 
 			if (ID > maxID) maxID = ID;
 
-			if (ID + 1 > totalComponents) totalComponents = ID + 1;
+			if (ID + 1 > totalEventTypes) totalEventTypes = ID + 1;
 
 			allEvents.push_back(new T());
 		}

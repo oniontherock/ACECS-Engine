@@ -4,10 +4,7 @@
 #include <iostream>
 
 struct Duplicatable {
-	virtual std::unique_ptr<Duplicatable> duplicate() {
-		std::cerr << "ERROR: duplicate called on base " << "Duplicatable " << "class, downcasting from this duplicate may fail." << std::endl;
-		return std::unique_ptr<Duplicatable>(new Duplicatable());
-	}
+	virtual std::unique_ptr<Duplicatable> duplicate();
 
 	virtual ~Duplicatable() = default;
 	// duplicates an object, and returns a unique_ptr converted to T. Note that T must be a derived class of Duplicatable
@@ -37,25 +34,8 @@ struct Duplicatable {
 		return std::unique_ptr<T>(static_cast<T*>(rawPointer));
 	}
 
-	static Duplicatable* duplicateAndGetRaw(Duplicatable* objectToDuplicate) {
-		std::unique_ptr<Duplicatable> duplicatablePtr = objectToDuplicate->duplicate();
-
-		Duplicatable* rawPointer = duplicatablePtr.get();
-
-		duplicatablePtr.release();
-
-		return rawPointer;
-	}
-
-	static Duplicatable* duplicateAndGetRaw(Duplicatable& objectToDuplicate) {
-		std::unique_ptr<Duplicatable> duplicatablePtr = objectToDuplicate.duplicate();
-
-		Duplicatable* rawPointer = duplicatablePtr.get();
-
-		duplicatablePtr.release();
-	
-		return rawPointer;
-	}
+	static Duplicatable* duplicateAndGetRaw(Duplicatable* objectToDuplicate);
+	static Duplicatable* duplicateAndGetRaw(Duplicatable& objectToDuplicate);
 };
 
 #endif

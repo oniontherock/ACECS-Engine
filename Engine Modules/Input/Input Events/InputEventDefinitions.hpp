@@ -12,8 +12,8 @@ enum InputKeyLogic : uint16_t {
 };
 
 struct InputEvent {
-	InputEvent(InputName _name, KeySet keyEvents) : name(_name), linkedKeyEvents(keyEvents) {};
-	InputEvent(InputName _name, KeySet keyEvents, InputKeyLogic _keyLogic) : name(_name), linkedKeyEvents(keyEvents), keyLogic(_keyLogic) {};
+	InputEvent(InputName _name, KeySet keyEvents);
+	InputEvent(InputName _name, KeySet keyEvents, InputKeyLogic _keyLogic);
 
 	InputName name = "Blank";
 	KeySet linkedKeyEvents;

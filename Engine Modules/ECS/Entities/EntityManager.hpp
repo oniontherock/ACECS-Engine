@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ENTITY_MANAGER_H__
+#define __ENTITY_MANAGER_H__
+
 #include <unordered_set>
 #include <string>
 #include <functional>
@@ -7,50 +9,42 @@
 #include <algorithm>
 
 #include "Entity.hpp"
-
 #include "../TypeDefinitions.hpp"
+
+#include "../../GameWorld/LevelTypeDefinitions.hpp"
+#include "../../GameWorld/GameWorld.hpp"
 
 namespace EntityManager {
 
-	inline std::vector<Entity> entities = std::vector<Entity>(MAX_ENTITIES);
+	extern std::vector<Entity> entities;
 
-	inline uint32_t entityCount = 0;
+	extern uint32_t entityCount;
 
-	inline void entitiesUpdate() {
-		for (uint32_t i = 0; i < entityCount; i++) {
-			entities[i].entityUpdate();
-		}
-	}
+	void entitiesUpdate();
+	/**
+	creates a new entity instance and returns it's ID
 
-	inline EntityID entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame) {
-		EntityID entityID = entityCount;
+	@param updateType: the update type of the entity
+	*/
+	EntityId entityCreate(EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it inside a specified room, and returns it's ID
 
+	@param updateType: the update type of the entity
+	@param level: the LevelPosition of the level the entity should be placed inside
+	*/
+	EntityId entityCreate(LevelPosition level, EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it inside a specified room, and returns it's ID
 
-		entities[entityID].entityCreate(entityID, updateType);
-
-		entityCount++;
-
-		return entityID;
-	}
-	inline void entityTerminate(EntityID entityID) {
-		entities[entityID].terminate();
-
-		Entity temp;
-		temp.entityCreateFromOther(entities[entityID]);
-
-		entities[entityID].terminate();
-		entities[entityID].entityCreateFromOther(entities[uint16_t(entityCount - 1)]);
-
-		entities[uint16_t(entityCount - 1)].terminate();
-		entities[uint16_t(entityCount - 1)].entityCreateFromOther(temp);
-
-		temp.terminate();
-
-		entityCount--;
-	}
-	inline void entitiesAllDelete() {
-		for (uint16_t i = 0; i < entityCount; i++) {
-			entities[i].terminate();
-		}
-	}
+	@param updateType: the update type of the entity
+	@param levelX: the X coordinate of the level the entity should be placed inside
+	@param levelY: the Y coordinate of the level the entity should be placed inside
+	@param levelZ: the Z coordinate of the level the entity should be placed inside
+	*/
+	EntityId entityCreate(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, EntityUpdateType updateType = EntityUpdateType::Frame);
+	void entityTerminate(EntityId entityID);
+	void entitiesAllDelete();
 };
+
+#endif

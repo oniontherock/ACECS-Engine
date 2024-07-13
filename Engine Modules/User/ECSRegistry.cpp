@@ -9,9 +9,7 @@ void ECSRegistry::ECSInitialize() {
 	EntityEvents::eventIDsInitialize();
 }
 void ECSRegistry::ECSTerminate() {
-	for (uint16_t i = 0; i < EntityEvents::allEvents.size(); i++) {
-		delete EntityEvents::allEvents[i];
-	}
+	EntityEvents::allEventsTerminate();
 	EntityManager::entitiesAllDelete();
 }
 
@@ -87,8 +85,9 @@ void EntityComponents::componentTemplatesInitialize() {
 using namespace EntityComponents;
 using namespace EntityEvents;
 
-Input::Interface inputInterface{};
+// if the system is not using the entity parameter, please remove it's name, as to avoid a C4100 error
 
+//
 void ComponentExample::system(Entity& entity) {
 
 }

@@ -12,13 +12,8 @@ typedef const char* PanelName;
 
 struct Panel {
 
-	Panel() {};
-	Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor) :
-		screenRect(_screenRect), viewRect(_viewRect), panelDrawFunction(_panelDrawFunction), clearColor(_clearColor)
-	{
-		textureCreate();
-		viewCreate();
-	}
+	Panel() = default;
+	Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor);
 
 	void textureCreate();
 	void viewCreate();

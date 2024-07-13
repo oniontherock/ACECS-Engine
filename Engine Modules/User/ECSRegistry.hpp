@@ -35,10 +35,7 @@ namespace ECSRegistry {
 namespace EntityEvents {
 #pragma region user_defined_events
 	struct EventExample final : public Event {
-
-		std::unique_ptr<Duplicatable> duplicate() override {
-			return std::unique_ptr<Duplicatable>(new EventExample(var));
-		}
+		DUPLICATE_OVERRIDE(EventExample)
 
 		EventExample(uint16_t _var = 0) : var(_var) {};
 
@@ -53,10 +50,7 @@ namespace EntityEvents {
 namespace EntityComponents {
 #pragma region user_defined_components_section
 	struct ComponentExample final : public Component {
-
-		std::unique_ptr<Duplicatable> duplicate() override {
-			return std::unique_ptr<Duplicatable>(new ComponentExample(var));
-		}
+		DUPLICATE_OVERRIDE(ComponentExample)
 
 		void system(Entity& entity) final;
 
