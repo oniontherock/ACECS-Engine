@@ -15,7 +15,7 @@
 
 #include "../TypeDefinitions.hpp"
 
-#include "../../GameWorld/LevelTypeDefinitions.hpp"
+#include "../../World/LevelTypeDefinitions.hpp"
 
 struct Entity {
 	explicit Entity();

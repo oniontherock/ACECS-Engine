@@ -4,6 +4,7 @@
 #include "../Input.hpp"
 #include "../GameState.hpp"
 #include "../Graphics.hpp"
+#include "../World.hpp"
 #include "ECSRegistry.hpp"
 
 #define GAME_STATE_FUNCTION []()
@@ -64,7 +65,7 @@ namespace {
 				/// update function
 				// update function for this GameState, called every frame
 				GAME_STATE_FUNCTION{
-					LevelUpdater
+					LevelUpdater::levelsUpdate();
 				}
 			);
 			GameStateHandler::gameStateAdd("Other Example State",
@@ -99,6 +100,7 @@ namespace {
 		// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.
 		// of course, certain modules do not have to be initialized if the user does not want them to be
 		static inline void engineInitialize() {
+			WorldGrid::levelGridInitialize(5, 5, 5);
 			inputsRegister();
 			ECSRegistry::ECSInitialize();
 			panelsRegister();

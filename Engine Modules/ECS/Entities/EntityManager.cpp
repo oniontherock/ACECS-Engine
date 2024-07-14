@@ -28,7 +28,7 @@ EntityId EntityManager::entityCreate(LevelPosition level, EntityUpdateType updat
 
 	EntityId entityId = entityCreate(updateType);
 
-	World::levelGet(level)->entityIdAdd(entityId);
+	WorldGrid::levelGet(level)->entityIdAdd(entityId);
 
 	return entityId;
 }

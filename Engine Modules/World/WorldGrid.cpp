@@ -1,36 +1,13 @@
-#include "GameWorld.hpp"
+#include "WorldGrid.hpp"
 
 
+LevelGrid WorldGrid::levelGrid = LevelGrid(0);
 
-Level::Level() :
-	entities(std::vector<EntityId>())
-{}
+std::vector<LevelPosition> WorldGrid::levelsActiveVector = std::vector<LevelPosition>(0);
 
-Level::Level(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ) :
-	Level()
-{
-	id = LevelPosition(_idX, _idY, _idZ);
-}
+LevelPosition WorldGrid::levelCur = LevelPosition(0, 0, 0);
 
-Level::Level(LevelPosition _id) :
-	Level(_id.x, _id.y, _id.z)
-{}
-
-void Level::entityIdAdd(const EntityId id) {
-	entities.push_back(id);
-}
-void Level::entityIdRemove(EntityId id) {
-	// the position of the id in the entities vector
-	auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
-
-	entities.erase(idVectorPosition);
-}
-
-LevelGrid World::levelGrid = LevelGrid(0);
-
-LevelPosition World::levelCur = LevelPosition(0, 0, 0);
-
-void World::levelGridInitialize(LevelCoordinate width, LevelCoordinate height, LevelCoordinate depth) {
+void WorldGrid::levelGridInitialize(LevelCoordinate width, LevelCoordinate height, LevelCoordinate depth) {
 
 	if (width == 0) {
 		std::cerr << "ERROR: GameWorld initialization failed: levelGrid width cannot be 0" << std::endl;
@@ -72,43 +49,43 @@ void World::levelGridInitialize(LevelCoordinate width, LevelCoordinate height, L
 	// set levelGrid to columns, where each column is a row, and each row a slice, and each slice a unique_ptr to nullptr
 	levelGrid = std::move(columns);
 }
-void World::levelGridInitialize(LevelPosition dimensions) {
+void WorldGrid::levelGridInitialize(LevelPosition dimensions) {
 	levelGridInitialize(dimensions.x, dimensions.y, dimensions.z);
 }
-Level* World::levelGet(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
+Level* WorldGrid::levelGet(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	return levelGrid[x][y][z].get();
 }
-Level* World::levelGet(LevelPosition level) {
+Level* WorldGrid::levelGet(LevelPosition level) {
 	return levelGet(level.x, level.y, level.z);
 }
-bool World::levelExists(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
+bool WorldGrid::levelExists(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	return static_cast<bool>(levelGrid[x][y][z]);
 }
-bool World::levelExists(LevelPosition level) {
+bool WorldGrid::levelExists(LevelPosition level) {
 	return levelExists(level.x, level.y, level.z);
 }
-Level* World::levelAdd(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
+Level* WorldGrid::levelAdd(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	Level* levelInstance = new Level(x, y, z);
 	levelGrid[x][y][z] = LevelPtr(levelInstance);
 	return levelInstance;
 }
-Level* World::levelAdd(LevelPosition level) {
+Level* WorldGrid::levelAdd(LevelPosition level) {
 	return levelAdd(level.x, level.y, level.z);
 }
 
-void World::levelActivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
+void WorldGrid::levelActivate(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	
 	if (std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z)) != levelsActiveVector.end()) return;
 
 	levelsActiveVector.push_back(LevelPosition(x, y, z));
 }
-void World::levelActivate(LevelPosition level) {
+void WorldGrid::levelActivate(LevelPosition level) {
 	levelActivate(level.x, level.y, level.z);
 }
 
-void World::levelDeactivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
-	levelsActiveVector.erase(std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z));
+void WorldGrid::levelDeactivate(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
+	levelsActiveVector.erase(std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z)));
 }
-void World::levelDeactivate(LevelPosition level) {
+void WorldGrid::levelDeactivate(LevelPosition level) {
 	levelDeactivate(level.x, level.y, level.z);
 }

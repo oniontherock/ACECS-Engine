@@ -150,7 +150,8 @@
     <ClCompile Include="Engine Modules\ECS\Entities\EntityManager.cpp" />
     <ClCompile Include="Engine Modules\ECS\Events\EventIDs.cpp" />
     <ClCompile Include="Engine Modules\GameState\GameStateHandler.cpp" />
-    <ClCompile Include="Engine Modules\World\World.cpp" />
+    <ClCompile Include="Engine Modules\World\Level.cpp" />
+    <ClCompile Include="Engine Modules\World\WorldGrid.cpp" />
     <ClCompile Include="Engine Modules\World\LevelUpdater.cpp" />
     <ClCompile Include="Engine Modules\Graphics\PanelManager.cpp" />
     <ClCompile Include="Engine Modules\Graphics\PanelManager.hpp" />
@@ -174,8 +175,9 @@
     <ClInclude Include="Engine Modules\ECS\Events\EventIDs.hpp" />
     <ClInclude Include="Engine Modules\ECS\TypeDefinitions.hpp" />
     <ClInclude Include="Engine Modules\ECS.hpp" />
-    <ClInclude Include="Engine Modules\GameWorld.hpp" />
-    <ClInclude Include="Engine Modules\World\World.hpp" />
+    <ClInclude Include="Engine Modules\World.hpp" />
+    <ClInclude Include="Engine Modules\World\Level.hpp" />
+    <ClInclude Include="Engine Modules\World\WorldGrid.hpp" />
     <ClInclude Include="Engine Modules\GameState.hpp" />
     <ClInclude Include="Engine Modules\GameState\GameStateHandler.hpp" />
     <ClInclude Include="Engine Modules\World\LevelTypeDefinitions.hpp" />

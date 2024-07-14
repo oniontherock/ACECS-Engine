@@ -11,8 +11,8 @@
 #include "Entity.hpp"
 #include "../TypeDefinitions.hpp"
 
-#include "../../GameWorld/LevelTypeDefinitions.hpp"
-#include "../../GameWorld/GameWorld.hpp"
+#include "../../World/LevelTypeDefinitions.hpp"
+#include "../../World/WorldGrid.hpp"
 
 namespace EntityManager {
 
