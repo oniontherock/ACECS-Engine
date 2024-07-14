@@ -34,7 +34,7 @@ using Levels3D = std::vector<Levels2D>;
 // 3D grid of levels
 typedef Levels3D LevelGrid;
 
-namespace GameWorld {
+namespace World {
 	// 3D grid of every level in the world.
 	// note that, although this is a 3D grid, it's 2nd and 3rd dimensions may be zero,
 	// and so it could behave as a simple list, or a 2D grid

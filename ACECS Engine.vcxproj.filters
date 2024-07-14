@@ -30,7 +30,7 @@
     <ClCompile Include="Engine Modules\Graphics\PanelManager.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine Modules\GameWorld\GameWorld.cpp">
+    <ClCompile Include="Engine Modules\World\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine Modules\GameState\GameStateHandler.cpp">
@@ -60,7 +60,7 @@
     <ClCompile Include="Engine Modules\Input\Key Events\KeyRecorder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine Modules\GameWorld\LevelUpdater.cpp">
+    <ClCompile Include="Engine Modules\World\LevelUpdater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,7 +125,7 @@
     <ClInclude Include="Engine Modules\Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\GameWorld\GameWorld.hpp">
+    <ClInclude Include="Engine Modules\World\World.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\ECS\Components\ComponentTemplateManager.hpp">
@@ -134,10 +134,13 @@
     <ClInclude Include="Engine Modules\ECS\Duplicatable\Duplicatable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\GameWorld\LevelTypeDefinitions.hpp">
+    <ClInclude Include="Engine Modules\World\LevelTypeDefinitions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine Modules\GameWorld\LevelUpdater.hpp">
+    <ClInclude Include="Engine Modules\World\LevelUpdater.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\GameWorld.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

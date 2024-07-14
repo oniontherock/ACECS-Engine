@@ -64,7 +64,7 @@ namespace {
 				/// update function
 				// update function for this GameState, called every frame
 				GAME_STATE_FUNCTION{
-					EntityManager::entitiesUpdate();
+					LevelUpdater
 				}
 			);
 			GameStateHandler::gameStateAdd("Other Example State",
