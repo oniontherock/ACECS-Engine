@@ -1,20 +1,23 @@
 #include "EntityManager.hpp"
 
-std::vector<Entity> EntityManager::entities = std::vector<Entity>(MAX_ENTITIES);
+std::vector<Entity> EntityManager::entitiesVector = std::vector<Entity>(MAX_ENTITIES);
 
 uint32_t EntityManager::entityCount = 0;
 
 void EntityManager::entitiesUpdate() {
 	for (uint32_t i = 0; i < entityCount; i++) {
-		entities[i].entityUpdate();
+		entitiesVector[i].entityUpdate();
 	}
+}
+void EntityManager::entityUpdate(EntityId entityId) {
+	entitiesVector[entityId].entityUpdate();
 }
 
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 
 	EntityId entityId = entityCount;
 
-	entities[entityId].entityCreate(entityId, updateType);
+	entitiesVector[entityId].entityCreate(entityId, updateType);
 
 	entityCount++;
 
@@ -34,16 +37,16 @@ EntityId EntityManager::entityCreate(LevelCoordinate levelX, LevelCoordinate lev
 }
 
 void EntityManager::entityTerminate(EntityId entityID) {
-	entities[entityID].terminate();
+	entitiesVector[entityID].terminate();
 
 	Entity temp;
-	temp.entityBecomeOther(entities[entityID]);
+	temp.entityBecomeOther(entitiesVector[entityID]);
 
-	entities[entityID].terminate();
-	entities[entityID].entityBecomeOther(entities[uint16_t(entityCount - 1)]);
+	entitiesVector[entityID].terminate();
+	entitiesVector[entityID].entityBecomeOther(entitiesVector[uint16_t(entityCount - 1)]);
 
-	entities[uint16_t(entityCount - 1)].terminate();
-	entities[uint16_t(entityCount - 1)].entityBecomeOther(temp);
+	entitiesVector[uint16_t(entityCount - 1)].terminate();
+	entitiesVector[uint16_t(entityCount - 1)].entityBecomeOther(temp);
 
 	temp.terminate();
 
@@ -51,6 +54,6 @@ void EntityManager::entityTerminate(EntityId entityID) {
 }
 void EntityManager::entitiesAllDelete() {
 	for (uint16_t i = 0; i < entityCount; i++) {
-		entities[i].terminate();
+		entitiesVector[i].terminate();
 	}
 }

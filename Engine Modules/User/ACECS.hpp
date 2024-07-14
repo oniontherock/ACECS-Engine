@@ -1,8 +1,9 @@
 #ifndef __ACECS_H__
 #define __ACECS_H__
 
+#include "../Input.hpp"
 #include "../GameState.hpp"
-#include "../Graphics/PanelManager.hpp"
+#include "../Graphics.hpp"
 #include "ECSRegistry.hpp"
 
 #define GAME_STATE_FUNCTION []()

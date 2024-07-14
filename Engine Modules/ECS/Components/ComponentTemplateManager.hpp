@@ -78,7 +78,7 @@ namespace ComponentTemplateManager {
 	}
 	// applies a template to an entityId
 	inline void componentTemplateApply(ComponentTemplateName templateName, EntityId entity, TemplateApplicationType applicationType = Overwrite) {
-		componentTemplateApply(templateName, EntityManager::entities[entity], applicationType);
+		componentTemplateApply(templateName, EntityManager::entitiesVector[entity], applicationType);
 	}
 	inline void componentTemplateTerminate(ComponentTemplateName templateName) {
 		componentTemplates[templateName].clear();

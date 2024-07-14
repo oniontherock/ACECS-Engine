@@ -16,11 +16,15 @@
 
 namespace EntityManager {
 
-	extern std::vector<Entity> entities;
+	extern std::vector<Entity> entitiesVector;
 
 	extern uint32_t entityCount;
 
+	// updates every entity in existence.
+	// note that this shouldn't be used for simply updating the entities,
+	// as entities in active rooms are updated in the LevelUpdater.
 	void entitiesUpdate();
+	void entityUpdate(EntityId entityId);
 	/**
 	creates a new entity instance and returns it's ID
 

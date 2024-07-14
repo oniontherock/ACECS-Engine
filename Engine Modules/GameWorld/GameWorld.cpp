@@ -98,16 +98,16 @@ Level* GameWorld::levelAdd(LevelPosition level) {
 
 void GameWorld::levelActivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
 	
-	if (std::find(activeLevels.begin(), activeLevels.end(), LevelPosition(x, y, z)) != activeLevels.end()) return;
+	if (std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z)) != levelsActiveVector.end()) return;
 
-	activeLevels.push_back(LevelPosition(x, y, z));
+	levelsActiveVector.push_back(LevelPosition(x, y, z));
 }
 void GameWorld::levelActivate(LevelPosition level) {
 	levelActivate(level.x, level.y, level.z);
 }
 
 void GameWorld::levelDeactivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
-	activeLevels.erase(std::find(activeLevels.begin(), activeLevels.end(), LevelPosition(x, y, z));
+	levelsActiveVector.erase(std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z));
 }
 void GameWorld::levelDeactivate(LevelPosition level) {
 	levelDeactivate(level.x, level.y, level.z);

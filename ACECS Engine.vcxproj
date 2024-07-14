@@ -151,6 +151,7 @@
     <ClCompile Include="Engine Modules\ECS\Events\EventIDs.cpp" />
     <ClCompile Include="Engine Modules\GameState\GameStateHandler.cpp" />
     <ClCompile Include="Engine Modules\GameWorld\GameWorld.cpp" />
+    <ClCompile Include="Engine Modules\GameWorld\LevelUpdater.cpp" />
     <ClCompile Include="Engine Modules\Graphics\PanelManager.cpp" />
     <ClCompile Include="Engine Modules\Graphics\PanelManager.hpp" />
     <ClCompile Include="Engine Modules\Input.hpp" />

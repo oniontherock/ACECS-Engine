@@ -41,7 +41,7 @@ namespace GameWorld {
 	extern LevelGrid levelGrid;
 
 	// list of LevelPositions that are currently active and updating
-	extern std::vector<LevelPosition> activeLevels;
+	extern std::vector<LevelPosition> levelsActiveVector;
 
 	extern LevelPosition levelCur;
 
