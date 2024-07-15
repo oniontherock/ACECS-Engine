@@ -52,25 +52,23 @@ void WorldGrid::levelGridInitialize(LevelCoordinate width, LevelCoordinate heigh
 void WorldGrid::levelGridInitialize(LevelPosition dimensions) {
 	levelGridInitialize(dimensions.x, dimensions.y, dimensions.z);
 }
-Level* WorldGrid::levelGet(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
+
+BaseLevel* WorldGrid::levelGet(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	return levelGrid[x][y][z].get();
 }
-Level* WorldGrid::levelGet(LevelPosition level) {
+BaseLevel* WorldGrid::levelGet(LevelPosition level) {
 	return levelGet(level.x, level.y, level.z);
 }
+
 bool WorldGrid::levelExists(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
 	return static_cast<bool>(levelGrid[x][y][z]);
 }
 bool WorldGrid::levelExists(LevelPosition level) {
 	return levelExists(level.x, level.y, level.z);
 }
-Level* WorldGrid::levelAdd(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {
-	Level* levelInstance = new Level(x, y, z);
-	levelGrid[x][y][z] = LevelPtr(levelInstance);
-	return levelInstance;
-}
-Level* WorldGrid::levelAdd(LevelPosition level) {
-	return levelAdd(level.x, level.y, level.z);
+
+void WorldGrid::levelAdd(BaseLevel* levelInstance) {
+	levelGrid[levelInstance->levelPosition.x][levelInstance->levelPosition.y][levelInstance->levelPosition.z] = LevelPtr(levelInstance);
 }
 
 void WorldGrid::levelActivate(LevelCoordinate x, LevelCoordinate y, LevelCoordinate z) {

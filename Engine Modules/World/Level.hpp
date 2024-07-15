@@ -5,13 +5,13 @@
 #include "../ECS/Entities/Entity.hpp"
 #include "../ECS/TypeDefinitions.hpp"
 
-struct Level {
+struct BaseLevel {
 
-	Level();
-	Level(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ);
-	Level(LevelPosition _id);
+	BaseLevel();
+	BaseLevel(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ);
+	BaseLevel(LevelPosition _id);
 
-	LevelPosition id;
+	LevelPosition levelPosition;
 
 	void entityIdAdd(EntityId id);
 	void entityIdRemove(EntityId id);
@@ -20,6 +20,6 @@ struct Level {
 	std::vector<EntityId> entities;
 };
 
-typedef std::unique_ptr<Level> LevelPtr;
+typedef std::unique_ptr<BaseLevel> LevelPtr;
 
 #endif

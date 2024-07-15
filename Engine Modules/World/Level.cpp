@@ -1,24 +1,24 @@
 #include "Level.hpp"
 
 
-Level::Level() :
+BaseLevel::BaseLevel() :
 	entities(std::vector<EntityId>())
 {}
 
-Level::Level(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ) :
-	Level()
+BaseLevel::BaseLevel(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ) :
+	BaseLevel()
 {
-	id = LevelPosition(_idX, _idY, _idZ);
+	levelPosition = LevelPosition(_idX, _idY, _idZ);
 }
 
-Level::Level(LevelPosition _id) :
-	Level(_id.x, _id.y, _id.z)
+BaseLevel::BaseLevel(LevelPosition _id) :
+	BaseLevel(_id.x, _id.y, _id.z)
 {}
 
-void Level::entityIdAdd(const EntityId id) {
+void BaseLevel::entityIdAdd(const EntityId id) {
 	entities.push_back(id);
 }
-void Level::entityIdRemove(EntityId id) {
+void BaseLevel::entityIdRemove(EntityId id) {
 	// the position of the id in the entities vector
 	auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
 

@@ -1,8 +1,5 @@
 #include "ECSRegistry.hpp"
 
-#include "../Input.hpp"
-#include <iostream>
-
 void ECSRegistry::ECSInitialize() {
 	EntityComponents::componentIDsInitialize();
 	EntityComponents::componentTemplatesInitialize();
@@ -85,11 +82,12 @@ void EntityComponents::componentTemplatesInitialize() {
 using namespace EntityComponents;
 using namespace EntityEvents;
 
-// if the system is not using the entity parameter, please remove it's name, as to avoid a C4100 error
+// if you need to include a certain file for a system, include it here.
+#include <iostream>
 
-//
+// if the system is not using the entity parameter, remove it's name to avoid a C4100 error
+
 void ComponentExample::system(Entity& entity) {
-
 }
 
 #pragma endregion Systems

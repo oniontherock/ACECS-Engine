@@ -66,6 +66,12 @@
     <ClCompile Include="Engine Modules\World\Level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine Modules\User\ACECS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine Modules\User\GameLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine Modules\User\ECSRegistry.hpp">
@@ -147,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine Modules\World\Level.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine Modules\User\GameLevel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

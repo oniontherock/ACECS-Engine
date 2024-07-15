@@ -32,19 +32,18 @@ namespace WorldGrid {
 	void levelGridInitialize(LevelPosition dimensions);
 
 	// get a level at the specified LevelCoordinates
-	Level* levelGet(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0);
+	BaseLevel* levelGet(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0);
 	// get a level at the specified LevelPosition
-	Level* levelGet(LevelPosition level);
+	BaseLevel* levelGet(LevelPosition level);
 
 	// check if a level exists at the specified LevelCoordinates
 	bool levelExists(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0);
 	// check if a level exists at the specified LevelPosition
 	bool levelExists(LevelPosition level);
 
-	// creates a new level at the specified LevelCoordinates and returns a pointer to it so it may be modified
-	Level* levelAdd(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0);
-	// creates a new level at the specified LevelPosition and returns a pointer to it so it may be modified
-	Level* levelAdd(LevelPosition level);
+	// adds a level to the levelGrid.
+	// the position the level instance is placed at is the level instance's levelPosition member
+	void levelAdd(BaseLevel* levelInstance);
 
 	void levelActivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0);
 	void levelActivate(LevelPosition level);
