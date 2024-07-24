@@ -3,7 +3,6 @@
 
 #include <functional>
 #include "../Entities/Entity.hpp"
-#include "../Entities/EntityManager.hpp"
 #include "Component.hpp"
 
 // just the name of a component template
@@ -19,73 +18,18 @@ enum TemplateApplicationType {
 };
 
 namespace ComponentTemplateManager {
-	inline std::unordered_map<ComponentTemplateName, ComponentTemplate> componentTemplates;
+	extern std::unordered_map<ComponentTemplateName, ComponentTemplate> componentTemplates;
 
-	inline bool componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName) {
-		if (componentTemplates.count(templateName)) {
-			std::cerr << "ERROR: Template name taken: " << "\"" << templateName << "\"" << std::endl;
-			return true;
-		}
-		return false;
-	}
-
-	inline void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplate templateComponentsVector) {
-		if (templateComponentsVector.size() < EntityComponents::totalComponents) {
-			std::cerr << "ERROR: Attempted to add template with fewer components than the total amount of components: " << "\"" << templateName << "\"" << std::endl;
-			return;
-		}
-		else if (componentTemplatesErrorIfNameTaken(templateName)) {
-			return;
-		}
-
-		componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
-	}
+	bool componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName);
+	void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplate templateComponentsVector);
 	// this overload should generally be preferred over others, as it is easier to use in one line
-	inline void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplatePairVector templateComponentsMap) {
-
-		if (componentTemplatesErrorIfNameTaken(templateName)) {
-			return;
-		}
-
-		ComponentTemplate templateComponentsVector(EntityComponents::totalComponents);
-
-		for (uint16_t i = 0; i < templateComponentsMap.size(); i ++) {
-			templateComponentsVector[templateComponentsMap[i].first] =
-				Duplicatable::duplicateAndConvertToType<EntityComponents::Component>(templateComponentsMap[i].second.get());
-		}
-
-		componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
-	}
-
+	void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplatePairVector templateComponentsMap);
+	// applies a template to a componentVector
+	void componentTemplateApplyToComponentVector(ComponentTemplateName templateName, std::vector<ComponentUniquePtr>& componentsVector, TemplateApplicationType applicationType = Overwrite);
 	// applies a template to an entity
-	inline void componentTemplateApply(ComponentTemplateName templateName, Entity& entity, TemplateApplicationType applicationType = Overwrite) {
-
-		if (applicationType == Overwrite) {
-			entity.componentsAllTerminate();
-		}
-		for (EntityComponents::ComponentTypeID i = 0; i < componentTemplates[templateName].size(); i++) {
-
-			// go to next iteration if the current component is a nullptr
-			if (!static_cast<bool>(componentTemplates[templateName][i])) continue;
-
-			// we use no overwrite regardless of the application type because if the application type IS overwrite,
-			// then all the components were terminated, and so adding a component with no overwrite is the same as with overwrite
-			entity.entityComponentAddAtIndexNoOverwrite(
-				static_cast<EntityComponents::Component*>(Duplicatable::duplicateAndGetRaw(componentTemplates[templateName][i].get())),
-				i
-			);
-		}
-	}
-	// applies a template to an entityId
-	inline void componentTemplateApply(ComponentTemplateName templateName, EntityId entity, TemplateApplicationType applicationType = Overwrite) {
-		componentTemplateApply(templateName, EntityManager::entitiesVector[entity], applicationType);
-	}
-	inline void componentTemplateTerminate(ComponentTemplateName templateName) {
-		componentTemplates[templateName].clear();
-	}
-	inline void componentTemplatesAllTerminate() {
-		componentTemplates.clear();
-	}
+	void componentTemplateApplyToEntity(ComponentTemplateName templateName, Entity& entity, TemplateApplicationType applicationType = Overwrite);
+	void componentTemplateTerminate(ComponentTemplateName templateName);
+	void componentTemplatesAllTerminate();
 };
 
 

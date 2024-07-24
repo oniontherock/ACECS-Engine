@@ -16,18 +16,18 @@ namespace ECSRegistry {
 // whenever you create a new type, ensure you register it in the implementation file of this header
 namespace EntityEvents {
 	struct EventExample final : public Event {
-		DUPLICATE_OVERRIDE(EventExample)
 
 		EventExample(uint16_t _var = 0) : var(_var) {};
 
 		uint16_t var;
+
+		DUPLICATE_OVERRIDE(EventExample)
 	};
 }
 // use this file to define new component types.
 // whenever you create a new type, ensure you register it in the implementation file of this header
 namespace EntityComponents {
 	struct ComponentExample final : public Component {
-		DUPLICATE_OVERRIDE(ComponentExample)
 
 		void system(Entity& entity) final;
 
@@ -36,6 +36,8 @@ namespace EntityComponents {
 		};
 
 		uint16_t var;
+
+		DUPLICATE_OVERRIDE(ComponentExample)
 	};
 }
 

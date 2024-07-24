@@ -22,6 +22,6 @@
 #define DUPLICATE_OVERRIDE(Type) \
 	std::unique_ptr<Duplicatable> duplicate() override { \
 		return std::unique_ptr<Duplicatable>(new Type()); \
-	};
+	}
 
 #endif

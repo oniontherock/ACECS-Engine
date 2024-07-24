@@ -2,9 +2,9 @@
 
 
 void LevelUpdater::levelsUpdate() {
-	for (uint32_t levelActiveInd = 0; levelActiveInd<LevelGrid<BaseLevel>::levelsActiveVector.size(); levelActiveInd++) {
+	for (uint32_t levelActiveInd = 0; levelActiveInd < levelsActiveVector.size(); levelActiveInd++) {
 
-		LevelPosition levelActivePosition = LevelGrid<BaseLevel>::levelsActiveVector[levelActiveInd];
+		LevelPosition levelActivePosition = levelsActiveVector[levelActiveInd];
 
 		BaseLevel* levelActiveCur = LevelGrid<BaseLevel>::levelGet(levelActivePosition);
 
@@ -13,5 +13,4 @@ void LevelUpdater::levelsUpdate() {
 		}
 	}
 }
-
 

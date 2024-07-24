@@ -15,18 +15,19 @@ using Levels3D = std::vector<Levels2D>;
 // 3D grid of levels
 using BaseLevelPtrGrid = Levels3D;
 
+
+// 3D grid of every level in the world.
+// note that, although this is a 3D grid, it's 2nd and 3rd dimensions may be zero,
+// and so it could behave as a simple list, or a 2D grid
 extern BaseLevelPtrGrid levelGrid;
+
+// list of LevelPositions that are currently active and updating
+extern std::vector<LevelPosition> levelsActiveVector;
+
+extern LevelPosition levelCur;
 
 template <class Level>
 struct LevelGrid {
-	// 3D grid of every level in the world.
-	// note that, although this is a 3D grid, it's 2nd and 3rd dimensions may be zero,
-	// and so it could behave as a simple list, or a 2D grid
-
-	// list of LevelPositions that are currently active and updating
-	static std::vector<LevelPosition> levelsActiveVector;
-
-	static LevelPosition levelCur;
 
 	// initialize the level grid and set it to be the dimensions passed in
 	static void levelGridInitialize(LevelCoordinate width, LevelCoordinate height, LevelCoordinate depth) {
