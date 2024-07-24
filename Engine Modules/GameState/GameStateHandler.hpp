@@ -49,7 +49,7 @@ public:
 	static void gameStateTerminate(GameStateName name);
 	static void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::vector<PanelName> panels, std::function<void()> updateFunc);
 	// does some error checking on every state, should be called after adding new game states
-	static void gameStateFinalizeAddedStates();
+	static void gameStatesAddedStatesFinalize();
 	static void gameStateForceSet(GameStateName gameStateName);
 	static void gameStatesAllTerminate();
 	static const std::vector<PanelName>& gameStateGetPanels();

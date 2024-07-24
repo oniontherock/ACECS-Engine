@@ -5,7 +5,6 @@ void Engine::inputsRegister() {
 	InputInterface::inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });
 }
 
-// game states are registered here
 void Engine::panelsRegister() {
 	using namespace PanelManager;
 	panelAdd("Example View",
@@ -13,17 +12,10 @@ void Engine::panelsRegister() {
 		PanelRect(0, 0, 640, 360), // world coordinates
 		sf::Color::Black,
 		PANEL_DRAW_FUNCTION{
-			// example of how to draw a circle to the panel
-			sf::CircleShape shape(16);
-			shape.setFillColor(sf::Color::Red);
-			shape.setPosition(200, 200);
-
-			panel.objectDraw(shape);
 		}
 	);
 }
 
-// game states are registered here
 void Engine::gameStateRegister() {
 
 	GameStateHandler::gameStateForceSet("Example State");
@@ -80,30 +72,24 @@ void Engine::gameStateRegister() {
 		}
 		);
 
-	GameStateHandler::gameStateFinalizeAddedStates();
+	GameStateHandler::gameStatesAddedStatesFinalize();
 }
 
-// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.
-// of course, certain modules do not have to be initialized if the user does not want them to be
 void Engine::engineInitialize() {
-	WorldGrid::levelGridInitialize(5, 5, 5);
+	GameLevelGrid::levelGridInitialize(5, 5, 5);
 	inputsRegister();
 	ECSRegistry::ECSInitialize();
 	panelsRegister();
 	gameStateRegister();
 }
-// updates the engines input
 void Engine::engineInputUpdate(sf::RenderWindow& window) {
 	InputInterface::inputUpdate();
 	InputInterface::eventsProcess(window);
 }
-// update certain modules of the engine, like the input system, and the game state.
-// note that certain modules, like the ECS system, are updated inside the GameStateHandler,
-// because you don't want to update the ECS system if the GameState is currently paused, for example.
-void Engine::engineUpdate() {
+void Engine::engineGameUpdate() {
 	GameStateHandler::gameStateProcess();
 }
-void Engine::engineDraw(sf::RenderWindow& renderWindowMain) {
+void Engine::engineGameDraw(sf::RenderWindow& renderWindowMain) {
 
 	auto& gameStatePanels = GameStateHandler::gameStateGetPanels();
 
@@ -113,7 +99,6 @@ void Engine::engineDraw(sf::RenderWindow& renderWindowMain) {
 		PanelManager::panelGet(gameStatePanels[i])->panelClear();
 	}
 }
-// terminates certain engine modules, like the ECS or GameStateHandler
 void Engine::engineTerminate() {
 	ECSRegistry::ECSTerminate();
 	GameStateHandler::gameStatesAllTerminate();

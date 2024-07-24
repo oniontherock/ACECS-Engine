@@ -20,6 +20,9 @@ struct BaseLevel {
 	std::vector<EntityId> entities;
 };
 
-typedef std::unique_ptr<BaseLevel> LevelPtr;
+template <class Level>
+using LevelPtr = std::unique_ptr<Level>;
+
+using BaseLevelPtr = LevelPtr<BaseLevel>;
 
 #endif

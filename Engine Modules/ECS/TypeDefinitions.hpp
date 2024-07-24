@@ -9,15 +9,6 @@ enum class EntityUpdateType : uint8_t {
 
 typedef uint32_t EntityId;
 
-#ifndef MAX_ENTITIES
-#define MAX_ENTITIES 10000
-#endif
-
-#ifndef MAX_COMPONENT_TYPES
-#define MAX_COMPONENT_TYPES 32
-#endif
-
-#ifndef MAX_EVENT_TYPES
-#define MAX_EVENT_TYPES 32
-#endif
-
+extern uint32_t MAX_ENTITIES;
+extern uint16_t MAX_COMPONENT_TYPES;
+extern uint16_t MAX_EVENT_TYPES;

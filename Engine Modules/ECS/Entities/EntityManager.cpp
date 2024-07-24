@@ -28,7 +28,7 @@ EntityId EntityManager::entityCreate(LevelPosition level, EntityUpdateType updat
 
 	EntityId entityId = entityCreate(updateType);
 
-	WorldGrid::levelGet(level)->entityIdAdd(entityId);
+	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId);
 
 	return entityId;
 }
@@ -36,19 +36,21 @@ EntityId EntityManager::entityCreate(LevelCoordinate levelX, LevelCoordinate lev
 	return entityCreate(LevelPosition(levelX, levelY, levelZ), updateType);
 }
 
-void EntityManager::entityTerminate(EntityId entityID) {
-	entitiesVector[entityID].terminate();
+Entity& EntityManager::entityGet(EntityId entityId) {
+	return entitiesVector[entityId];
+}
 
+void EntityManager::entityTerminate(EntityId entityID) {
+
+	// move the entityId to a temporary variable
 	Entity temp;
 	temp.entityBecomeOther(entitiesVector[entityID]);
-
-	entitiesVector[entityID].terminate();
+	// move the last entity in the entitiesVector to the position of the 
 	entitiesVector[entityID].entityBecomeOther(entitiesVector[uint16_t(entityCount - 1)]);
 
-	entitiesVector[uint16_t(entityCount - 1)].terminate();
-	entitiesVector[uint16_t(entityCount - 1)].entityBecomeOther(temp);
-
 	temp.terminate();
+	
+	LevelGrid<BaseLevel>::levelGet(temp.levelId)->entityIdRemove(temp.Id);
 
 	entityCount--;
 }

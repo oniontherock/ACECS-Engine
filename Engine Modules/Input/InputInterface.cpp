@@ -58,6 +58,8 @@ void InputInterface::eventsProcess(sf::RenderWindow& window) {
 
 	sf::Event event;
 
+	mouseScrollAmountUpdate(0);
+
 	while (window.pollEvent(event)) {
 		switch (event.type) {
 		case sf::Event::Closed:

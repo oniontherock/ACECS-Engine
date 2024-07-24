@@ -12,7 +12,7 @@
 #include "../TypeDefinitions.hpp"
 
 #include "../../World/LevelTypeDefinitions.hpp"
-#include "../../World/WorldGrid.hpp"
+#include "../../World/LevelGrid.hpp"
 
 namespace EntityManager {
 
@@ -47,6 +47,7 @@ namespace EntityManager {
 	@param levelZ: the Z coordinate of the level the entity should be placed inside
 	*/
 	EntityId entityCreate(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, EntityUpdateType updateType = EntityUpdateType::Frame);
+	Entity& entityGet(EntityId entityId);
 	void entityTerminate(EntityId entityID);
 	void entitiesAllDelete();
 };

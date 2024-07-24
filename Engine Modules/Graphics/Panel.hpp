@@ -24,7 +24,9 @@ struct Panel {
 	}
 	void vertexArrayDraw(const sf::VertexArray& vertexArray, const sf::RenderStates& states);
 
-	void zoomView(float zoomFactor);
+	void viewZoom(float zoomFactor);
+	void viewMove(float moveX, float moveY);
+	void viewMove(sf::Vector2f moveVec);
 
 	void panelDrawObjects();
 	void panelRender(sf::RenderWindow& renderWindowMain);

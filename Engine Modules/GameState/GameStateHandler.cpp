@@ -79,7 +79,7 @@ void GameStateHandler::gameStateAdd(GameStateName name, std::vector<GameStateTra
 }
 
 // does some error checking on every state, should be called after adding new game states
-void GameStateHandler::gameStateFinalizeAddedStates() {
+void GameStateHandler::gameStatesAddedStatesFinalize() {
 	for (const auto& [stateNameCur, gameStateCur] : gameStates) {
 		for (const auto& gameStateTransitionCur : gameStateCur->transitions) {
 			if (!gameStateExists(gameStateTransitionCur.toStateName)) {

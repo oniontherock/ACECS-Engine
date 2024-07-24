@@ -18,13 +18,17 @@
 #include "../../World/LevelTypeDefinitions.hpp"
 
 struct Entity {
+private:
+	bool hasAnyEvent = false;
+public:
 	explicit Entity();
 	Entity(Entity& other) = delete;
 	Entity& operator= (const Entity& other) = delete;
 	
 	void entityCreate(EntityId _Id, EntityUpdateType _updateType);
 	void entityCreate(EntityId _Id, EntityUpdateType _updateType, LevelPosition _levelId);
-	// terminates this entity, then sets all data to that of the other entity, and finally terminates the other entity.
+	// sets all data to that of the other entity.
+	// note that this does NOT terminate the current entity, so if the entity has been initialized, it should be terminated
 	void entityBecomeOther(Entity& other);
 
 	void componentsInitialize();
@@ -42,7 +46,6 @@ struct Entity {
 	std::vector<ComponentUniquePtr> componentsVector;
 
 	std::vector<EventPtr> eventsVector;
-	bool hasAnyEvent = false;
 
 
 	template <class T>
@@ -92,7 +95,7 @@ struct Entity {
 	}
 	// sets an event to active and returns the event so it's members may be modified
 	template <class T>
-	T* entityEventAddAndReturn() {
+	T* entityEventAddAndGet() {
 		entityEventAdd<T>();
 		return entityEventGet<T>();
 	}

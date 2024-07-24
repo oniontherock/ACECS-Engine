@@ -21,7 +21,7 @@
 // used when declaring custom events and components to simplify the overriding process
 #define DUPLICATE_OVERRIDE(Type) \
 	std::unique_ptr<Duplicatable> duplicate() override { \
-		return std::unique_ptr<Duplicatable>(new Type(var)); \
+		return std::unique_ptr<Duplicatable>(new Type()); \
 	};
 
 #endif

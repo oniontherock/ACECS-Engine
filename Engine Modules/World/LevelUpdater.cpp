@@ -2,11 +2,11 @@
 
 
 void LevelUpdater::levelsUpdate() {
-	for (uint32_t levelActiveInd = 0; levelActiveInd < WorldGrid::levelsActiveVector.size(); levelActiveInd++) {
+	for (uint32_t levelActiveInd = 0; levelActiveInd<LevelGrid<BaseLevel>::levelsActiveVector.size(); levelActiveInd++) {
 
-		LevelPosition levelActivePosition = WorldGrid::levelsActiveVector[levelActiveInd];
+		LevelPosition levelActivePosition = LevelGrid<BaseLevel>::levelsActiveVector[levelActiveInd];
 
-		BaseLevel* levelActiveCur = WorldGrid::levelGet(levelActivePosition);
+		BaseLevel* levelActiveCur = LevelGrid<BaseLevel>::levelGet(levelActivePosition);
 
 		for (uint32_t entityIdInd = 0; entityIdInd < levelActiveCur->entities.size(); entityIdInd++) {
 			EntityManager::entityUpdate(levelActiveCur->entities[entityIdInd]);

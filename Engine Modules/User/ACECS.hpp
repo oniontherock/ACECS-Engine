@@ -15,7 +15,7 @@ class Engine {
 private:
 	// inputs are registered here
 	static void inputsRegister();
-	// game states are registered here
+	// panels are registered here
 	static void panelsRegister();
 	// game states are registered here
 	static void gameStateRegister();
@@ -25,11 +25,11 @@ public:
 	static void engineInitialize();
 	// updates the engines input
 	static void engineInputUpdate(sf::RenderWindow& window);
-	// update certain modules of the engine, like the input system, and the game state.
-	// note that certain modules, like the ECS system, are updated inside the GameStateHandler,
-	// because you don't want to update the ECS system if the GameState is currently paused, for example.
-	static void engineUpdate();
-	static void engineDraw(sf::RenderWindow& renderWindowMain);
+	// update certain modules of the engine, like the GameState, which itself will usually update the ECS module.
+	// note that this does NOT update the input, that must be called manually before updating the game
+	static void engineGameUpdate();
+	// draws the panels of the current GameState
+	static void engineGameDraw(sf::RenderWindow& renderWindowMain);
 	// terminates certain engine modules, like the ECS or GameStateHandler
 	static void engineTerminate();
 };

@@ -2,6 +2,7 @@
 #define __GAME_LEVEL_H__
 
 #include "../World/Level.hpp"
+#include "../World/LevelGrid.hpp"
 
 // example of the game level class,
 // 
@@ -16,5 +17,7 @@ struct GameLevel : public BaseLevel {
 
 	uint32_t exampleVariable = 0;
 };
+
+using GameLevelGrid = LevelGrid<GameLevel>;
 
 #endif

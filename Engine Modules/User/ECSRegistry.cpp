@@ -1,5 +1,9 @@
 #include "ECSRegistry.hpp"
 
+uint32_t MAX_ENTITIES = 10000;
+uint16_t MAX_EVENT_TYPES = 32;
+uint16_t MAX_COMPONENT_TYPES = 32;
+
 void ECSRegistry::ECSInitialize() {
 	EntityComponents::componentIDsInitialize();
 	EntityComponents::componentTemplatesInitialize();
@@ -29,7 +33,6 @@ void EntityEvents::eventIDsInitialize() {
 
 	using EventRegistry = TypeIDAllocator<Event>;
 
-	/// registry convention:
 	EventRegistry::typeRegister<EventIDs<EventExample>>();
 }
 
@@ -55,7 +58,6 @@ void EntityComponents::componentIDsInitialize() {
 
 	using ComponentRegistry = TypeIDAllocator<Component>;
 
-	/// registry convention:
 	ComponentRegistry::typeRegister<ComponentIDs<ComponentExample>>();
 }
 

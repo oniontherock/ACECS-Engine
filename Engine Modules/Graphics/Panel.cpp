@@ -31,7 +31,7 @@ void Panel::panelRender(sf::RenderWindow& renderWindowMain) {
 void Panel::panelClear() {
 	texture.clear(clearColor);
 }
-void Panel::zoomView(float zoomFactor) {
+void Panel::viewZoom(float zoomFactor) {
 	sf::Vector2f newSize = viewRect.getSize() * zoomFactor;
 
 	sf::Vector2f cornerChangeDist = viewRect.getSize() - newSize;
@@ -41,6 +41,13 @@ void Panel::zoomView(float zoomFactor) {
 
 	viewRect.left += (cornerChangeDist.x / 2.f);
 	viewRect.top += (cornerChangeDist.y / 2.f);
+}
+void Panel::viewMove(float moveX, float moveY) {
+	viewRect.left += moveX;
+	viewRect.top += moveY;
+}
+void Panel::viewMove(sf::Vector2f moveVec) {
+	viewMove(moveVec.x, moveVec.y);
 }
 
 void Panel::viewUpdate() {

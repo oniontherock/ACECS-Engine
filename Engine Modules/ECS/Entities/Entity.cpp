@@ -22,14 +22,12 @@ void Entity::entityCreate(EntityId id, EntityUpdateType _updateType, LevelPositi
 }
 void Entity::entityBecomeOther(Entity& other) {
 
-	terminate();
-
-	entityCreate(other.Id, other.updateType, other.levelId);
+	Id = other.Id;
+	updateType = other.updateType;
+	levelId = other.levelId;
 
 	componentsVector = std::move(other.componentsVector);
 	eventsVector = std::move(other.eventsVector);
-
-	other.terminate();
 }
 
 void Entity::componentsInitialize() {
@@ -64,7 +62,7 @@ void Entity::entityUpdate() {
 void Entity::componentsUpdate() {
 	for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
 
-		if (componentsVector[i] == nullptr) continue;
+		if (!static_cast<bool>(componentsVector[i])) continue;
 		if (!componentsVector[i]->hasSystem) continue;
 
 		componentsVector[i]->system(*this);

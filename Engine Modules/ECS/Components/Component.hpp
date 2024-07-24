@@ -21,7 +21,7 @@ namespace EntityComponents {
 
 		virtual ~Component() = default;
 
-		virtual void system(Entity&) = 0;
+		virtual void system(Entity&) {}
 
 		bool hasSystem = false;
 	};
