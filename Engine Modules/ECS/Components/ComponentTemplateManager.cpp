@@ -1,11 +1,13 @@
 #include "ComponentTemplateManager.hpp"
 
-
-
 std::unordered_map<ComponentTemplateName, ComponentTemplate> ComponentTemplateManager::componentTemplates{};
 
+bool ComponentTemplateManager::componentTemplateExists(ComponentTemplateName templateName) {
+	return componentTemplates.count(templateName);
+}
+
 bool ComponentTemplateManager::componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName) {
-	if (componentTemplates.count(templateName)) {
+	if (componentTemplateExists(templateName)) {
 		std::cerr << "ERROR: Template name taken: " << "\"" << templateName << "\"" << std::endl;
 		return true;
 	}
@@ -40,7 +42,34 @@ void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templa
 	componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
 }
 
-void ComponentTemplateManager::componentTemplateApplyToComponentVector(ComponentTemplateName templateName, std::vector<ComponentUniquePtr>& componentsVector, TemplateApplicationType applicationType = Overwrite) {
+void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templateName, std::vector<ComponentTemplateName> chunkNames, ComponentTemplatePairVector templateComponentsMap) {
+	if (componentTemplatesErrorIfNameTaken(templateName)) {
+		return;
+	}
+
+	ComponentTemplate templateComponentsVector(EntityComponents::totalComponents);
+
+	for (uint16_t i = 0; i < chunkNames.size(); i++) {
+
+		auto& chunkName = chunkNames[i];
+
+		if (!componentTemplateExists(chunkName)) {
+			std::cerr << "ERROR: Template chunk name " << "\"" << chunkName << "\"" << " does not exist!" << std::endl;
+		}
+		else {
+			componentTemplateApplyToComponentVector(chunkName, templateComponentsVector, TemplateApplicationType::Merge);
+		}
+	}
+
+	for (uint16_t i = 0; i < templateComponentsMap.size(); i++) {
+		templateComponentsVector[templateComponentsMap[i].first] =
+			Duplicatable::duplicateAndConvertToType<EntityComponents::Component>(templateComponentsMap[i].second.get());
+	}
+
+	componentTemplates.insert({ templateName, std::move(templateComponentsVector) });
+}
+
+void ComponentTemplateManager::componentTemplateApplyToComponentVector(ComponentTemplateName templateName, std::vector<ComponentUniquePtr>& componentsVector, TemplateApplicationType applicationType) {
 
 	if (applicationType == Overwrite) {
 		for (EntityComponents::ComponentTypeID i = 0; i < EntityComponents::totalComponents; i++) {
@@ -59,7 +88,7 @@ void ComponentTemplateManager::componentTemplateApplyToComponentVector(Component
 	}
 }
 
-void ComponentTemplateManager::componentTemplateApplyToEntity(ComponentTemplateName templateName, Entity& entity, TemplateApplicationType applicationType = Overwrite) {
+void ComponentTemplateManager::componentTemplateApplyToEntity(ComponentTemplateName templateName, Entity& entity, TemplateApplicationType applicationType) {
 	componentTemplateApplyToComponentVector(templateName, entity.componentsVector, applicationType);
 }
 void ComponentTemplateManager::componentTemplateTerminate(ComponentTemplateName templateName) {

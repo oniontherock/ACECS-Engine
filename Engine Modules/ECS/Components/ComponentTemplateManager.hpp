@@ -20,10 +20,11 @@ enum TemplateApplicationType {
 namespace ComponentTemplateManager {
 	extern std::unordered_map<ComponentTemplateName, ComponentTemplate> componentTemplates;
 
+	bool componentTemplateExists(ComponentTemplateName templateName);
 	bool componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName);
 	void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplate templateComponentsVector);
-	// this overload should generally be preferred over others, as it is easier to use in one line
 	void componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplatePairVector templateComponentsMap);
+	void componentTemplateAdd(ComponentTemplateName templateName, std::vector<ComponentTemplateName> chunkNames, ComponentTemplatePairVector templateComponentsMap);
 	// applies a template to a componentVector
 	void componentTemplateApplyToComponentVector(ComponentTemplateName templateName, std::vector<ComponentUniquePtr>& componentsVector, TemplateApplicationType applicationType = Overwrite);
 	// applies a template to an entity

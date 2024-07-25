@@ -43,10 +43,10 @@ namespace EntityComponents {
 	// note that this type contains a shared_ptr, because certain usages are impossible if it is a unique_ptr, like list initialization
 	typedef std::pair<EntityComponents::ComponentTypeID, ComponentSharedPtr> ComponentIndexInstancePair;
 
-	// creates a new ComponentIndexInstancePair from the type T,
-	template <class T>
-	ComponentIndexInstancePair createComponentPairFromType() {
-		return ComponentIndexInstancePair(ComponentIDs<T>::ID, ComponentSharedPtr(new T()));
+	// creates a new ComponentIndexInstancePair from the type T with the arguments "args"
+	template <class T, typename... Args>
+	ComponentIndexInstancePair createComponentPairFromType(Args... args) {
+		return ComponentIndexInstancePair(ComponentIDs<T>::ID, ComponentSharedPtr(new T(args...)));
 	}
 };
 

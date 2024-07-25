@@ -24,23 +24,23 @@ extern BaseLevelPtrGrid levelGrid;
 // list of LevelPositions that are currently active and updating
 extern std::vector<LevelPosition> levelsActiveVector;
 
-extern LevelPosition levelCur;
-
 template <class Level>
 struct LevelGrid {
 
 	// initialize the level grid and set it to be the dimensions passed in
 	static void levelGridInitialize(LevelCoordinate width, LevelCoordinate height, LevelCoordinate depth) {
 
-		if (width == 0) {
+		if (width <= 0) {
 			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid width cannot be 0" << std::endl;
 			return;
 		}
-		else if (height == 0) {
-			if (depth != 0) {
-				std::cerr << "ERROR: LevelGrid initialization failed: depth cannot be higher than 0 if height is equal to 0" << std::endl;
-				return;
-			}
+		else if (height <= 0) {
+			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid height cannot be 0" << std::endl;
+			return;
+		}
+		else if (depth <= 0) {
+			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid depth cannot be 0" << std::endl;
+			return;
 		}
 
 		// the whole thing below is just a very annoying and large way of making a 3D grid of LevelPtrs
@@ -95,12 +95,6 @@ struct LevelGrid {
 		return levelExists(level.x, level.y, level.z);
 	}
 
-	// adds a level to the levelGrid.
-	// the position the level instance is placed at is the level instance's levelPosition member
-	static void levelAdd(BaseLevel* levelInstance) {
-		levelGrid[levelInstance->levelPosition.x][levelInstance->levelPosition.y][levelInstance->levelPosition.z] = BaseLevelPtr(levelInstance);
-	}
-
 	static void levelActivate(LevelCoordinate x, LevelCoordinate y = 0, LevelCoordinate z = 0) {
 
 		if (std::find(levelsActiveVector.begin(), levelsActiveVector.end(), LevelPosition(x, y, z)) != levelsActiveVector.end()) return;
@@ -116,6 +110,22 @@ struct LevelGrid {
 	}
 	static void levelDeactivate(LevelPosition level) {
 		levelDeactivate(level.x, level.y, level.z);
+	}
+
+	// adds a level to the levelGrid.
+	// the position the Level is placed at in the levelGrid is the Level's levelPosition
+	static void levelAdd(BaseLevel* levelInstance) {
+		levelGrid[levelInstance->levelPosition.x][levelInstance->levelPosition.y][levelInstance->levelPosition.z] = BaseLevelPtr(levelInstance);
+	}
+	// adds a level to the levelGrid and either activates or deactivates it,
+	// deactivation doesn't actually do anything though, as levels start inactive.
+	// the position the Level is placed at in the levelGrid is the Level's levelPosition
+	static void levelAdd(BaseLevel* levelInstance, bool startActive) {
+		levelAdd(levelInstance);
+
+		if (startActive) {
+			levelActivate(levelInstance->levelPosition);
+		}
 	}
 };
 
