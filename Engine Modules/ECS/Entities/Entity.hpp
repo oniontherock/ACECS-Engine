@@ -20,16 +20,19 @@
 struct Entity {
 private:
 	bool hasAnyEvent = false;
+
+	void componentsAllTerminate();
+	void eventsAllDeactivate();
+	void eventsAllTerminate();
+	void terminate();
 public:
 	explicit Entity();
-	Entity(Entity& other) = delete;
-	Entity& operator= (const Entity& other) = delete;
-	
-	void entityCreate(EntityId _Id, EntityUpdateType _updateType);
-	void entityCreate(EntityId _Id, EntityUpdateType _updateType, LevelPosition _levelId);
-	// sets all data to that of the other entity.
-	// note that this does NOT terminate the current entity, so if the entity has been initialized, it should be terminated
-	void entityBecomeOther(Entity& other);
+	explicit Entity(EntityId _id, EntityUpdateType _updateType);
+	explicit Entity(EntityId _id, EntityUpdateType _updateType, LevelPosition _levelId);
+
+	Entity(Entity& other);
+	Entity& operator= (const Entity& other);
+	~Entity();
 
 	void componentsInitialize();
 	void eventsInitialize();
@@ -45,7 +48,7 @@ public:
 
 	std::vector<ComponentUniquePtr> componentsVector;
 
-	std::vector<EventPtr> eventsVector;
+	std::vector<EventUniquePtr> eventsVector;
 
 
 	template <class T>
@@ -107,8 +110,4 @@ public:
 
 	void entityUpdate();
 	void componentsUpdate();
-	void componentsAllTerminate();
-	void eventsAllDeactivate();
-	void eventsAllTerminate();
-	void terminate();
 };

@@ -71,8 +71,7 @@ namespace EntityManager {
 	@param levelY: the Y coordinate of the level the entity should be placed in
 	@param levelZ: the Z coordinate of the level the entity should be placed in
 	*/
-	EntityId entityCreate(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, ComponentTemplateName templateName,
-		EntityUpdateType updateType = EntityUpdateType::Frame);
+	EntityId entityCreate(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, ComponentTemplateName templateName, EntityUpdateType updateType = EntityUpdateType::Frame);
 
 	void entityAddToRoom(EntityId entityId, LevelPosition level);
 	void entityAddToRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ);

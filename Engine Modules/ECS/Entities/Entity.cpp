@@ -3,31 +3,65 @@
 Entity::Entity() {
 	updateType = EntityUpdateType::Frame;
 	Id = 0;
-};
-
-void Entity::entityCreate(EntityId id, EntityUpdateType _updateType) {
-	Id = id;
+}
+Entity::Entity(EntityId _id, EntityUpdateType _updateType) {
+	Id = _id;
 	updateType = _updateType;
 
 	componentsInitialize();
 	eventsInitialize();
 }
-void Entity::entityCreate(EntityId id, EntityUpdateType _updateType, LevelPosition _levelId) {
-	Id = id;
+Entity::Entity(EntityId _id, EntityUpdateType _updateType, LevelPosition _levelId) {
+	Id = _id;
 	updateType = _updateType;
 	levelId = _levelId;
 
 	componentsInitialize();
 	eventsInitialize();
 }
-void Entity::entityBecomeOther(Entity& other) {
+
+template <class T>
+static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, const std::vector<std::unique_ptr<T>>& B) {
+	for (uint16_t i = 0; i < B.size(); i++) {
+		if (!static_cast<bool>(B[i])) {
+			A.push_back(std::unique_ptr<T>(nullptr));
+			continue;
+		}
+		A.push_back(Duplicatable::duplicateAndConvertToType<T>(B[i].get()));
+	}
+}
+template <class T>
+static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, std::vector<std::unique_ptr<T>>& B) {
+	for (uint16_t i = 0; i < B.size(); i++) {
+		if (!static_cast<bool>(B[i])) {
+			A.push_back(std::unique_ptr<T>(nullptr));
+			continue;
+		}
+		A.push_back(Duplicatable::duplicateAndConvertToType<T>(B[i].get()));
+	}
+}
+
+Entity::Entity(Entity& other) {
+	Id = other.Id;
+	updateType = other.updateType;
+	levelId = other.levelId;
+
+	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
+	copyUniquePtrVector<EntityEvents::Event>(eventsVector, other.eventsVector);
+}
+Entity& Entity::operator= (const Entity& other) {
 
 	Id = other.Id;
 	updateType = other.updateType;
 	levelId = other.levelId;
 
-	componentsVector = std::move(other.componentsVector);
-	eventsVector = std::move(other.eventsVector);
+	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
+	copyUniquePtrVector<EntityEvents::Event>(eventsVector, other.eventsVector);
+
+	return *this;
+}
+Entity::~Entity() {
+	terminate();
 }
 
 void Entity::componentsInitialize() {

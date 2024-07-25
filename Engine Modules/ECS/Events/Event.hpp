@@ -18,6 +18,7 @@ namespace EntityEvents {
 	void eventIDsInitialize();
 }
 
-typedef std::unique_ptr<EntityEvents::Event> EventPtr;
+typedef std::unique_ptr<EntityEvents::Event> EventUniquePtr;
+typedef std::shared_ptr<EntityEvents::Event> EventSharedPtr;
 
 #endif

@@ -17,7 +17,7 @@ EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 
 	EntityId entityId = entityCount;
 
-	entitiesVector[entityId].entityCreate(entityId, updateType);
+	entitiesVector[entityId] = Entity(entityId, updateType);
 
 	entityCount++;
 
@@ -68,20 +68,13 @@ Entity& EntityManager::entityGet(EntityId entityId) {
 
 void EntityManager::entityTerminate(EntityId entityID) {
 
-	// move the entityId to a temporary variable
-	Entity temp;
-	temp.entityBecomeOther(entitiesVector[entityID]);
-	// move the last entity in the entitiesVector to the position of the 
-	entitiesVector[entityID].entityBecomeOther(entitiesVector[uint16_t(entityCount - 1)]);
+	LevelGrid<BaseLevel>::levelGet(entitiesVector[entityID].levelId)->entityIdRemove(entitiesVector[entityID].Id);
 
-	temp.terminate();
-	
-	LevelGrid<BaseLevel>::levelGet(temp.levelId)->entityIdRemove(temp.Id);
+	// move the last entity in the entitiesVector to the position of the
+	entitiesVector[entityID] = entitiesVector[uint16_t(entityCount - 1)];
 
 	entityCount--;
 }
 void EntityManager::entitiesAllDelete() {
-	for (uint16_t i = 0; i < entityCount; i++) {
-		entitiesVector[i].terminate();
-	}
+	entitiesVector.clear();
 }
