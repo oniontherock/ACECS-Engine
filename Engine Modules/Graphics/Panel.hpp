@@ -8,12 +8,15 @@ typedef sf::View PanelView;
 typedef sf::RenderTexture PanelScreenTexture;
 typedef sf::FloatRect PanelRect;
 
-typedef const char* PanelName;
+enum PanelTypes : uint16_t;
+
+typedef PanelTypes PanelName;
 
 struct Panel {
 
 	Panel() = default;
-	Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor);
+	Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor);
+	virtual ~Panel() {};
 
 	void textureCreate();
 	void viewCreate();
@@ -49,11 +52,13 @@ private:
 	// the panel's view,
 	PanelView view;
 
-	std::function<void(Panel& panel)> panelDrawFunction;
+	virtual void panelUpdate() = 0;
 
 	void viewUpdate();
 
 	static inline uint16_t allocatedPanelIdsTotal = 0;
 };
+
+typedef std::unique_ptr<Panel> PanelPtr;
 
 #endif

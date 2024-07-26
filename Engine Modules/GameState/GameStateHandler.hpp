@@ -8,15 +8,18 @@
 #include "../Graphics/Panel.hpp"
 #include "../Graphics/PanelManager.hpp"
 #include "../Input/InputInterface.hpp"
+#include <Windows.h>
 
-typedef const char* GameStateName;
+enum GameStateTypes : uint16_t;
+
+typedef GameStateTypes GameStateType;
 
 struct GameStateTransition {
 
-	GameStateTransition(GameStateName _toStateName, std::vector<InputName> _transitionInputs);
+	GameStateTransition(GameStateType _toStateName, std::vector<InputName> _transitionInputs);
 
 	// the name of the state that this transition leads to
-	GameStateName toStateName;
+	GameStateType toStateName;
 
 	// vector of inputs that trigger a transition
 	std::vector<InputName> linkedInputs;
@@ -24,19 +27,27 @@ struct GameStateTransition {
 
 struct GameState {
 
-	GameState(std::vector<GameStateTransition> _transitions, std::function<void()> _updateFunc, std::vector<PanelName> _panelNames);
+	GameState(std::vector<GameStateTransition> _transitions, std::vector<PanelName> _panelNames);
+	virtual ~GameState() {};
+
+	// the name of this GameState
+	GameStateType id;
 
 	// vector of different GameStateTransitions linked to this GameStates
 	std::vector<GameStateTransition> transitions;
+
 	// vector of different PanelNames belonging to this GameState
 	std::vector<PanelName> panelNames;
+
 	// this GameState's update function
-	std::function<void()> updateFunc;
+	virtual void gameStateUpdate() = 0;
 };
 
+typedef std::unique_ptr<GameState> GameStateUniquePtr;
+
 class GameStateHandler {
-	static std::unordered_map<GameStateName, GameState*> gameStates;
-	static GameStateName gameStateNameCur;
+	static std::unordered_map<GameStateType, GameStateUniquePtr> gameStates;
+	static GameStateType gameStateNameCur;
 
 	static void gameStateUpdate();
 	static const void gameStateRun();
@@ -44,13 +55,13 @@ class GameStateHandler {
 	static bool gameStateNameCurCheckValid();
 
 public:
-	static bool gameStateExists(GameStateName stateName);
+	static bool gameStateExists(GameStateType stateName);
 	static void gameStateProcess();
-	static void gameStateTerminate(GameStateName name);
-	static void gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::vector<PanelName> panels, std::function<void()> updateFunc);
+	static void gameStateTerminate(GameStateType name);
+	static void gameStateAdd(GameStateUniquePtr gameStateInstance);
 	// does some error checking on every state, should be called after adding new game states
 	static void gameStatesAddedStatesFinalize();
-	static void gameStateForceSet(GameStateName gameStateName);
+	static void gameStateForceSet(GameStateType gameStateName);
 	static void gameStatesAllTerminate();
 	static const std::vector<PanelName>& gameStateGetPanels();
 };

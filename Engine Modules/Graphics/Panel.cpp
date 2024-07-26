@@ -1,7 +1,7 @@
 #include "Panel.hpp"
 
-Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, std::function<void(Panel& panel)> _panelDrawFunction, sf::Color _clearColor) :
-	screenRect(_screenRect), viewRect(_viewRect), panelDrawFunction(_panelDrawFunction), clearColor(_clearColor)
+Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor) :
+	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor)
 {
 	textureCreate();
 	viewCreate();
@@ -17,7 +17,7 @@ inline void Panel::vertexArrayDraw(const sf::VertexArray& vertexArray, const sf:
 	texture.draw(vertexArray, states);
 }
 void Panel::panelDrawObjects() {
-	std::invoke(panelDrawFunction, *this);
+	panelUpdate();
 }
 void Panel::panelRender(sf::RenderWindow& renderWindowMain) {
 	viewUpdate();

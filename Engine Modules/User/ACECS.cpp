@@ -7,24 +7,22 @@ void Engine::inputsRegister() {
 
 void Engine::panelsRegister() {
 	using namespace PanelManager;
-	panelAdd("Example View",
+	panelAdd(PanelTypes::GameView, PanelPtr(new PanelGameView(
 		PanelRect(0, 0, 1280, 720), // screen coordinates
 		PanelRect(0, 0, 640, 360), // world coordinates
-		sf::Color::Black,
-		PANEL_DRAW_FUNCTION{
-		}
-	);
+		sf::Color::Black
+	)));
 }
 
 void Engine::gameStateRegister() {
 
-	GameStateHandler::gameStateForceSet("Example State");
+	GameStateHandler::gameStateForceSet(GameStateType::Play);
 
-	GameStateHandler::gameStateAdd("Example State",
+	GameStateHandler::gameStateAdd(GameStateUniquePtr(new GameStatePlay(
 		/// transitions
 		// vector of GameStateTransitions, and their inputs
 		{
-			GameStateTransition("Other Example State", // name of the state to transition to
+			GameStateTransition(GameStateType::Pause, // name of the state to transition to
 				/// transition inputs
 				// vector of inputs that trigger this transition
 				// note the commas after an input name, without commas every name will become a single string
@@ -37,20 +35,14 @@ void Engine::gameStateRegister() {
 		// the panels belonging to this GameState,
 		// note the commas after every panel name, without commas every name will become a single string
 		{
-			"Example View",
-		},
-
-		/// update function
-		// update function for this GameState, called every frame
-		GAME_STATE_FUNCTION{
-			LevelUpdater::levelsUpdate();
+			PanelTypes::GameView,
 		}
-	);
-	GameStateHandler::gameStateAdd("Other Example State",
+	)));
+	GameStateHandler::gameStateAdd(GameStateUniquePtr(new GameStatePause(
 		/// transitions
 		// vector of GameStateTransitions, and their inputs
 		{
-			GameStateTransition("Example State", // name of the state to transition to
+			GameStateTransition(GameStateType::Play, // name of the state to transition to
 				/// transition inputs
 				// vector of inputs that trigger this transition
 				// note the commas after an input name, without commas every name will become a single string
@@ -63,14 +55,9 @@ void Engine::gameStateRegister() {
 		// the panels belonging to this GameState,
 		// note the commas after every panel name, without commas every name will become a single string
 		{
-			"Example View",
-		},
-
-		/// update function
-		// update function for this GameState, called every frame
-		GAME_STATE_FUNCTION{
+			PanelTypes::GameView,
 		}
-		);
+		)));
 
 	GameStateHandler::gameStatesAddedStatesFinalize();
 }
@@ -94,9 +81,12 @@ void Engine::engineGameDraw(sf::RenderWindow& renderWindowMain) {
 	auto& gameStatePanels = GameStateHandler::gameStateGetPanels();
 
 	for (uint16_t i = 0; i < gameStatePanels.size(); i++) {
-		PanelManager::panelGet(gameStatePanels[i])->panelDrawObjects();
-		PanelManager::panelGet(gameStatePanels[i])->panelRender(renderWindowMain);
-		PanelManager::panelGet(gameStatePanels[i])->panelClear();
+
+		auto& panelCur = PanelManager::panelGet(gameStatePanels[i]);
+
+		panelCur.panelDrawObjects();
+		panelCur.panelRender(renderWindowMain);
+		panelCur.panelClear();
 	}
 }
 void Engine::engineTerminate() {

@@ -1,18 +1,18 @@
 #include "GameStateHandler.hpp"
 
-std::unordered_map<GameStateName, GameState*> GameStateHandler::gameStates = std::unordered_map<GameStateName, GameState*>();
-GameStateName GameStateHandler::gameStateNameCur = "";
+std::unordered_map<GameStateType, GameStateUniquePtr> GameStateHandler::gameStates = std::unordered_map<GameStateType, GameStateUniquePtr>();
+GameStateType GameStateHandler::gameStateNameCur{};
 
-GameStateTransition::GameStateTransition(GameStateName _toStateName, std::vector<InputName> _transitionInputs) :
+GameStateTransition::GameStateTransition(GameStateType _toStateName, std::vector<InputName> _transitionInputs) :
 	toStateName(_toStateName),
 	linkedInputs(_transitionInputs)
 {}
 
 
-GameState::GameState(std::vector<GameStateTransition> _transitions, std::function<void()> _updateFunc, std::vector<PanelName> _panelNames) :
+GameState::GameState(std::vector<GameStateTransition> _transitions, std::vector<PanelName> _panelNames) :
 	transitions(_transitions),
-	updateFunc(_updateFunc),
-	panelNames(_panelNames)
+	panelNames(_panelNames),
+	id() // we initialize id to nothing to avoid a C26495, the actual id is assigned in the derived class constructor
 {}
 
 void GameStateHandler::gameStateUpdate() {
@@ -35,14 +35,11 @@ void GameStateHandler::gameStateUpdate() {
 }
 
 const void GameStateHandler::gameStateRun() {
-	std::invoke(gameStates[gameStateNameCur]->updateFunc);
+	gameStates[gameStateNameCur]->gameStateUpdate();
 }
 
 // checks if gameStateCurName is valid, and if it is, returns true, otherwise, prints an error and returns false
 bool GameStateHandler::gameStateNameCurCheckValid() {
-	if (std::strcmp(gameStateNameCur, "") == 0) {
-		std::cerr << "ERROR: Uninitialized game state. Please set game state to an initial value" << std::endl;
-	}
 	if (!gameStateExists(gameStateNameCur)) {
 		std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateNameCur << "\"" << std::endl;
 	}
@@ -52,7 +49,7 @@ bool GameStateHandler::gameStateNameCurCheckValid() {
 	return false;
 }
 
-bool GameStateHandler::gameStateExists(GameStateName stateName) {
+bool GameStateHandler::gameStateExists(GameStateType stateName) {
 	return gameStates.count(stateName);
 }
 
@@ -62,20 +59,25 @@ void GameStateHandler::gameStateProcess() {
 	gameStateRun();
 }
 
-void GameStateHandler::gameStateTerminate(GameStateName name) {
-	delete gameStates[name];
+void GameStateHandler::gameStateTerminate(GameStateType name) {
 	gameStates.erase(name);
 }
 
-void GameStateHandler::gameStateAdd(GameStateName name, std::vector<GameStateTransition> transitions, std::vector<PanelName> panels, std::function<void()> updateFunc) {
+void GameStateHandler::gameStateAdd(GameStateUniquePtr gameStateInstance) {
 
-	for (const auto& panelNameCur : panels) {
+	if (gameStateExists(gameStateInstance->id)) {
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
+		std::cerr << "ERROR: Attempted to add a GameState with a taken id,\n please ensure the correct class was used when adding GameState,\n and check GameState constructor to ensure the correct id was assigned" << std::endl;
+		return;
+	}
+
+	for (const auto& panelNameCur : gameStateInstance->panelNames) {
 		if (!PanelManager::panelExists(panelNameCur)) {
 			std::cerr << "ERROR: Attempted to add a GameState with non-existent panel: " << "\"" << panelNameCur << "\"" << std::endl;
 		}
 	}
 
-	gameStates.insert({ name, new GameState(transitions, updateFunc, panels) });
+	gameStates.insert(std::move(std::pair<GameStateType, GameStateUniquePtr>(gameStateInstance->id, std::move(gameStateInstance))));
 }
 
 // does some error checking on every state, should be called after adding new game states
@@ -90,14 +92,11 @@ void GameStateHandler::gameStatesAddedStatesFinalize() {
 	}
 }
 
-void GameStateHandler::gameStateForceSet(GameStateName gameStateName) {
+void GameStateHandler::gameStateForceSet(GameStateType gameStateName) {
 	gameStateNameCur = gameStateName;
 }
 
 void GameStateHandler::gameStatesAllTerminate() {
-	for (const auto& [key, value] : gameStates) {
-		delete value;
-	}
 	gameStates.clear();
 }
 

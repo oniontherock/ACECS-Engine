@@ -7,6 +7,8 @@
 #include "../World.hpp"
 #include "ECSRegistry.hpp"
 #include "GameLevel.hpp"
+#include "GameStates.hpp"
+#include "Panels.hpp"
 
 #define GAME_STATE_FUNCTION []()
 #define PANEL_DRAW_FUNCTION [](Panel& panel)
