@@ -56,7 +56,7 @@ private:
 
 	void viewUpdate();
 
-	static inline uint16_t allocatedPanelIdsTotal = 0;
+	static uint16_t allocatedPanelIdsTotal;
 };
 
 typedef std::unique_ptr<Panel> PanelPtr;

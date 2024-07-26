@@ -8,7 +8,7 @@ bool ComponentTemplateManager::componentTemplateExists(ComponentTemplateName tem
 
 bool ComponentTemplateManager::componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName) {
 	if (componentTemplateExists(templateName)) {
-		std::cerr << "ERROR: Template name taken: " << "\"" << templateName << "\"" << std::endl;
+		ConsoleHandler::consolePrintErr("Template name taken: \"" + std::string(templateName) + std::string("\""));
 		return true;
 	}
 	return false;
@@ -16,7 +16,7 @@ bool ComponentTemplateManager::componentTemplatesErrorIfNameTaken(ComponentTempl
 
 void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templateName, ComponentTemplate templateComponentsVector) {
 	if (templateComponentsVector.size() < EntityComponents::totalComponents) {
-		std::cerr << "ERROR: Attempted to add template with fewer components than the total amount of components: " << "\"" << templateName << "\"" << std::endl;
+		ConsoleHandler::consolePrintErr("Attempted to add template with fewer components than the total amount of components: \"" + std::string(templateName) + std::string("\""));
 		return;
 	}
 	else if (componentTemplatesErrorIfNameTaken(templateName)) {
@@ -54,7 +54,7 @@ void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templa
 		auto& chunkName = chunkNames[i];
 
 		if (!componentTemplateExists(chunkName)) {
-			std::cerr << "ERROR: Template chunk name " << "\"" << chunkName << "\"" << " does not exist!" << std::endl;
+			ConsoleHandler::consolePrintErr("Template chunk name \"" + std::string(chunkName) + std::string("\"") + " does not exist!");
 		}
 		else {
 			componentTemplateApplyToComponentVector(chunkName, templateComponentsVector, TemplateApplicationType::Merge);

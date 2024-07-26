@@ -8,7 +8,7 @@
 #include "../Graphics/Panel.hpp"
 #include "../Graphics/PanelManager.hpp"
 #include "../Input/InputInterface.hpp"
-#include <Windows.h>
+#include "../Auxiliary/ConsoleHandler.hpp"
 
 enum GameStateTypes : uint16_t;
 

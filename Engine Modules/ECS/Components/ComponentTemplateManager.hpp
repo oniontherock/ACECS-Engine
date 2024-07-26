@@ -2,6 +2,7 @@
 #define __COMPONENT_TEMPLATE_MANAGER_H__
 
 #include <functional>
+#include "../../Auxiliary/ConsoleHandler.hpp"
 #include "../Entities/Entity.hpp"
 #include "Component.hpp"
 

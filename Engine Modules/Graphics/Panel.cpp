@@ -56,3 +56,5 @@ void Panel::viewUpdate() {
 	texture.setView(view);
 }
 
+uint16_t Panel::allocatedPanelIdsTotal = 0;
+

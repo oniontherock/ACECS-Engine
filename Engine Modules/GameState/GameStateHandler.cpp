@@ -41,7 +41,7 @@ const void GameStateHandler::gameStateRun() {
 // checks if gameStateCurName is valid, and if it is, returns true, otherwise, prints an error and returns false
 bool GameStateHandler::gameStateNameCurCheckValid() {
 	if (!gameStateExists(gameStateNameCur)) {
-		std::cerr << "ERROR: Unknown game state: " << "\"" << gameStateNameCur << "\"" << std::endl;
+		ConsoleHandler::consolePrintErr("Unknown game state: \"" + gameStateNameCur + std::string("\""));
 	}
 	else {
 		return true;
@@ -65,19 +65,24 @@ void GameStateHandler::gameStateTerminate(GameStateType name) {
 
 void GameStateHandler::gameStateAdd(GameStateUniquePtr gameStateInstance) {
 
-	if (gameStateExists(gameStateInstance->id)) {
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-		std::cerr << "ERROR: Attempted to add a GameState with a taken id,\n please ensure the correct class was used when adding GameState,\n and check GameState constructor to ensure the correct id was assigned" << std::endl;
+	try {
+		if (gameStateExists(gameStateInstance->id)) {
+			throw "Attempted to add a GameState with a taken id,\n please ensure the correct class was used when adding the GameState,\n and check the GameState constructor to ensure the correct id was assigned";
+		}
+
+		for (const auto& panelNameCur : gameStateInstance->panelNames) {
+			if (!PanelManager::panelExists(panelNameCur)) {
+				throw "Attempted to add a GameState with non-existent panel: \"" + panelNameCur + std::string("\"");
+			}
+		}
+
+
+		gameStates.insert(std::move(std::pair<GameStateType, GameStateUniquePtr>(gameStateInstance->id, std::move(gameStateInstance))));
+	}
+	catch (const char* errorMessage) {
+		ConsoleHandler::consolePrintErr(errorMessage);
 		return;
 	}
-
-	for (const auto& panelNameCur : gameStateInstance->panelNames) {
-		if (!PanelManager::panelExists(panelNameCur)) {
-			std::cerr << "ERROR: Attempted to add a GameState with non-existent panel: " << "\"" << panelNameCur << "\"" << std::endl;
-		}
-	}
-
-	gameStates.insert(std::move(std::pair<GameStateType, GameStateUniquePtr>(gameStateInstance->id, std::move(gameStateInstance))));
 }
 
 // does some error checking on every state, should be called after adding new game states
@@ -85,8 +90,7 @@ void GameStateHandler::gameStatesAddedStatesFinalize() {
 	for (const auto& [stateNameCur, gameStateCur] : gameStates) {
 		for (const auto& gameStateTransitionCur : gameStateCur->transitions) {
 			if (!gameStateExists(gameStateTransitionCur.toStateName)) {
-				std::cerr << "ERROR: Attempted to add a GameState with non-existent transition: " << "\"" << gameStateTransitionCur.toStateName
-					<< "\"" << std::endl;
+				ConsoleHandler::consolePrintErr("Attempted to add a GameState with non-existent transition: \"" + gameStateTransitionCur.toStateName + std::string("\""));
 			}
 		}
 	}

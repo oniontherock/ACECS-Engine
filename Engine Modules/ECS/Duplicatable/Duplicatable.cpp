@@ -1,7 +1,7 @@
 #include "Duplicatable.hpp"
 
 std::unique_ptr<Duplicatable> Duplicatable::duplicate() {
-	std::cerr << "ERROR: duplicate called on base " << "Duplicatable " << "class, downcasting from this duplicate may fail." << std::endl;
+	ConsoleHandler::consolePrintErr("duplicate called on base " + std::string("Duplicatable ") + "class, downcasting from this duplicate may fail.");
 	return std::unique_ptr<Duplicatable>(new Duplicatable());
 }
 

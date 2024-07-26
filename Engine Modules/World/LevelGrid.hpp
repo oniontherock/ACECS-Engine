@@ -30,16 +30,19 @@ struct LevelGrid {
 	// initialize the level grid and set it to be the dimensions passed in
 	static void levelGridInitialize(LevelCoordinate width, LevelCoordinate height, LevelCoordinate depth) {
 
-		if (width <= 0) {
-			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid width cannot be 0" << std::endl;
-			return;
+		try {
+			if (width <= 0) {
+				throw "ERROR: LevelGrid initialization failed: levelGrid width cannot be 0";
+			}
+			else if (height <= 0) {
+				throw "ERROR: LevelGrid initialization failed: levelGrid height cannot be 0";
+			}
+			else if (depth <= 0) {
+				throw "LevelGrid initialization failed : levelGrid depth cannot be 0";
+			}
 		}
-		else if (height <= 0) {
-			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid height cannot be 0" << std::endl;
-			return;
-		}
-		else if (depth <= 0) {
-			std::cerr << "ERROR: LevelGrid initialization failed: levelGrid depth cannot be 0" << std::endl;
+		catch (const char* message) {
+			ConsoleHandler::consolePrintErr(message);
 			return;
 		}
 
