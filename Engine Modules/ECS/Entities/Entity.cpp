@@ -60,9 +60,7 @@ Entity& Entity::operator= (const Entity& other) {
 
 	return *this;
 }
-Entity::~Entity() {
-	terminate();
-}
+Entity::~Entity() {}
 
 void Entity::componentsInitialize() {
 	componentsVector = std::vector<ComponentUniquePtr>(EntityComponents::totalComponents);
@@ -112,6 +110,7 @@ void Entity::componentsAllTerminate() {
 void Entity::eventsAllDeactivate() {
 	for (uint16_t i = 0; i < eventsVector.size(); i++) {
 		eventsVector[i]->isActive = false;
+		eventsVector[i]->clear();
 	}
 
 	hasAnyEvent = false;

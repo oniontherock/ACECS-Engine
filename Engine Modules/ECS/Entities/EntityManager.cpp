@@ -70,7 +70,7 @@ void EntityManager::entityTerminate(EntityId entityID) {
 
 	LevelGrid<BaseLevel>::levelGet(entitiesVector[entityID].levelId)->entityIdRemove(entitiesVector[entityID].Id);
 
-	// move the last entity in the entitiesVector to the position of the
+	// move the last entity in the entitiesVector to the position of the entity we are terminating
 	entitiesVector[entityID] = entitiesVector[uint16_t(entityCount - 1)];
 
 	entityCount--;

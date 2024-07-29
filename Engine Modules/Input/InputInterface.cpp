@@ -1,8 +1,10 @@
 #include "InputInterface.hpp"
 
 #include "Input Events/InputManager.hpp"
+#include "../Auxiliary/ConsoleHandler.hpp"
 
 bool InputInterface::inputGetActive(const InputName& name) {
+
 	try {
 
 		const uint16_t& indexFromName = InputManager::inputIndexFind(name);
@@ -11,16 +13,16 @@ bool InputInterface::inputGetActive(const InputName& name) {
 			return InputManager::inputs[indexFromName].isActive;
 		}
 		else {
-			throw (std::invalid_argument(name));
+			throw "Invalid input name: \"" + std::string(name) + std::string("\"");
 		}
 	}
-	catch (const std::invalid_argument& e) {
-		std::cout << "ERROR, INVALID INPUT NAME: " << "\"" << e.what() << "\"" << std::endl;
+	catch (const char* message) {
+		ConsoleHandler::consolePrintErr(message);
 		return false;
 	}
 }
 
-sf::Vector2i InputInterface::mousePositionGet() {
+sf::Vector2i InputInterface::windowMousePositionGet() {
 	return InputManager::mouseData.position;
 }
 float InputInterface::mouseScrollAmountGet() {
@@ -31,11 +33,16 @@ void InputInterface::mousePositionUpdate(sf::Vector2i position) {
 	InputManager::mouseData.position = position;
 }
 void InputInterface::mousePositionUpdate(uint16_t x, uint16_t y) {
-	InputManager::mouseData.position = sf::Vector2i(x, y);
+	mousePositionUpdate(sf::Vector2i(x, y));
 }
 void InputInterface::mouseScrollAmountUpdate(float scrollAmount) {
 	InputManager::mouseData.scrollAmount = scrollAmount;
 }
+
+bool InputInterface::focusGet() {
+	return InputManager::hasFocus;
+}
+
 
 void InputInterface::inputRegister(const InputName& name, const KeySet& keys) {
 	KeyRecorder::keySetRegister(keys);
@@ -70,6 +77,12 @@ void InputInterface::eventsProcess(sf::RenderWindow& window) {
 			break;
 		case sf::Event::MouseWheelScrolled:
 			mouseScrollAmountUpdate(event.mouseWheelScroll.delta);
+			break;
+		case sf::Event::GainedFocus:
+			InputManager::hasFocus = true;
+			break;
+		case sf::Event::LostFocus:
+			InputManager::hasFocus = false;
 			break;
 		}
 	}

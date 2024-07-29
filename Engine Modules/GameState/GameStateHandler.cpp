@@ -90,7 +90,7 @@ void GameStateHandler::gameStatesAddedStatesFinalize() {
 	for (const auto& [stateNameCur, gameStateCur] : gameStates) {
 		for (const auto& gameStateTransitionCur : gameStateCur->transitions) {
 			if (!gameStateExists(gameStateTransitionCur.toStateName)) {
-				ConsoleHandler::consolePrintErr("Attempted to add a GameState with non-existent transition: \"" + gameStateTransitionCur.toStateName + std::string("\""));
+				ConsoleHandler::consolePrintErr("AAttempted to add a GameState with non-existent transition: \"" + gameStateTransitionCur.toStateName + std::string("\""));
 			}
 		}
 	}

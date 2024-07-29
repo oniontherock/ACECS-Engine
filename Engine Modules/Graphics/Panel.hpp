@@ -1,7 +1,9 @@
 #ifndef __PANEL_H__
 #define __PANEL_H__
 
+#include "../Input/InputInterface.hpp"
 #include "SFML/Graphics.hpp"
+#include "WindowHolder.hpp"
 #include <functional>
 
 typedef sf::View PanelView;
@@ -27,7 +29,9 @@ struct Panel {
 	}
 	void vertexArrayDraw(const sf::VertexArray& vertexArray, const sf::RenderStates& states);
 
-	void viewZoom(float zoomFactor);
+	void viewZoomScale(float zoomFactor);
+	void viewZoomSet(float zoomValue);
+	float viewZoomGet() const;
 	void viewMove(float moveX, float moveY);
 	void viewMove(sf::Vector2f moveVec);
 
@@ -35,6 +39,14 @@ struct Panel {
 	void panelRender(sf::RenderWindow& renderWindowMain);
 	// clears the panel with a transparent color
 	void panelClear();
+
+
+	// gets the mouse position relative to the panel's window position
+	sf::Vector2f panelMousePositionGet();
+	// gets the mouse position relative to the panel's view position
+	sf::Vector2f viewMousePositionGet();
+
+	const PanelView& viewGet();
 
 	// the Panel's position and dimensions on the screen
 	PanelRect screenRect{ 0, 0, 0, 0 };
@@ -51,6 +63,10 @@ private:
 	PanelScreenTexture texture;
 	// the panel's view,
 	PanelView view;
+
+	sf::Vector2f viewRectSizeOriginal;
+
+	float viewZoom = 1.f;
 
 	virtual void panelUpdate() = 0;
 

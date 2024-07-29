@@ -1,10 +1,11 @@
 #include "InputManager.hpp"
 
-
 std::vector<InputEvent> InputManager::inputs{};
 std::map<InputName, uint16_t> InputManager::namesToIndexesMap{};
 
 MouseData InputManager::mouseData{};
+
+bool InputManager::hasFocus = true;
 
 bool InputManager::keySetContains(const KeySet& set, const KeyEvent& keyEvent) {
 	for (const auto& curSetKeyEvent : set) {
@@ -37,6 +38,8 @@ void InputManager::inputEventsUpdate() {
 	for (InputEvent& curInput : inputs) {
 		curInput.isActive = false;
 	}
+
+	if (!hasFocus) return;
 
 	KeySet keys = KeyRecorder::keysGet();
 

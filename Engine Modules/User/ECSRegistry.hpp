@@ -12,8 +12,8 @@ namespace ECSRegistry {
 
 // avoid having undefined constructor arguments for events or components,
 // as it's more convenient to not have to define every event/component all the time
-
 // whenever you create a new type, ensure you register it in the implementation file of this header
+
 namespace EntityEvents {
 	struct EventExample final : public Event {
 
@@ -21,11 +21,13 @@ namespace EntityEvents {
 
 		uint16_t var;
 
+		void clear() final {
+			var = 0;
+		}
+
 		DUPLICATE_OVERRIDE(EventExample)
 	};
 }
-// use this file to define new component types.
-// whenever you create a new type, ensure you register it in the implementation file of this header
 namespace EntityComponents {
 	struct ComponentExample final : public Component {
 

@@ -104,6 +104,7 @@ public:
 	}
 	template <class T>
 	void entityEventDeactivate() {
+		eventsVector[EntityEvents::EventIDs<T>::ID]->clear();
 		eventsVector[EntityEvents::EventIDs<T>::ID]->isActive = false;
 	}
 

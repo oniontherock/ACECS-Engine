@@ -24,6 +24,8 @@ namespace InputManager {
 	
 	extern MouseData mouseData;
 
+	extern bool hasFocus;
+
 	bool keySetContains(const KeySet& set, const KeyEvent& keyEvent);
 
 	bool inputEventIsActive(const InputEvent& inputEvent, const KeySet& keySet);

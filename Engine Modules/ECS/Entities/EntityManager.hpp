@@ -1,18 +1,15 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include <unordered_set>
-#include <string>
-#include <functional>
-#include <vector>
-
-#include "../Components/ComponentTemplateManager.hpp"
-
-#include "Entity.hpp"
-#include "../TypeDefinitions.hpp"
-
-#include "../../World/LevelTypeDefinitions.hpp"
 #include "../../World/LevelGrid.hpp"
+#include "../../World/LevelTypeDefinitions.hpp"
+#include "../Components/ComponentTemplateManager.hpp"
+#include "../TypeDefinitions.hpp"
+#include "Entity.hpp"
+#include <functional>
+#include <string>
+#include <unordered_set>
+#include <vector>
 
 namespace EntityManager {
 
