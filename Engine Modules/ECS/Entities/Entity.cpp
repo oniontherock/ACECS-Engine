@@ -30,16 +30,6 @@ static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, const std::v
 		A.push_back(Duplicatable::duplicateAndConvertToType<T>(B[i].get()));
 	}
 }
-template <class T>
-static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, std::vector<std::unique_ptr<T>>& B) {
-	for (uint16_t i = 0; i < B.size(); i++) {
-		if (!static_cast<bool>(B[i])) {
-			A.push_back(std::unique_ptr<T>(nullptr));
-			continue;
-		}
-		A.push_back(Duplicatable::duplicateAndConvertToType<T>(B[i].get()));
-	}
-}
 
 Entity::Entity(Entity& other) {
 	Id = other.Id;
@@ -47,7 +37,7 @@ Entity::Entity(Entity& other) {
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
-	copyUniquePtrVector<EntityEvents::Event>(eventsVector, other.eventsVector);
+	eventsInitialize();
 }
 Entity& Entity::operator= (const Entity& other) {
 
@@ -56,7 +46,7 @@ Entity& Entity::operator= (const Entity& other) {
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
-	copyUniquePtrVector<EntityEvents::Event>(eventsVector, other.eventsVector);
+	eventsInitialize();
 
 	return *this;
 }
@@ -65,13 +55,8 @@ Entity::~Entity() {}
 void Entity::componentsInitialize() {
 	componentsVector = std::vector<ComponentUniquePtr>(EntityComponents::totalComponents);
 };
-
 void Entity::eventsInitialize() {
-	auto& allEvents = EntityEvents::allEvents;
-
-	for (uint16_t i = 0; i < allEvents.size(); i++) {
-		eventsVector.push_back(Duplicatable::duplicateAndConvertToType<EntityEvents::Event>(allEvents[i]));
-	}
+	eventsVector = std::vector<EventVector>(EntityEvents::totalEventTypes, EventVector());
 };
 
 bool Entity::entityComponentHasAtIndex(EntityComponents::ComponentTypeID index) {
@@ -89,7 +74,7 @@ void Entity::entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* c
 void Entity::entityUpdate() {
 	componentsUpdate();
 	// deactivating all events is basically just clearing the entity's events
-	if (hasAnyEvent) eventsAllDeactivate();
+	if (hasAnyEvent) eventsAllTerminate();
 }
 void Entity::componentsUpdate() {
 	for (uint16_t i = 0; i < EntityComponents::totalComponents; i++) {
@@ -101,28 +86,31 @@ void Entity::componentsUpdate() {
 	}
 }
 
+void Entity::entityEventTerminate(EntityEvents::EventTypeID eventId, uint16_t ind) {
+	EventPool::eventPoolGive(std::move(eventsVector[eventId][ind]), eventId);
+
+	eventsVector[eventId].getVec().erase(eventsVector[eventId].getVec().begin() + ind);
+}
+
 void Entity::componentsAllTerminate() {
 	for (EntityComponents::ComponentTypeID i = 0; i < EntityComponents::totalComponents; i++) {
 		componentsVector[i].reset();
 	}
 }
 
-void Entity::eventsAllDeactivate() {
-	for (uint16_t i = 0; i < eventsVector.size(); i++) {
-		eventsVector[i]->isActive = false;
-		eventsVector[i]->clear();
+void Entity::entityEventTerminateAllOfType(EntityEvents::EventTypeID eventId) {
+	for (uint16_t i = 0; i < eventsVector[eventId].getVec().size(); i++) {
+		entityEventTerminate(eventId, i);
 	}
-
-	hasAnyEvent = false;
 }
 
 void Entity::eventsAllTerminate() {
-	for (uint16_t i = 0; i < eventsVector.size(); i++) {
 
-		if (eventsVector[i] != nullptr) {
-			eventsVector[i].reset();
-		}
+	for (EntityEvents::EventTypeID entityTypeInd = 0; entityTypeInd < EntityEvents::totalEventTypes; entityTypeInd++) {
+		entityEventTerminateAllOfType(entityTypeInd);
 	}
+
+	eventsVector.clear();
 
 	hasAnyEvent = false;
 }

@@ -11,8 +11,6 @@
 namespace EntityEvents {
 
 	struct Event : public Duplicatable {
-		bool isActive = false;
-
 		// resets all the event's data to it's default values
 		virtual void clear() = 0;
 	};

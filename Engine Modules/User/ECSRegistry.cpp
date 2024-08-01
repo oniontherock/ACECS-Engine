@@ -8,6 +8,7 @@ void ECSRegistry::ECSInitialize() {
 	EntityComponents::componentIDsInitialize();
 	EntityComponents::componentTemplatesInitialize();
 	EntityEvents::eventIDsInitialize();
+	EventPool::eventPoolInitialize();
 }
 void ECSRegistry::ECSTerminate() {
 	EntityEvents::allEventsTerminate();
