@@ -56,7 +56,12 @@ void Entity::componentsInitialize() {
 	componentsVector = std::vector<ComponentUniquePtr>(EntityComponents::totalComponents);
 };
 void Entity::eventsInitialize() {
-	eventsVector = std::vector<EventVector>(EntityEvents::totalEventTypes, EventVector());
+
+	std::vector<EventVector> columns(MAX_EVENT_TYPES);
+	for (uint16_t i = 0; i < columns.size(); i++) {
+		columns[i] = EventVector();
+	}
+	eventsVector = std::move(columns);
 };
 
 bool Entity::entityComponentHasAtIndex(EntityComponents::ComponentTypeID index) {
@@ -89,7 +94,7 @@ void Entity::componentsUpdate() {
 void Entity::entityEventTerminate(EntityEvents::EventTypeID eventId, uint16_t ind) {
 	EventPool::eventPoolGive(std::move(eventsVector[eventId][ind]), eventId);
 
-	eventsVector[eventId].getVec().erase(eventsVector[eventId].getVec().begin() + ind);
+	eventsVector[eventId].erase(eventsVector[eventId].begin() + ind);
 }
 
 void Entity::componentsAllTerminate() {
@@ -99,7 +104,7 @@ void Entity::componentsAllTerminate() {
 }
 
 void Entity::entityEventTerminateAllOfType(EntityEvents::EventTypeID eventId) {
-	for (uint16_t i = 0; i < eventsVector[eventId].getVec().size(); i++) {
+	for (uint16_t i = 0; i < eventsVector[eventId].size(); i++) {
 		entityEventTerminate(eventId, i);
 	}
 }
@@ -109,8 +114,6 @@ void Entity::eventsAllTerminate() {
 	for (EntityEvents::EventTypeID entityTypeInd = 0; entityTypeInd < EntityEvents::totalEventTypes; entityTypeInd++) {
 		entityEventTerminateAllOfType(entityTypeInd);
 	}
-
-	eventsVector.clear();
 
 	hasAnyEvent = false;
 }

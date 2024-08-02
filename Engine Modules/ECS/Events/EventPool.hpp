@@ -6,36 +6,32 @@
 #include "EventIDs.hpp"
 
 class EventPool {
-	static std::vector<std::vector<EntityEvents::Event*>> eventPool;
+	static std::vector<std::vector<EventUniquePtr>> eventPool;
 
 public:
 	static void eventPoolInitialize();
 	template <class T>
-	static inline T* eventPoolTake() {
+	static inline EventUniquePtr eventPoolTake() {
 
 		EntityEvents::EventTypeID eventId = EntityEvents::EventIDs<T>::ID;
 
 		if (eventPool[eventId].size() == 0) {
-			eventPoolGive(new T(), eventId);
+			eventPoolGive(EventUniquePtr(new T()), eventId);
 		}
 
-		EntityEvents::Event* item = eventPool[eventId].back();
+		EventUniquePtr item = std::move(eventPool[eventId].back());
 		eventPool[eventId].pop_back();
 
 		item->clear();
 
-		return static_cast<T*>(item);
+		return std::move(item);
 	}
-	static inline void eventPoolGive(EntityEvents::Event* item, EntityEvents::EventTypeID eventId) {
-		eventPool[eventId].push_back(item);
-	}
-	template <class T>
-	static inline void eventPoolGive(EntityEvents::Event* item) {
-		eventPoolGive(item, EntityEvents::EventIDs<T>::ID);
+	static inline void eventPoolGive(EventUniquePtr item, EntityEvents::EventTypeID eventId) {
+		eventPool[eventId].push_back(std::move(item));
 	}
 	template <class T>
-	static inline void eventPoolGive(T* item, EntityEvents::EventTypeID eventId) {
-		eventPool[eventId].push_back(item);
+	static inline void eventPoolGive(EventUniquePtr item) {
+		eventPoolGive(std::move(item), EntityEvents::EventIDs<T>::ID);
 	}
 };
 
