@@ -2,7 +2,9 @@
 
 Entity::Entity() {
 	updateType = EntityUpdateType::Frame;
-	Id = 0;
+	Id = EntityId(new uint32_t(UINT32_MAX));
+	componentsInitialize();
+	eventsInitialize();
 }
 Entity::Entity(EntityId _id, EntityUpdateType _updateType) {
 	Id = _id;
@@ -32,21 +34,25 @@ static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, const std::v
 }
 
 Entity::Entity(Entity& other) {
-	Id = other.Id;
+	//*Id = *other.Id;
 	updateType = other.updateType;
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
-	eventsInitialize();
+	for (uint16_t i = 0; i < eventsVector.size(); i++) {
+		copyUniquePtrVector<EntityEvents::Event>(eventsVector[i], other.eventsVector[i]);
+	}
 }
 Entity& Entity::operator= (const Entity& other) {
 
-	Id = other.Id;
+	//*Id = *other.Id;
 	updateType = other.updateType;
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
-	eventsInitialize();
+	for (uint16_t i = 0; i < eventsVector.size(); i++) {
+		copyUniquePtrVector<EntityEvents::Event>(eventsVector[i], other.eventsVector[i]);
+	}
 
 	return *this;
 }

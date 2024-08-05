@@ -18,9 +18,13 @@ BaseLevel::BaseLevel(LevelPosition _id) :
 void BaseLevel::entityIdAdd(const EntityId id) {
 	entities.push_back(id);
 }
-void BaseLevel::entityIdRemove(EntityId id) {
+void BaseLevel::entityIdRemove(const EntityId id) {
 	// the position of the id in the entities vector
-	auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
+	auto idVectorPosition = std::find_if(entities.begin(), entities.end(), [&](EntityId const ptr) {
+		return *ptr == *id;
+		});
+
+	if (idVectorPosition == entities.end()) return;
 
 	entities.erase(idVectorPosition);
 }

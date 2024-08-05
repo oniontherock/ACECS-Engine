@@ -10,14 +10,16 @@ void EntityManager::entitiesUpdate() {
 	}
 }
 void EntityManager::entityUpdate(EntityId entityId) {
-	entitiesVector[entityId].entityUpdate();
+	entitiesVector[*entityId].entityUpdate();
 }
 
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 
-	EntityId entityId = entityCount;
+	EntityId entityId = EntityId(new uint32_t(entityCount));
 
-	entitiesVector[entityId] = Entity(entityId, updateType);
+	Entity entity = Entity(entityId, updateType);
+
+	entitiesVector[*entityId] = entity;
 
 	entityCount++;
 
@@ -63,15 +65,31 @@ void EntityManager::entityAddToRoom(EntityId entityId, LevelCoordinate levelX, L
 }
 
 Entity& EntityManager::entityGet(EntityId entityId) {
-	return entitiesVector[entityId];
+	return entitiesVector[*entityId];
 }
 
-void EntityManager::entityTerminate(EntityId entityID) {
+void EntityManager::entityTerminate(EntityId entityId) {
+	uint32_t lastInd = entityCount - 1;
 
-	LevelGrid<BaseLevel>::levelGet(entitiesVector[entityID].levelId)->entityIdRemove(entitiesVector[entityID].Id);
+	LevelGrid<BaseLevel>::levelGet(entitiesVector[*entityId].levelId)->entityIdRemove(entityId);
+	//LevelGrid<BaseLevel>::levelGet(entitiesVector[lastInd].levelId)->entityIdRemove(entitiesVector[lastInd].Id);
 
-	// move the last entity in the entitiesVector to the position of the entity we are terminating
-	entitiesVector[entityID] = entitiesVector[uint16_t(entityCount - 1)];
+	ConsoleHandler::consolePrintDebug("deleted");
+
+	if (*entityId == lastInd) {
+		entitiesVector[*entityId].terminate();
+	}
+	else {
+
+		entitiesVector[*entityId].terminate();
+		entitiesVector[*entityId] = entitiesVector[lastInd];
+		//entitiesVector[lastInd].terminate();
+
+		EntityId tempId = std::move(entityId);
+		entitiesVector[*tempId].Id = std::move(entitiesVector[lastInd].Id);
+		entitiesVector[lastInd].Id = std::move(tempId);
+		*entitiesVector[lastInd].Id = UINT32_MAX;
+	}
 
 	entityCount--;
 }

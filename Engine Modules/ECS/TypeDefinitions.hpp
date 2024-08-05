@@ -1,5 +1,7 @@
 #pragma once
+
 #include <cstdint>
+#include <iostream>
 
 
 enum class EntityUpdateType : uint8_t {
@@ -7,7 +9,7 @@ enum class EntityUpdateType : uint8_t {
 	Frame, // the entity is updated every frame by the entity updater
 };
 
-typedef uint32_t EntityId;
+typedef std::shared_ptr<uint32_t> EntityId;
 
 extern uint32_t MAX_ENTITIES;
 extern uint16_t MAX_COMPONENT_TYPES;

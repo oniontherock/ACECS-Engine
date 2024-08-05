@@ -19,6 +19,7 @@
 #include <algorithm>
 
 
+
 typedef std::vector<EventUniquePtr> EventVector;
 
 template <class CastType>
@@ -45,8 +46,10 @@ private:
 
 	void componentsAllTerminate();
 	void eventsAllTerminate();
-	void terminate();
 public:
+
+	void terminate();
+
 	explicit Entity();
 	explicit Entity(EntityId _id, EntityUpdateType _updateType);
 	explicit Entity(EntityId _id, EntityUpdateType _updateType, LevelPosition _levelId);
