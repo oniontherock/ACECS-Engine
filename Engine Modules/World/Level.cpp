@@ -15,14 +15,12 @@ BaseLevel::BaseLevel(LevelPosition _id) :
 	BaseLevel(_id.x, _id.y, _id.z)
 {}
 
-void BaseLevel::entityIdAdd(const EntityId id) {
+void BaseLevel::entityIdAdd(EntityId id) {
 	entities.push_back(id);
 }
 void BaseLevel::entityIdRemove(const EntityId id) {
 	// the position of the id in the entities vector
-	auto idVectorPosition = std::find_if(entities.begin(), entities.end(), [&](EntityId const ptr) {
-		return *ptr == *id;
-		});
+	auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
 
 	if (idVectorPosition == entities.end()) return;
 

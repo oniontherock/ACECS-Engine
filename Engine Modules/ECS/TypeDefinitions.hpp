@@ -9,7 +9,7 @@ enum class EntityUpdateType : uint8_t {
 	Frame, // the entity is updated every frame by the entity updater
 };
 
-typedef std::shared_ptr<uint32_t> EntityId;
+typedef uint32_t EntityId;
 
 extern uint32_t MAX_ENTITIES;
 extern uint16_t MAX_COMPONENT_TYPES;

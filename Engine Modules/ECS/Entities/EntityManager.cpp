@@ -1,29 +1,26 @@
 #include "EntityManager.hpp"
 
 std::vector<Entity> EntityManager::entitiesVector = std::vector<Entity>(MAX_ENTITIES);
+std::vector<EntityId> EntityManager::entityIdsVector = std::vector<EntityId>(MAX_ENTITIES);
 
-uint32_t EntityManager::entityCount = 0;
-
-void EntityManager::entitiesUpdate() {
-	for (uint32_t i = 0; i < entityCount; i++) {
-		entitiesVector[i].entityUpdate();
+void EntityManager::entityIdsInitialize() {
+	for (EntityId i = 0; i < MAX_ENTITIES; i++) {
+		entityIdsVector[i] = (MAX_ENTITIES - 1) - i;
 	}
 }
+
 void EntityManager::entityUpdate(EntityId entityId) {
-	entitiesVector[*entityId].entityUpdate();
+	entitiesVector[entityId].entityUpdate();
 }
 
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
+	
+	EntityId id = entityIdsVector.back();
+	entityIdsVector.pop_back();
 
-	EntityId entityId = EntityId(new uint32_t(entityCount));
+	entitiesVector[id] = Entity(id, updateType);
 
-	Entity entity = Entity(entityId, updateType);
-
-	entitiesVector[*entityId] = entity;
-
-	entityCount++;
-
-	return entityId;
+	return entitiesVector[id].Id;
 }
 EntityId EntityManager::entityCreate(LevelPosition level, EntityUpdateType updateType) {
 
@@ -65,34 +62,17 @@ void EntityManager::entityAddToRoom(EntityId entityId, LevelCoordinate levelX, L
 }
 
 Entity& EntityManager::entityGet(EntityId entityId) {
-	return entitiesVector[*entityId];
+	return entitiesVector[entityId];
 }
 
 void EntityManager::entityTerminate(EntityId entityId) {
-	uint32_t lastInd = entityCount - 1;
 
-	LevelGrid<BaseLevel>::levelGet(entitiesVector[*entityId].levelId)->entityIdRemove(entityId);
-	//LevelGrid<BaseLevel>::levelGet(entitiesVector[lastInd].levelId)->entityIdRemove(entitiesVector[lastInd].Id);
+	LevelGrid<BaseLevel>::levelGet(entitiesVector[entityId].levelId)->entityIdRemove(entityId);
 
-	ConsoleHandler::consolePrintDebug("deleted");
-
-	if (*entityId == lastInd) {
-		entitiesVector[*entityId].terminate();
-	}
-	else {
-
-		entitiesVector[*entityId].terminate();
-		entitiesVector[*entityId] = entitiesVector[lastInd];
-		//entitiesVector[lastInd].terminate();
-
-		EntityId tempId = std::move(entityId);
-		entitiesVector[*tempId].Id = std::move(entitiesVector[lastInd].Id);
-		entitiesVector[lastInd].Id = std::move(tempId);
-		*entitiesVector[lastInd].Id = UINT32_MAX;
-	}
-
-	entityCount--;
+	entitiesVector[entityId].terminate();
+	entityIdsVector.push_back(entityId);
 }
 void EntityManager::entitiesAllDelete() {
 	entitiesVector.clear();
 }
+

@@ -10,17 +10,15 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <numeric>
 
 namespace EntityManager {
 
 	extern std::vector<Entity> entitiesVector;
+	extern std::vector<EntityId> entityIdsVector;
 
-	extern uint32_t entityCount;
+	void entityIdsInitialize();
 
-	// updates every entity in existence.
-	// note that this shouldn't be used for simply updating the entities,
-	// as entities in active rooms are updated in the LevelUpdater.
-	void entitiesUpdate();
 	void entityUpdate(EntityId entityId);
 	/**
 	creates a new entity instance and returns it's ID

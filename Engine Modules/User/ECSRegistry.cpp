@@ -5,6 +5,7 @@ uint16_t MAX_EVENT_TYPES = 32;
 uint16_t MAX_COMPONENT_TYPES = 32;
 
 void ECSRegistry::ECSInitialize() {
+	EntityManager::entityIdsInitialize();
 	EntityComponents::componentIDsInitialize();
 	EntityComponents::componentTemplatesInitialize();
 	EntityEvents::eventIDsInitialize();

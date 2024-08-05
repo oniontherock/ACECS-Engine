@@ -2,9 +2,9 @@
 
 Entity::Entity() {
 	updateType = EntityUpdateType::Frame;
-	Id = EntityId(new uint32_t(UINT32_MAX));
-	componentsInitialize();
-	eventsInitialize();
+	Id = 0;
+	//componentsInitialize();
+	//eventsInitialize();
 }
 Entity::Entity(EntityId _id, EntityUpdateType _updateType) {
 	Id = _id;
@@ -24,6 +24,7 @@ Entity::Entity(EntityId _id, EntityUpdateType _updateType, LevelPosition _levelI
 
 template <class T>
 static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, const std::vector<std::unique_ptr<T>>& B) {
+	A.clear();
 	for (uint16_t i = 0; i < B.size(); i++) {
 		if (!static_cast<bool>(B[i])) {
 			A.push_back(std::unique_ptr<T>(nullptr));
@@ -34,22 +35,24 @@ static void copyUniquePtrVector(std::vector<std::unique_ptr<T>>& A, const std::v
 }
 
 Entity::Entity(Entity& other) {
-	//*Id = *other.Id;
+	Id = other.Id;
 	updateType = other.updateType;
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
+	eventsInitialize();
 	for (uint16_t i = 0; i < eventsVector.size(); i++) {
 		copyUniquePtrVector<EntityEvents::Event>(eventsVector[i], other.eventsVector[i]);
 	}
 }
 Entity& Entity::operator= (const Entity& other) {
 
-	//*Id = *other.Id;
+	Id = other.Id;
 	updateType = other.updateType;
 	levelId = other.levelId;
 
 	copyUniquePtrVector<EntityComponents::Component>(componentsVector, other.componentsVector);
+	eventsInitialize();
 	for (uint16_t i = 0; i < eventsVector.size(); i++) {
 		copyUniquePtrVector<EntityEvents::Event>(eventsVector[i], other.eventsVector[i]);
 	}
