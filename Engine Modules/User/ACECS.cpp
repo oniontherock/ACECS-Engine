@@ -1,5 +1,13 @@
 #include "ACECS.hpp"
 
+#include "../GameState.hpp"
+#include "../Graphics.hpp"
+#include "../Input.hpp"
+#include "../World.hpp"
+#include "ECSRegistry.hpp"
+#include "GameLevel.hpp"
+#include "GameStates.hpp"
+#include "Panels.hpp"
 
 void Engine::inputsRegister() {
 	InputInterface::inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });

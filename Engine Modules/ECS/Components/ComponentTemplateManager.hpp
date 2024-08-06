@@ -1,10 +1,9 @@
 #ifndef __COMPONENT_TEMPLATE_MANAGER_H__
 #define __COMPONENT_TEMPLATE_MANAGER_H__
 
-#include <functional>
-#include "../../Auxiliary/ConsoleHandler.hpp"
 #include "../Entities/Entity.hpp"
 #include "Component.hpp"
+#include <unordered_map>
 
 // just the name of a component template
 typedef const char* ComponentTemplateName;

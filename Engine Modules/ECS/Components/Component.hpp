@@ -1,15 +1,6 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 
-#include <cstdint>
-#include <map>
-#include <set>
-#include <functional>
-#include <string>
-#include <iostream>
-#include <vector>
-
-#include "../TypeDefinitions.hpp"
 #include "../Duplicatable/Duplicatable.hpp"
 
 struct Entity;

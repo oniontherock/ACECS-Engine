@@ -1,16 +1,11 @@
 #ifndef __KEY_RECORDER_H__
 #define __KEY_RECORDER_H__
 
-#include <cstdint>
-#include <unordered_set>
-#include <unordered_map>
-#include <set>
-#include <iostream>
-#include <tuple>
-
-#include "SFML/Window/Event.hpp"
-
 #include "KeyEventDefinitions.hpp"
+#include "SFML/Window/Event.hpp"
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
 
 
 // records input and assigns it a transition type

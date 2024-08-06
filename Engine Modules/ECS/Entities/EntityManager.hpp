@@ -1,21 +1,18 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include "../../World/LevelGrid.hpp"
 #include "../../World/LevelTypeDefinitions.hpp"
 #include "../Components/ComponentTemplateManager.hpp"
 #include "../TypeDefinitions.hpp"
 #include "Entity.hpp"
-#include <functional>
-#include <string>
-#include <unordered_set>
 #include <vector>
-#include <numeric>
+#include <set>
+
 
 namespace EntityManager {
 
 	extern std::vector<Entity> entitiesVector;
-	extern std::vector<EntityId> entityIdsVector;
+	extern std::set<EntityId> entityIdsSet;
 
 	void entityIdsInitialize();
 

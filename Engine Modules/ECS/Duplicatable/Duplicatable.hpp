@@ -2,7 +2,7 @@
 #define __DUPLICATABLE_H__
 
 #include <iostream>
-#include "../../Auxiliary/ConsoleHandler.hpp"
+
 
 struct Duplicatable {
 	virtual std::unique_ptr<Duplicatable> duplicate();

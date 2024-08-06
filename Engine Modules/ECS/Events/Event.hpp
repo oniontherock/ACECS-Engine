@@ -1,12 +1,8 @@
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
-#include <cstdint>
-#include <vector>
-#include <queue>
-#include <iostream>
-
 #include "../Duplicatable/Duplicatable.hpp"
+#include <iostream>
 
 namespace EntityEvents {
 

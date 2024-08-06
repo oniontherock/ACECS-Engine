@@ -1,6 +1,7 @@
 #include "ConsoleHandler.hpp"
 
 #include <Windows.h>
+#include <iostream>
 
 std::string ConsoleHandler::gameName = "Game";
 

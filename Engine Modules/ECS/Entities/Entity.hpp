@@ -8,15 +8,8 @@
 #include "../Events/EventIDs.hpp"
 #include "../Events/EventPool.hpp"
 #include "../TypeDefinitions.hpp"
-#include <array>
 #include <cstdint>
-#include <iostream>
-#include <optional>
-#include <queue>
-#include <set>
 #include <vector>
-#include <map>
-#include <algorithm>
 
 
 

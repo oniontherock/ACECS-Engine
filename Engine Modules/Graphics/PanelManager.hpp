@@ -2,7 +2,6 @@
 #define __PANEL_MANAGER_H__
 
 #include <unordered_map>
-#include <vector>
 #include "Panel.hpp"
 
 namespace PanelManager {

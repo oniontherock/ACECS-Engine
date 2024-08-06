@@ -1,14 +1,11 @@
 #ifndef __GAME_STATE_HANDLER_H__
 #define __GAME_STATE_HANDLER_H__
 
-#include <unordered_map>
-#include <functional>
-#include <cstdint>
-#include <iostream>
 #include "../Graphics/Panel.hpp"
-#include "../Graphics/PanelManager.hpp"
 #include "../Input/InputInterface.hpp"
-#include "../Auxiliary/ConsoleHandler.hpp"
+#include <cstdint>
+#include <unordered_map>
+
 
 enum GameStateTypes : uint16_t;
 

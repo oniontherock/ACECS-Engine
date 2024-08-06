@@ -1,7 +1,9 @@
 #include "InputInterface.hpp"
 
-#include "Input Events/InputManager.hpp"
 #include "../Auxiliary/ConsoleHandler.hpp"
+#include "Input Events/InputManager.hpp"
+#include "Key Events/KeyRecorder.hpp"
+
 
 bool InputInterface::inputGetActive(const InputName& name) {
 

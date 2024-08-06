@@ -1,7 +1,7 @@
 #ifndef __INPUT_INTERFACE_H__
 #define __INPUT_INTERFACE_H__
 
-#include "../SFMLInclude/SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp"
 #include "Input Events/InputEventDefinitions.hpp"
 #include "Key Events/KeyEventDefinitions.hpp"
 

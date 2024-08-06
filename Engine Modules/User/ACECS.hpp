@@ -1,14 +1,8 @@
 #ifndef __ACECS_H__
 #define __ACECS_H__
 
-#include "../Input.hpp"
-#include "../GameState.hpp"
 #include "../Graphics.hpp"
-#include "../World.hpp"
-#include "ECSRegistry.hpp"
-#include "GameLevel.hpp"
-#include "GameStates.hpp"
-#include "Panels.hpp"
+#include "SFML/Graphics.hpp"
 
 #define GAME_STATE_FUNCTION []()
 #define PANEL_DRAW_FUNCTION [](Panel& panel)

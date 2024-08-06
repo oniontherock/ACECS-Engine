@@ -1,16 +1,11 @@
 #ifndef __INPUT_MANAGER_H__
 #define __INPUT_MANAGER_H__
 
+#include "InputEventDefinitions.hpp"
+#include "SFML/System/Vector2.hpp"
 #include <map>
 #include <vector>
-#include <unordered_set>
-#include <unordered_map>
-#include <iostream>
 
-#include "SFML/Graphics.hpp"
-
-#include "../Key Events/KeyRecorder.hpp"
-#include "InputEventDefinitions.hpp"
 
 struct MouseData {
 	sf::Vector2i position;

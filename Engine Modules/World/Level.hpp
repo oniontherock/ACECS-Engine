@@ -1,9 +1,11 @@
 #ifndef __LEVEL_H__
 #define __LEVEL_H__
 
-#include "LevelTypeDefinitions.hpp"
-#include "../ECS/Entities/Entity.hpp"
 #include "../ECS/TypeDefinitions.hpp"
+#include "LevelTypeDefinitions.hpp"
+#include <iostream>
+#include <vector>
+
 
 struct BaseLevel {
 

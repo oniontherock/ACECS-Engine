@@ -1,10 +1,7 @@
 #ifndef __PANEL_H__
 #define __PANEL_H__
 
-#include "../Input/InputInterface.hpp"
 #include "SFML/Graphics.hpp"
-#include "WindowHolder.hpp"
-#include <functional>
 
 typedef sf::View PanelView;
 typedef sf::RenderTexture PanelScreenTexture;

@@ -1,4 +1,6 @@
 #include "ComponentTemplateManager.hpp"
+#include "../../Auxiliary/ConsoleHandler.hpp"
+
 
 std::unordered_map<ComponentTemplateName, ComponentTemplate> ComponentTemplateManager::componentTemplates{};
 

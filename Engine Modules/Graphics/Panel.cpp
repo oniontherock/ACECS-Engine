@@ -1,4 +1,5 @@
 #include "Panel.hpp"
+#include "../Input/InputInterface.hpp"
 
 Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor) :
 	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor), viewRectSizeOriginal(_viewRect.getSize())
@@ -74,7 +75,7 @@ sf::Vector2f Panel::panelMousePositionGet() {
 
 	return mousePos - screenRect.getPosition();
 }
-#include "../Auxiliary/ConsoleHandler.hpp"
+
 sf::Vector2f Panel::viewMousePositionGet() {
 	sf::Vector2f mousePos = panelMousePositionGet();
 

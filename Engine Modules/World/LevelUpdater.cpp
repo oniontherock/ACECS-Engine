@@ -1,5 +1,7 @@
 #include "LevelUpdater.hpp"
 
+#include "../ECS/Entities/EntityManager.hpp"
+
 
 void LevelUpdater::levelsUpdate() {
 	for (uint32_t levelActiveInd = 0; levelActiveInd < levelsActiveVector.size(); levelActiveInd++) {

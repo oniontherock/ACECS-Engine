@@ -1,4 +1,6 @@
 #include "GameStateHandler.hpp"
+#include "../Auxiliary/ConsoleHandler.hpp"
+#include "../Graphics/PanelManager.hpp"
 
 std::unordered_map<GameStateType, GameStateUniquePtr> GameStateHandler::gameStates = std::unordered_map<GameStateType, GameStateUniquePtr>();
 GameStateType GameStateHandler::gameStateNameCur{};

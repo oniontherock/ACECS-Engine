@@ -1,4 +1,5 @@
 #include "InputManager.hpp"
+#include "../Key Events/KeyRecorder.hpp"
 
 std::vector<InputEvent> InputManager::inputs{};
 std::map<InputName, uint16_t> InputManager::namesToIndexesMap{};

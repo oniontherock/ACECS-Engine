@@ -1,11 +1,6 @@
 #ifndef __TYPE_ID_ALLOCATOR_H__
 #define __TYPE_ID_ALLOCATOR_H__
 
-#include <unordered_map>
-#include <functional>
-#include <string>
-#include <iostream>
-
 // substitute for ComponentTypeID or EventTypeID
 typedef uint16_t TypeID;
 

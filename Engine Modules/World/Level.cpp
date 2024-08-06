@@ -1,6 +1,5 @@
 #include "Level.hpp"
 
-
 BaseLevel::BaseLevel() :
 	entities(std::vector<EntityId>())
 {}

@@ -2,11 +2,10 @@
 #define __WORLD_GRID_H__
 
 #include <vector>
-#include <cstdint>
-#include <variant>
-
 #include "LevelTypeDefinitions.hpp"
 #include "Level.hpp"
+#include "../Auxiliary/ConsoleHandler.hpp"
+
 
 using Levels1D = std::vector<BaseLevelPtr>;
 using Levels2D = std::vector<Levels1D>;

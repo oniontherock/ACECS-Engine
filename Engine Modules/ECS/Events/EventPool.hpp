@@ -1,7 +1,6 @@
 #ifndef __EVENT_POOL_H__
 #define __EVENT_POOL_H__
 
-#include "../TypeDefinitions.hpp"
 #include "Event.hpp"
 #include "EventIDs.hpp"
 

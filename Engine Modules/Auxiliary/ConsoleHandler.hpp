@@ -2,7 +2,6 @@
 #define __CONSOLE_HANDLER_H__
 
 #include <cstdint>
-#include <iostream>
 #include <string>
 
 namespace ConsoleHandler {

@@ -1,4 +1,5 @@
 #include "EventPool.hpp"
+#include "../TypeDefinitions.hpp"
 
 
 std::vector<std::vector<EventUniquePtr>> EventPool::eventPool{};

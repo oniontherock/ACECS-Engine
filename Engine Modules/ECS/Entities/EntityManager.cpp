@@ -1,11 +1,13 @@
 #include "EntityManager.hpp"
+#include "../../World/LevelGrid.hpp"
+
 
 std::vector<Entity> EntityManager::entitiesVector = std::vector<Entity>(MAX_ENTITIES);
-std::vector<EntityId> EntityManager::entityIdsVector = std::vector<EntityId>(MAX_ENTITIES);
+std::set<EntityId> EntityManager::entityIdsSet = std::set<EntityId>();
 
 void EntityManager::entityIdsInitialize() {
 	for (EntityId i = 0; i < MAX_ENTITIES; i++) {
-		entityIdsVector[i] = (MAX_ENTITIES - 1) - i;
+		entityIdsSet.insert(i);
 	}
 }
 
@@ -15,8 +17,8 @@ void EntityManager::entityUpdate(EntityId entityId) {
 
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
-	EntityId id = entityIdsVector.back();
-	entityIdsVector.pop_back();
+	EntityId id = *entityIdsSet.begin();
+	entityIdsSet.erase(id);
 
 	entitiesVector[id] = Entity(id, updateType);
 
@@ -70,7 +72,7 @@ void EntityManager::entityTerminate(EntityId entityId) {
 	LevelGrid<BaseLevel>::levelGet(entitiesVector[entityId].levelId)->entityIdRemove(entityId);
 
 	entitiesVector[entityId].terminate();
-	entityIdsVector.push_back(entityId);
+	entityIdsSet.insert(entityId);
 }
 void EntityManager::entitiesAllDelete() {
 	entitiesVector.clear();
