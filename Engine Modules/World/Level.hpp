@@ -18,6 +18,7 @@ struct BaseLevel {
 	void entityIdAdd(EntityId id);
 	void entityIdRemove(const EntityId id);
 
+	bool isUpdating;
 
 	// list of EntityIDs belonging to this room 
 	std::vector<EntityId> entities;

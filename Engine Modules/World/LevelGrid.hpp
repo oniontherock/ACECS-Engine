@@ -1,5 +1,5 @@
-#ifndef __WORLD_GRID_H__
-#define __WORLD_GRID_H__
+#ifndef __LEVEL_GRID_H__
+#define __LEVEL_GRID_H__
 
 #include <vector>
 #include "LevelTypeDefinitions.hpp"

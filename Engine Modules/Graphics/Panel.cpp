@@ -53,6 +53,12 @@ void Panel::viewMove(float moveX, float moveY) {
 void Panel::viewMove(sf::Vector2f moveVec) {
 	viewMove(moveVec.x, moveVec.y);
 }
+void Panel::viewSetRotation(float angle) {
+	viewRotation = angle;
+}
+void Panel::viewRotate(float angle) {
+	viewRotation += angle;
+}
 
 void Panel::viewUpdate() {
 
@@ -63,11 +69,16 @@ void Panel::viewUpdate() {
 
 	view.setCenter(viewRect.getPosition() + (viewRect.getSize() / 2.f));
 	view.setSize(viewRect.getSize());
+	view.setRotation(viewRotation);
 	texture.setView(view);
 }
 
 const PanelView& Panel::viewGet() {
 	return view;
+}
+
+float Panel::viewAspectRatioGet() {
+	return view.getSize().x / view.getSize().y;
 }
 
 sf::Vector2f Panel::panelMousePositionGet() {

@@ -1,7 +1,9 @@
 #include "Level.hpp"
+#include "../ECS/Entities/EntityManager.hpp"
 
 BaseLevel::BaseLevel() :
-	entities(std::vector<EntityId>())
+	entities(std::vector<EntityId>()),
+	isUpdating(true)
 {}
 
 BaseLevel::BaseLevel(LevelCoordinate _idX, LevelCoordinate _idY, LevelCoordinate _idZ) :

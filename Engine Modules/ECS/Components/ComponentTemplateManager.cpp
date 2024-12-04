@@ -56,7 +56,7 @@ void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templa
 		auto& chunkName = chunkNames[i];
 
 		if (!componentTemplateExists(chunkName)) {
-			ConsoleHandler::consolePrintErr("Template chunk name \"" + std::string(chunkName) + std::string("\"") + " does not exist!");
+			ConsoleHandler::consolePrintErr("Template chunk name \"" + std::string(chunkName) + "\"" + " does not exist!");
 		}
 		else {
 			componentTemplateApplyToComponentVector(chunkName, templateComponentsVector, TemplateApplicationType::Merge);
@@ -72,6 +72,11 @@ void ComponentTemplateManager::componentTemplateAdd(ComponentTemplateName templa
 }
 
 void ComponentTemplateManager::componentTemplateApplyToComponentVector(ComponentTemplateName templateName, std::vector<ComponentUniquePtr>& componentsVector, TemplateApplicationType applicationType) {
+
+	if (!componentTemplateExists(templateName)) {
+		ConsoleHandler::consolePrintErr("Template name \"" + std::string(templateName) + std::string("\"") + " does not exist!");
+		return;
+	}
 
 	if (applicationType == Overwrite) {
 		for (EntityComponents::ComponentTypeID i = 0; i < EntityComponents::totalComponents; i++) {

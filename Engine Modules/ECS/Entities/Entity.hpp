@@ -87,6 +87,7 @@ public:
 
 		entityComponentAdd<T>(component);
 	}
+	// resets the unique_ptr for the specified component type, thus terminating the component
 	template <class T>
 	void entityComponentTerminate() {
 		componentsVector[EntityComponents::ComponentIDs<T>::ID].reset();

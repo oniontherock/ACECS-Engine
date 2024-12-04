@@ -24,6 +24,9 @@ struct Panel {
 	inline void objectDraw(const T& drawableObject) {
 		texture.draw(drawableObject);
 	}
+	inline void objectDraw(const sf::Drawable& drawableObject, sf::Shader& shader) {
+		texture.draw(drawableObject, &shader);
+	}
 	void vertexArrayDraw(const sf::VertexArray& vertexArray, const sf::RenderStates& states);
 
 	void viewZoomScale(float zoomFactor);
@@ -32,11 +35,15 @@ struct Panel {
 	void viewMove(float moveX, float moveY);
 	void viewMove(sf::Vector2f moveVec);
 
+	void viewSetRotation(float angle);
+	void viewRotate(float angle);
+
 	void panelDrawObjects();
 	void panelRender(sf::RenderWindow& renderWindowMain);
 	// clears the panel with a transparent color
 	void panelClear();
 
+	float viewAspectRatioGet();
 
 	// gets the mouse position relative to the panel's window position
 	sf::Vector2f panelMousePositionGet();
@@ -45,6 +52,8 @@ struct Panel {
 
 	const PanelView& viewGet();
 
+	void viewUpdate();
+
 	// the Panel's position and dimensions on the screen
 	PanelRect screenRect{ 0, 0, 0, 0 };
 
@@ -52,6 +61,7 @@ struct Panel {
 	// as an example, if an object is drawn at 250x250, and the viewRect is 0x0x500x500,
 	// then the object will be drawn in the center of the screenRect
 	PanelRect viewRect{ 0, 0, 0, 0 };
+	float viewRotation = 0.f;
 
 	// color used when clearing panel
 	sf::Color clearColor;
@@ -66,8 +76,6 @@ private:
 	float viewZoom = 1.f;
 
 	virtual void panelUpdate() = 0;
-
-	void viewUpdate();
 
 	static uint16_t allocatedPanelIdsTotal;
 };
