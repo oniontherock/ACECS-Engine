@@ -32,18 +32,18 @@ public:
 		try {
 			if (extensionName == "err") {
 				if (extensionDefault == "err") {
-					throw "Default extension invalid";
+					throw std::string("Default extension invalid");
 				}
 				else {
-					throw "Extension invalid";
+					throw std::string("Extension invalid");
 				}
 			}
 			if (!file.loadFromFile(fileName + "." + extensionName)) {
-				throw "Unknown";
+				throw std::string("Unknown");
 			}
 		}
 		catch (std::string e) {
-			ConsoleHandler::consolePrintErr("File loading failed on file: \"" + fileName + extensionName + "\"" + ", Reason: " + e);
+			ConsoleHandler::consolePrintErr("File loading failed on file: \"" + fileName + "." + extensionName + "\"" + ", Reason: " + e);
 		}
 	}
 	// initializes and loads a file from the given file name, extension defaults to defaultExtension
