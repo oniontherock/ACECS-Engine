@@ -113,7 +113,7 @@ void Entity::componentsAllTerminate() {
 }
 
 void Entity::entityEventTerminateAllOfType(EntityEvents::EventTypeID eventId) {
-	for (int32_t i = eventsVector[eventId].size() - 1; i >= 0; i--) {
+	for (int32_t i = int32_t(eventsVector[eventId].size() - 1); i >= 0; i--) {
 		entityEventTerminate(eventId, i);
 	}
 }

@@ -7,7 +7,7 @@ void SoundPlayer::soundsUpdate() {
 		sounds.pop_front();
 	}
 
-	for (int16_t i = sounds.size() - 1; i >= 0; i--) {
+	for (int16_t i = int16_t(sounds.size() - 1); i >= 0; i--) {
 		if (sounds[i].getStatus() != sf::Sound::Playing) {
 			sounds.erase(sounds.begin() + i);
 		}
