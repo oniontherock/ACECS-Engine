@@ -22,7 +22,7 @@ void Engine::panelsRegister() {
 	)));
 }
 
-void Engine::gameStateRegister() {
+void Engine::gameStatesRegister() {
 
 	GameStateHandler::gameStateForceSet(GameStateType::Play);
 
@@ -69,13 +69,15 @@ void Engine::gameStateRegister() {
 
 	GameStateHandler::gameStatesAddedStatesFinalize();
 }
-
+void Engine::audioRegister() {
+}
 void Engine::engineInitialize() {
 	GameLevelGrid::levelGridInitialize(5, 5, 5);
 	inputsRegister();
 	ECSRegistry::ECSInitialize();
+	audioRegister();
 	panelsRegister();
-	gameStateRegister();
+	gameStatesRegister();
 }
 void Engine::engineInputUpdate(sf::RenderWindow& window) {
 	InputInterface::inputUpdate();
