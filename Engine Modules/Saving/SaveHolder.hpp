@@ -1,5 +1,5 @@
-#ifndef __SAVE_HANDLER_H__
-#define __SAVE_HANDLER_H__
+#ifndef __SAVE_HOLDER_H__
+#define __SAVE_HOLDER_H__
 
 #include "../Auxiliary/ConsoleHandler.hpp"
 #include <fstream>
@@ -8,7 +8,7 @@
 
 // class for holding some low level saving related stuff, like the file streams, the save file name,
 // and some functions that do the most basic "save" operations, like "fileWrite << obj", and "fileRead >> obj".
-class SaveHandler {
+class SaveHolder {
 
 	// name of the
 	static std::string saveFileName;

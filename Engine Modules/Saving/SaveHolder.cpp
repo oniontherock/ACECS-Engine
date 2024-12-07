@@ -1,11 +1,11 @@
-#include "SaveHandler.hpp"
+#include "SaveHolder.hpp"
 
-std::string SaveHandler::saveFileName = "save.dat";
+std::string SaveHolder::saveFileName = "save.dat";
 
-std::ofstream SaveHandler::fileWriter{};
-std::ifstream SaveHandler::fileReader{};
+std::ofstream SaveHolder::fileWriter{};
+std::ifstream SaveHolder::fileReader{};
 
-void SaveHandler::saveFileNameSet(std::string nameNew) {
+void SaveHolder::saveFileNameSet(std::string nameNew) {
 
 	try {
 		if (fileWriter.is_open()) {
@@ -23,24 +23,24 @@ void SaveHandler::saveFileNameSet(std::string nameNew) {
 	}
 }
 
-void SaveHandler::fileWriterOpen() {
+void SaveHolder::fileWriterOpen() {
 	fileWriter.open(saveFileName, std::ios::out | std::ios::binary);
 
 	if (!fileWriter) {
 		ConsoleHandler::consolePrintErr("Save file failed to open");
 	}
 }
-void SaveHandler::fileWriterClose() {
+void SaveHolder::fileWriterClose() {
 	fileWriter.close();
 }
 
-void SaveHandler::fileReaderOpen() {
+void SaveHolder::fileReaderOpen() {
 	fileReader.open(saveFileName, std::ios::in | std::ios::binary);
 
 	if (!fileWriter) {
 		ConsoleHandler::consolePrintErr("Save file failed to open");
 	}
 }
-void SaveHandler::fileReaderClose() {
+void SaveHolder::fileReaderClose() {
 	fileReader.close();
 }
