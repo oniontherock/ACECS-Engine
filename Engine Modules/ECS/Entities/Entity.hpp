@@ -15,6 +15,7 @@
 
 typedef std::vector<EventUniquePtr> EventVector;
 
+// used for vectors of events
 template <class CastType>
 class CastedVector {
 

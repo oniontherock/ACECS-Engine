@@ -3,8 +3,6 @@
 Entity::Entity() {
 	updateType = EntityUpdateType::Frame;
 	Id = 0;
-	//componentsInitialize();
-	//eventsInitialize();
 }
 Entity::Entity(EntityId _id, EntityUpdateType _updateType) {
 	Id = _id;
