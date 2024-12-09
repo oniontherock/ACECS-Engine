@@ -1,8 +1,9 @@
 #ifndef __COMPONENT_IDS_H__
 #define __COMPONENT_IDS_H__
 
-#include <cstdint>
 #include "Component.hpp"
+#include <cstdint>
+#include <vector>
 
 namespace EntityComponents {
 
@@ -13,6 +14,8 @@ namespace EntityComponents {
 	inline ComponentTypeID maxID;
 	// the total amount of components
 	inline ComponentTypeID totalComponents;
+	// a vector of instances of every type of component, sorted by component type. Assigned when the component's Id is registered.
+	inline std::vector<ComponentUniquePtr> componentsAll;
 
 	// ComponentTypesHolder is a sort of helper struct that holds the ComponentTypeID of every type of component,
 	// an ID is simply an integer assigned uniquely to every child of base class "Component",
@@ -27,6 +30,8 @@ namespace EntityComponents {
 			if (ID > maxID) maxID = ID;
 
 			if (ID + 1 > totalComponents) totalComponents = ID + 1;
+
+			componentsAll.push_back(ComponentUniquePtr(new T()));
 		}
 	};
 
@@ -48,6 +53,7 @@ namespace EntityComponents {
 	ComponentIndexInstancePair createComponentPairFromType(Args... args) {
 		return ComponentIndexInstancePair(ComponentIDs<T>::ID, ComponentSharedPtr(new T(args...)));
 	}
+
 };
 
 #endif
