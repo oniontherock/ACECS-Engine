@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include "../World/Level.hpp"
 
 // reinterpret_casts T into a char*. just used to write quicker, so we don't have to manually type reinterpret_cast every time.
 template <typename T>
@@ -32,5 +33,21 @@ std::ifstream& operator>> (std::ifstream& str, std::vector<T>& item) {
 
 	return str;
 }
+
+// T out
+template <typename T>
+std::ofstream& operator<< (std::ofstream& str, T& item) {
+	str.write(asByte(&item), sizeof(item));
+
+	return str;
+}
+// T in
+template <typename T>
+std::ifstream& operator>> (std::ifstream& str, T& item) {
+	str.read(asByte(&item), sizeof(item));
+
+	return str;
+}
+
 
 #endif

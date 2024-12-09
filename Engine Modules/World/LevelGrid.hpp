@@ -16,7 +16,7 @@ using BaseLevelPtrGrid = Levels3D;
 
 
 // 3D grid of every level in the world.
-// note that, although this is a 3D grid, it's 2nd and 3rd dimensions may be zero,
+// note that, although this is a 3D grid, it's 2nd and 3rd dimensions may be one,
 // and so it could behave as a simple list, or a 2D grid
 extern BaseLevelPtrGrid levelGrid;
 

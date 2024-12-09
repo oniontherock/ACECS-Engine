@@ -18,6 +18,10 @@ private:
 	static void gameStatesRegister();
 	// audio is registered here
 	static void audioRegister();
+	// saves the engine
+	static void engineSave();
+	// loads the engine, doesn't load if save file doesn't exist
+	static void engineLoad();
 public:
 	// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.
 	// of course, certain modules do not have to be initialized if the user does not want them to be

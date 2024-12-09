@@ -1,13 +1,13 @@
-#include "ACECS.hpp"
-
 #include "../GameState.hpp"
 #include "../Graphics.hpp"
 #include "../Input.hpp"
 #include "../World.hpp"
+#include "ACECS.hpp"
 #include "ECSRegistry.hpp"
 #include "GameLevel.hpp"
 #include "GameStates.hpp"
 #include "Panels.hpp"
+#include "../Saving/SaveDirector.hpp"
 
 void Engine::inputsRegister() {
 	InputInterface::inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });
@@ -78,6 +78,8 @@ void Engine::engineInitialize() {
 	audioRegister();
 	panelsRegister();
 	gameStatesRegister();
+
+	
 }
 void Engine::engineInputUpdate(sf::RenderWindow& window) {
 	InputInterface::inputUpdate();
@@ -103,4 +105,18 @@ void Engine::engineTerminate() {
 	ECSRegistry::ECSTerminate();
 	GameStateHandler::gameStatesAllTerminate();
 	PanelManager::panelManagerTerminate();
+}
+
+void Engine::engineSave() {
+	SaveDirector::saveBegin();
+	SaveDirector::gameDataSave();
+	SaveDirector::saveEnd();
+}
+void Engine::engineLoad() {
+	// only load if a save file exists
+	if (SaveHandler::saveFileExists()) {
+		SaveDirector::loadBegin();
+		SaveDirector::gameDataLoad();
+		SaveDirector::loadEnd();
+	}
 }
