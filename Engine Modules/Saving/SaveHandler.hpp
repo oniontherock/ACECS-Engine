@@ -28,6 +28,17 @@ public:
 	static void fileReaderOpen();
 	static void fileReaderClose();
 
+	// saves a file without doing any error checking
+	template <typename T>
+	static void objectSaveIgnoreErrors(T& obj) {
+		fileWriter << obj;
+	}
+	// loads a file without doing any error checking
+	template <typename T>
+	static void objectLoadIgnoreErrors(T& obj) {
+		fileReader >> obj;
+	}
+
 	template <typename T>
 	static void objectSave(T& obj) {
 
