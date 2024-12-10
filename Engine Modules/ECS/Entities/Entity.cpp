@@ -74,6 +74,9 @@ void Entity::eventsInitialize() {
 bool Entity::entityComponentHasAtIndex(EntityComponents::ComponentTypeID index) {
 	return static_cast<bool>(componentsVector[index]);
 }
+EntityComponents::Component* Entity::entityComponentGetAtIndex(EntityComponents::ComponentTypeID index) {
+	return componentsVector[index].get();
+}
 void Entity::entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index) {
 	componentsVector[index] = ComponentUniquePtr(component);
 }

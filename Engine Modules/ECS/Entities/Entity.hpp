@@ -94,6 +94,7 @@ public:
 		componentsVector[EntityComponents::ComponentIDs<T>::ID].reset();
 	}
 	bool entityComponentHasAtIndex(EntityComponents::ComponentTypeID index);
+	EntityComponents::Component* entityComponentGetAtIndex(EntityComponents::ComponentTypeID index);
 	void entityComponentAddAtIndex(EntityComponents::Component* component, EntityComponents::ComponentTypeID index);
 	// checks if the entity has the component, and if not, adds it
 	void entityComponentAddAtIndexNoOverwrite(EntityComponents::Component* component, EntityComponents::ComponentTypeID index);
