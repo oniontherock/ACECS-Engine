@@ -17,6 +17,11 @@ namespace EntityManager {
 	void entityIdsInitialize();
 
 	void entityUpdate(EntityId entityId);
+
+	/**
+	creates a new entity with the given id
+	*/
+	void entityCreateWithId(EntityId id);
 	/**
 	creates a new entity instance and returns it's ID
 

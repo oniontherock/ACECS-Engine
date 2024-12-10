@@ -15,12 +15,18 @@ void EntityManager::entityUpdate(EntityId entityId) {
 	entitiesVector[entityId].entityUpdate();
 }
 
+void EntityManager::entityCreateWithId(EntityId id) {
+
+	entityIdsSet.erase(id);
+
+	entitiesVector[id] = Entity(id, EntityUpdateType::Frame);
+}
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
 	EntityId id = *entityIdsSet.begin();
-	entityIdsSet.erase(id);
+	entityCreateWithId(id);
 
-	entitiesVector[id] = Entity(id, updateType);
+	entitiesVector[id].updateType = updateType;
 
 	return entitiesVector[id].Id;
 }
