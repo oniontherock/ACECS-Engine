@@ -2,6 +2,7 @@
 #define __COMPONENT_H__
 
 #include "../Duplicatable/Duplicatable.hpp"
+#include <fstream>
 
 struct Entity;
 
@@ -13,6 +14,11 @@ namespace EntityComponents {
 		virtual ~Component() = default;
 
 		virtual void system(Entity&) {}
+
+		// saves the data of the component
+		virtual void save(std::ofstream&) {}
+		// loads the data of the component
+		virtual void load(std::ifstream&) {}
 
 		bool hasSystem = false;
 	};
