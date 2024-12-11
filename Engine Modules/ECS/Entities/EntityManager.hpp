@@ -13,6 +13,8 @@ namespace EntityManager {
 
 	extern std::vector<Entity> entitiesVector;
 	extern std::set<EntityId> entityIdsSet;
+	// vector of entities not in a room
+	extern std::set<EntityId> entitiesIntangible;
 
 	void entityIdsInitialize();
 
@@ -76,6 +78,8 @@ namespace EntityManager {
 	Entity& entityGet(EntityId entityId);
 	void entityTerminate(EntityId entityID);
 	void entitiesAllDelete();
+
+	void entitiesIntangibleUpdate();
 };
 
 #endif

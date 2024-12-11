@@ -4,6 +4,7 @@
 
 std::vector<Entity> EntityManager::entitiesVector = std::vector<Entity>(MAX_ENTITIES);
 std::set<EntityId> EntityManager::entityIdsSet = std::set<EntityId>();
+std::set<EntityId> EntityManager::entitiesIntangible = std::set<EntityId>();
 
 void EntityManager::entityIdsInitialize() {
 	for (EntityId i = 0; i < MAX_ENTITIES; i++) {
@@ -20,6 +21,8 @@ void EntityManager::entityCreateWithId(EntityId id) {
 	entityIdsSet.erase(id);
 
 	entitiesVector[id] = Entity(id, EntityUpdateType::Frame);
+
+	entitiesIntangible.insert(id);
 }
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
@@ -62,7 +65,8 @@ EntityId EntityManager::entityCreate(LevelCoordinate levelX, LevelCoordinate lev
 }
 
 void EntityManager::entityAddToRoom(EntityId entityId, LevelPosition level) {
-	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId);
+	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId, (entityGet(entityId).updateType == EntityUpdateType::Frame));
+	entitiesIntangible.erase(entityId);
 
 }
 void EntityManager::entityAddToRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ) {
@@ -82,5 +86,18 @@ void EntityManager::entityTerminate(EntityId entityId) {
 }
 void EntityManager::entitiesAllDelete() {
 	entitiesVector.clear();
+}
+
+void EntityManager::entitiesIntangibleUpdate() {
+	std::vector<EntityId> entitiesIntangibleVector(entitiesIntangible.begin(), entitiesIntangible.end());
+
+	for (uint32_t i = 0; i < entitiesIntangibleVector.size(); i++) {
+		EntityId id = entitiesIntangibleVector[i];
+
+		if (entitiesVector[id].updateType == EntityUpdateType::Frame) {
+			entityUpdate(id);
+		}
+	}
+
 }
 

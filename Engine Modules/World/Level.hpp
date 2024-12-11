@@ -15,13 +15,15 @@ struct BaseLevel {
 
 	LevelPosition levelPosition;
 
-	void entityIdAdd(EntityId id);
+	void entityIdAdd(EntityId id, bool frameUpdate);
 	void entityIdRemove(const EntityId id);
 
 	bool isUpdating;
 
 	// list of EntityIDs belonging to this room 
 	std::vector<EntityId> entities;
+	// list of EntityIDs belonging to this room whose update type is not Frame
+	std::vector<EntityId> entitiesNoUpdate;
 };
 
 template <class Level>

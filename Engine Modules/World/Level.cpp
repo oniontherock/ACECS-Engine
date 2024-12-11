@@ -16,8 +16,9 @@ BaseLevel::BaseLevel(LevelPosition _id) :
 	BaseLevel(_id.x, _id.y, _id.z)
 {}
 
-void BaseLevel::entityIdAdd(EntityId id) {
-	entities.push_back(id);
+void BaseLevel::entityIdAdd(EntityId id, bool frameUpdate) {
+	if (frameUpdate) entities.push_back(id);
+	else entitiesNoUpdate.push_back(id);
 }
 void BaseLevel::entityIdRemove(const EntityId id) {
 	// the position of the id in the entities vector
