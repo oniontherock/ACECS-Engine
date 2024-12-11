@@ -78,6 +78,10 @@ namespace EntityManager {
 	void entityAddToRoom(EntityId entityId, LevelPosition level);
 	void entityAddToRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ);
 
+	void entityRemoveFromRoom(EntityId entityId, LevelPosition level);
+	void entityRemoveFromRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ);
+
+
 	Entity& entityGet(EntityId entityId);
 	void entityTerminate(EntityId entityID);
 	void entitiesAllDelete();

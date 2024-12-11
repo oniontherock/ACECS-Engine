@@ -8,6 +8,9 @@
 // position of a level in the GameWorld's levelGrid
 using LevelPosition = sf::Vector3<uint32_t>;
 
+// level position representing no level position (for entities that aren't in a room, I.E. intangible)
+#define NoLevelPosition LevelPosition(UINT32_MAX, UINT32_MAX, UINT32_MAX)
+
 typedef uint32_t LevelCoordinate;
 
 // a position in the world, contains a levelPosition, and a position in that level.

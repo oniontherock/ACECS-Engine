@@ -27,7 +27,6 @@ void EntityManager::entityCreateWithId(EntityId id) {
 	entitiesUpdateQueued.push(id);
 
 	entitiesIntangible.insert(id);
-
 }
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
@@ -41,7 +40,7 @@ EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 EntityId EntityManager::entityCreate(LevelPosition level, EntityUpdateType updateType) {
 
 	EntityId entityId = entityCreate(updateType);
-
+	
 	entityAddToRoom(entityId, level);
 
 	return entityId;
@@ -70,13 +69,25 @@ EntityId EntityManager::entityCreate(LevelCoordinate levelX, LevelCoordinate lev
 }
 
 void EntityManager::entityAddToRoom(EntityId entityId, LevelPosition level) {
-	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId, (entityGet(entityId).updateType == EntityUpdateType::Frame));
+	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId);
 	entitiesIntangible.erase(entityId);
+	entityGet(entityId).levelId = level;
 
 }
 void EntityManager::entityAddToRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ) {
 	entityAddToRoom(entityId, LevelPosition(levelX, levelY, levelZ));
 }
+
+void EntityManager::entityRemoveFromRoom(EntityId entityId, LevelPosition level) {
+	LevelGrid<BaseLevel>::levelGet(level)->entityIdRemove(entityId);
+	entitiesIntangible.insert(entityId);
+	entityGet(entityId).levelId = NoLevelPosition;
+
+}
+void EntityManager::entityRemoveFromRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ) {
+	entityRemoveFromRoom(entityId, LevelPosition(levelX, levelY, levelZ));
+}
+
 
 Entity& EntityManager::entityGet(EntityId entityId) {
 	return entitiesVector[entityId];
@@ -108,7 +119,6 @@ void EntityManager::entitiesIntangibleUpdate() {
 
 void EntityManager::entitiesQueuedUpdate() {
 	while (!entitiesUpdateQueued.empty()) {
-		std::cout << "update" << std::endl;
 		EntityId entityId = entitiesUpdateQueued.front();
 		entitiesUpdateQueued.pop();
 		entityUpdate(entityId);

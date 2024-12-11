@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include "EntityManager.hpp"
 
 Entity::Entity() {
 	updateType = EntityUpdateType::Frame;

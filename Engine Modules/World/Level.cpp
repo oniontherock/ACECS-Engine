@@ -16,15 +16,30 @@ BaseLevel::BaseLevel(LevelPosition _id) :
 	BaseLevel(_id.x, _id.y, _id.z)
 {}
 
-void BaseLevel::entityIdAdd(EntityId id, bool frameUpdate) {
+void BaseLevel::entityIdAdd(EntityId id) {
+	bool frameUpdate = EntityManager::entityGet(id).updateType == EntityUpdateType::Frame;
+
 	if (frameUpdate) entities.push_back(id);
 	else entitiesNoUpdate.push_back(id);
 }
 void BaseLevel::entityIdRemove(const EntityId id) {
-	// the position of the id in the entities vector
-	auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
 
-	if (idVectorPosition == entities.end()) return;
+	bool frameUpdate = EntityManager::entityGet(id).updateType == EntityUpdateType::Frame;
 
-	entities.erase(idVectorPosition);
+	if (frameUpdate) {
+		// the position of the id in the entities vector
+		auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
+
+		if (idVectorPosition != entities.end()) {
+			entities.erase(idVectorPosition);
+		}
+	}
+	else {
+		// the position of the id in the entitiesNoUpdate vector
+		auto idVectorPosition = std::find(entitiesNoUpdate.begin(), entitiesNoUpdate.end(), id);
+
+		if (idVectorPosition == entitiesNoUpdate.end()) {
+			entitiesNoUpdate.erase(idVectorPosition);
+		}
+	}
 }

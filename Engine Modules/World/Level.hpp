@@ -15,7 +15,7 @@ struct BaseLevel {
 
 	LevelPosition levelPosition;
 
-	void entityIdAdd(EntityId id, bool frameUpdate);
+	void entityIdAdd(EntityId id);
 	void entityIdRemove(const EntityId id);
 
 	bool isUpdating;

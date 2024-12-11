@@ -62,7 +62,7 @@ public:
 	EntityId Id;
 	// the id of the level that this entity belongs to,
 	// if all three components are equal to the max uint32_t value, then this entity does not belong to a level
-	LevelPosition levelId;
+	LevelPosition levelId = NoLevelPosition;
 
 	std::vector<ComponentUniquePtr> componentsVector;
 
