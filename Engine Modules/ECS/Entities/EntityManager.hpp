@@ -7,14 +7,17 @@
 #include "Entity.hpp"
 #include <vector>
 #include <set>
+#include <queue>
 
 
 namespace EntityManager {
 
 	extern std::vector<Entity> entitiesVector;
 	extern std::set<EntityId> entityIdsSet;
-	// vector of entities not in a room
+	// set of entities not in a room
 	extern std::set<EntityId> entitiesIntangible;
+	// queue of EntityIds that have an update queued, this is used for when an entity is first created, they can queue their update even if they have a never update type
+	extern std::queue<EntityId> entitiesUpdateQueued;
 
 	void entityIdsInitialize();
 
@@ -80,6 +83,8 @@ namespace EntityManager {
 	void entitiesAllDelete();
 
 	void entitiesIntangibleUpdate();
+	// update entities with an update queued
+	void entitiesQueuedUpdate();
 };
 
 #endif

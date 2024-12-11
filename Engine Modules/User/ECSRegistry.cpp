@@ -35,6 +35,7 @@ void EntityEvents::eventIDsInitialize() {
 
 	using EventRegistry = TypeIDAllocator<Event>;
 
+	EventRegistry::typeRegister<EventIDs<EventInitialize>>();
 	EventRegistry::typeRegister<EventIDs<EventExample>>();
 }
 

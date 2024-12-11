@@ -11,6 +11,18 @@ namespace EntityEvents {
 		virtual void clear() = 0;
 	};
 
+	// used for initializing certain components
+	struct EventInitialize final : public Event {
+
+		EventInitialize() {};
+
+		void clear() final {
+		}
+		std::unique_ptr<Duplicatable> duplicate() override {
+			return std::unique_ptr<Duplicatable>(new EventInitialize());
+		};
+	};
+
 	void eventIDsInitialize();
 }
 

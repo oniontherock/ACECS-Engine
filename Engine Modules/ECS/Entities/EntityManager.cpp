@@ -5,6 +5,7 @@
 std::vector<Entity> EntityManager::entitiesVector = std::vector<Entity>(MAX_ENTITIES);
 std::set<EntityId> EntityManager::entityIdsSet = std::set<EntityId>();
 std::set<EntityId> EntityManager::entitiesIntangible = std::set<EntityId>();
+std::queue<EntityId> EntityManager::entitiesUpdateQueued = std::queue<EntityId>();
 
 void EntityManager::entityIdsInitialize() {
 	for (EntityId i = 0; i < MAX_ENTITIES; i++) {
@@ -22,7 +23,11 @@ void EntityManager::entityCreateWithId(EntityId id) {
 
 	entitiesVector[id] = Entity(id, EntityUpdateType::Frame);
 
+	entitiesVector[id].entityEventAdd<EntityEvents::EventInitialize>();
+	entitiesUpdateQueued.push(id);
+
 	entitiesIntangible.insert(id);
+
 }
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
@@ -99,5 +104,14 @@ void EntityManager::entitiesIntangibleUpdate() {
 		}
 	}
 
+}
+
+void EntityManager::entitiesQueuedUpdate() {
+	while (!entitiesUpdateQueued.empty()) {
+		std::cout << "update" << std::endl;
+		EntityId entityId = entitiesUpdateQueued.front();
+		entitiesUpdateQueued.pop();
+		entityUpdate(entityId);
+	}
 }
 
