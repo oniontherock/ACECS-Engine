@@ -15,6 +15,12 @@ public:
 	static int sign(T v) {
 		return (T(0) < v) - (v < T(0));
 	}
+
+	static T slerp(T a, T b, T v) {
+		T diff = fmod(b - a, TAU);
+		T dist = fmod(2.0f * diff, TAU) - diff;
+		return a + dist * v;
+	}
 };
 
 using Mathf = Math<float>;

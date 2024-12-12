@@ -63,7 +63,7 @@ public:
 	}
 
 	static float getUnder(T max) {
-		generator->getUnder(max);
+		return generator->getUnder(max);
 	}
 
 	static float getRange(T min, T max) {
