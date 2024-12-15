@@ -37,7 +37,7 @@ namespace EntityComponents {
 
 	// define ComponentIDHolder's ID variable as 0 for every type.
 	// note that the ID for every type is assigned later, 
-	// if you wish to see how this is done, see the "Component.cpp" file, or the "TypeAllocator.hpp" file.
+	// if you wish to see how this is done, see the "ComponentRegistry.cpp" file, or the "TypeAllocator.hpp" file.
 
 	// the ID of a component type, used for accessing certain types of components in arrays, among other things
 	template <class T>
