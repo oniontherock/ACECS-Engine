@@ -65,7 +65,7 @@ struct Panel {
 
 	// color used when clearing panel
 	sf::Color clearColor;
-private:
+protected:
 	// the panel's texture, this is what is actual drawn on, and it's rendered to the main game window
 	PanelScreenTexture texture;
 	// the panel's view,
@@ -74,6 +74,7 @@ private:
 	sf::Vector2f viewRectSizeOriginal;
 
 	float viewZoom = 1.f;
+private:
 
 	virtual void panelUpdate() = 0;
 
