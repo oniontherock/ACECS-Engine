@@ -1,6 +1,7 @@
 #ifndef __MATH_H__
 #define __MATH_H__
 
+#include <algorithm>
 #include <cmath>
 
 template <typename T>
@@ -16,6 +17,10 @@ public:
 		return (T(0) < v) - (v < T(0));
 	}
 
+	inline static T clamp(T v, T min, T max) {
+		return std::min(max, std::max(min, v));
+	}
+
 	inline static T slerp(T a, T b, T v) {
 		T diff = fmod(b - a, TAU);
 		T dist = fmod(2.0f * diff, TAU) - diff;
@@ -25,5 +30,9 @@ public:
 
 using Mathf = Math<float>;
 using Mathd = Math<double>;
+
+using Mathu8 = Math<uint8_t>;
+using Mathu16 = Math<uint16_t>;
+
 
 #endif
