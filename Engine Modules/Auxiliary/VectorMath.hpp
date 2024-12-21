@@ -62,6 +62,14 @@ public:
 		return lengthSet(vec.x, vec.y, len);
 	}
 
+
+	static Vector2 lengthLimit(T x, T y, float limit) {
+		return (lengthSqrd(x, y) > limit * limit) ? (normalize(x, y) * limit) : Vector2(x, y);
+	}
+	static Vector2 lengthLimit(Vector2 vec, float limit) {
+		return lengthLimit(vec.x, vec.y, limit);
+	}
+
 	// gets the direction from (aX, aY) to (bX, bY)
 	static Vector2 dir(T aX, T aY, T bX, T bY) {
 		return normalize(axis(aX, aY, bX, bY));
