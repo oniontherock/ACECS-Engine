@@ -30,9 +30,9 @@ public:
 	static void engineInputUpdate(sf::RenderWindow& window);
 	// update certain modules of the engine, like the GameState, which itself will usually update the ECS module.
 	// note that this does NOT update the input, that must be called manually before updating the game
-	static void engineGameUpdate();
+	static void engineUpdate();
 	// draws the panels of the current GameState
-	static void engineGameDraw(sf::RenderWindow& renderWindowMain);
+	static void engineDraw(sf::RenderWindow& renderWindowMain);
 	// terminates certain engine modules, like the ECS or GameStateHandler
 	static void engineTerminate();
 };

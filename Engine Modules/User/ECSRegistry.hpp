@@ -23,7 +23,9 @@ namespace EntityEvents {
 			var = 0;
 		}
 
-		DUPLICATE_OVERRIDE(EventExample)
+		std::unique_ptr<Duplicatable> duplicate() override {
+			return std::unique_ptr<Duplicatable>(new EventExample());
+		};
 	};
 }
 namespace EntityComponents {
@@ -37,7 +39,11 @@ namespace EntityComponents {
 
 		uint16_t var;
 
-		DUPLICATE_OVERRIDE(ComponentExample)
+		std::unique_ptr<Duplicatable> duplicate() override {
+			return std::unique_ptr<Duplicatable>(new ComponentExample(var));
+		};
+		void save(std::ofstream& str) override;
+		void load(std::ifstream& str) override;
 	};
 }
 

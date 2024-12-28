@@ -85,10 +85,10 @@ void Engine::engineInputUpdate(sf::RenderWindow& window) {
 	InputInterface::inputUpdate();
 	InputInterface::eventsProcess(window);
 }
-void Engine::engineGameUpdate() {
+void Engine::engineUpdate() {
 	GameStateHandler::gameStateProcess();
 }
-void Engine::engineGameDraw(sf::RenderWindow& renderWindowMain) {
+void Engine::engineDraw(sf::RenderWindow& renderWindowMain) {
 
 	auto& gameStatePanels = GameStateHandler::gameStateGetPanels();
 
