@@ -1,30 +1,36 @@
+#include "../Auxiliary/NumberGenerator.hpp"
 #include "../GameState.hpp"
 #include "../Graphics.hpp"
 #include "../Input.hpp"
+#include "../Saving/SaveDirector.hpp"
 #include "../World.hpp"
 #include "ACECS.hpp"
 #include "ECSRegistry.hpp"
 #include "GameLevel.hpp"
 #include "GameStates.hpp"
 #include "Panels.hpp"
-#include "../Saving/SaveDirector.hpp"
 
 void Engine::inputsRegister() {
-	InputInterface::inputRegister("Example Input", KeySet{ KeyEvent("Escape", Pressed) });
+	InputInterface::inputRegister("Pause", KeySet{ KeyEvent("Escape", Pressed) });
+
+	InputInterface::inputRegister("Move Right", KeySet{ KeyEvent("D", Held), KeyEvent("Right", Held) }, InputKeyLogic::Or);
+	InputInterface::inputRegister("Move Up", KeySet{ KeyEvent("W", Held), KeyEvent("Up", Held) }, InputKeyLogic::Or);
+	InputInterface::inputRegister("Move Left", KeySet{ KeyEvent("A", Held), KeyEvent("Left", Held) }, InputKeyLogic::Or);
+	InputInterface::inputRegister("Move Down", KeySet{ KeyEvent("S", Held), KeyEvent("Down", Held) }, InputKeyLogic::Or);
 }
 
+// game states are registered here
 void Engine::panelsRegister() {
 	using namespace PanelManager;
 	panelAdd(PanelTypes::GameView, PanelPtr(new PanelGameView(
 		PanelRect(0, 0, 1280, 720), // screen coordinates
-		PanelRect(0, 0, 640, 360), // world coordinates
+		PanelRect(0, 0, 1280, 720), // world coordinates
 		sf::Color::Black
 	)));
 }
 
+// game states are registered here
 void Engine::gameStatesRegister() {
-
-	GameStateHandler::gameStateForceSet(GameStateType::Play);
 
 	GameStateHandler::gameStateAdd(GameStateUniquePtr(new GameStatePlay(
 		/// transitions
@@ -35,9 +41,9 @@ void Engine::gameStatesRegister() {
 				// vector of inputs that trigger this transition
 				// note the commas after an input name, without commas every name will become a single string
 				{
-					"Example Input",
+					"Pause",
 				}
-			)
+			),
 		},
 		/// panels
 		// the panels belonging to this GameState,
@@ -45,7 +51,8 @@ void Engine::gameStatesRegister() {
 		{
 			PanelTypes::GameView,
 		}
-	)));
+		)));
+
 	GameStateHandler::gameStateAdd(GameStateUniquePtr(new GameStatePause(
 		/// transitions
 		// vector of GameStateTransitions, and their inputs
@@ -55,9 +62,9 @@ void Engine::gameStatesRegister() {
 				// vector of inputs that trigger this transition
 				// note the commas after an input name, without commas every name will become a single string
 				{
-					"Example Input",
+					"Pause",
 				}
-			)
+			),
 		},
 		/// panels
 		// the panels belonging to this GameState,
@@ -68,23 +75,43 @@ void Engine::gameStatesRegister() {
 		)));
 
 	GameStateHandler::gameStatesAddedStatesFinalize();
+	GameStateHandler::gameStateForceSet(GameStateTypes::Play);
 }
 void Engine::audioRegister() {
 }
+void Engine::imagesRegister() {
+}
+void Engine::texturesRegister() {
+}
+
+// initialize the ACECS engine by registering all inputs, initializing the ECS module, and registering game states.
+// of course, certain modules do not have to be initialized if the user does not want them to be
 void Engine::engineInitialize() {
-	GameLevelGrid::levelGridInitialize(5, 5, 5);
+
+	RNGf::initialize();
+
+	GameLevelGrid::levelGridInitialize(1, 1, 1);
+	GameLevelGrid::levelAdd(new GameLevel(0, 0, 0), true);
+
+	// register textures and images
+	imagesRegister();
+	texturesRegister();
+
 	inputsRegister();
+	panelsRegister();
 	ECSRegistry::ECSInitialize();
 	audioRegister();
-	panelsRegister();
 	gameStatesRegister();
-
-	
 }
+// updates the engines input
 void Engine::engineInputUpdate(sf::RenderWindow& window) {
 	InputInterface::inputUpdate();
+
 	InputInterface::eventsProcess(window);
 }
+// update certain modules of the engine, like the game state.
+// note that certain modules, like the ECS system, are updated inside the GameStateHandler,
+// because you don't want to update the ECS system if the GameState is currently paused, for example.
 void Engine::engineUpdate() {
 	GameStateHandler::gameStateProcess();
 }
@@ -93,14 +120,12 @@ void Engine::engineDraw(sf::RenderWindow& renderWindowMain) {
 	auto& gameStatePanels = GameStateHandler::gameStateGetPanels();
 
 	for (uint16_t i = 0; i < gameStatePanels.size(); i++) {
-
-		auto& panelCur = PanelManager::panelGet(gameStatePanels[i]);
-
-		panelCur.panelDrawObjects();
-		panelCur.panelRender(renderWindowMain);
-		panelCur.panelClear();
+		PanelManager::panelGet(gameStatePanels[i]).panelDrawObjects();
+		PanelManager::panelGet(gameStatePanels[i]).panelRender(renderWindowMain);
+		PanelManager::panelGet(gameStatePanels[i]).panelClear();
 	}
 }
+// terminates certain engine modules, like the ECS or GameStateHandler
 void Engine::engineTerminate() {
 	ECSRegistry::ECSTerminate();
 	GameStateHandler::gameStatesAllTerminate();
