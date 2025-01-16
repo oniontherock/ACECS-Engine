@@ -135,47 +135,46 @@ using RNGu64 = RNGi<uint64_t>;
 template <typename T>
 class RNGPool {
 private:
-	static inline std::vector<T*> pools;
-	static inline std::vector<uint32_t> poolSizes;
+	static inline std::vector<std::vector<T>> pools;
+	static inline std::vector<uint32_t> poolValueIndexes;
 	static inline uint16_t poolCount = 0;
+
+	static void poolIndexIncrement(uint16_t poolIndex) {
+		if ((++poolValueIndexes[poolIndex]) >= pools[poolIndex].size()) poolValueIndexes[poolIndex] = 0;
+	}
+	static uint32_t poolIndexIncrementAndGet(uint16_t poolIndex) {
+		poolIndexIncrement(poolIndex);
+		return poolValueIndexes[poolIndex];
+	}
 public:
 	// creates a new RNG pool and returns it's pool index
-	static uint16_t createNewPool(uint32_t size) {
-		pools.push_back(new T[size]);
-		poolSizes.push_back(size);
-		poolCount++;
-		return poolCount - 1;
+	static uint16_t poolCreate(uint32_t size) {
+		pools.push_back(std::vector<T>(size, T(0)));
+		poolValueIndexes.push_back(0);
+		return poolCount++;
 	}
 
-	static void setPoolIndexValue(uint16_t poolIndex, uint32_t valueIndex, T value) {
+	static void poolValueSetAtIndex(uint16_t poolIndex, uint32_t valueIndex, T value) {
 		pools[poolIndex][valueIndex] = value;
 	}
 
-	static void fillPool(uint16_t poolIndex) {
-		for (uint32_t i = 0; i < poolSizes[poolIndex]; i++) {
-			setPoolIndexValue(poolIndex, i, T(RNGf::get()));
+	static void poolFill(uint16_t poolIndex) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNG<T>::get();
 		}
 	}
-
-	static void fillPoolRange(uint16_t poolIndex, T width) {
-		for (uint32_t i = 0; i < poolSizes[poolIndex]; i++) {
-			setPoolIndexValue(poolIndex, i, T(RNGf::getRange(width)));
+	static void poolFillRange(uint16_t poolIndex, T width) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNG<T>::getRange(width);
 		}
 	}
-
-	static void fillPoolRange(uint16_t poolIndex, T min, T max) {
-		for (uint32_t i = 0; i < poolSizes[poolIndex]; i++) {
-			setPoolIndexValue(poolIndex, i, T(RNGf::getRange(min, max)));
+	static void poolFillRange(uint16_t poolIndex, T min, T max) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNG<T>::getRange(min, max);
 		}
 	}
-
-	static void deletePool(uint16_t poolIndex) {
-		delete[] pools[poolIndex];
-		poolCount -= 1;
-	}
-
-	static T getPoolValue(uint16_t poolIndex, uint16_t valueIndex) {
-		return pools[poolIndex][valueIndex];
+	static T poolValueGet(uint16_t poolIndex) {
+		return pools[poolIndex][poolIndexIncrementAndGet(poolIndex)];
 	}
 };
 
