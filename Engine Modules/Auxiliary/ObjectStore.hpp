@@ -41,7 +41,7 @@ public:
 		return objectGet(std::string(objectName));
 	}
 
-	// returns whether the given object exists
+	// returns whether the given object existsd
 	bool objectExists(std::string objectName) {
 		return objectsUMap.contains(objectName);
 	}

@@ -26,13 +26,27 @@ public:
 		T dist = fmod(2.0f * diff, TAU) - diff;
 		return a + dist * v;
 	}
+
+	inline static bool isEven(T v) {
+		return (v % 2) == 0;
+	}
+	inline static bool isOdd(T v) {
+		return (v % 2) != 0;
+	}
+
 };
 
 using Mathf = Math<float>;
 using Mathd = Math<double>;
 
+using Mathi8 = Math<int8_t>;
+using Mathi16 = Math<int16_t>;
+using Mathi32 = Math<int32_t>;
+using Mathi64 = Math<int64_t>;
 using Mathu8 = Math<uint8_t>;
 using Mathu16 = Math<uint16_t>;
+using Mathu32 = Math<uint32_t>;
+using Mathu64 = Math<uint64_t>;
 
 
 #endif

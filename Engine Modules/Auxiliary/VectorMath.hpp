@@ -79,12 +79,13 @@ public:
 		return dir(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-
+	// returns the angle from (aX, aY) to (bX, bY)
 	static R angle(T aX, T aY, T bX, T bY) {
 		auto vecAxis = axis(aX, aY, bX, bY);
 
 		return atan2(vecAxis.y, vecAxis.x);
 	}
+	// returns the angle from vecA to vecB
 	static R angle(Vector2 vecA, Vector2 vecB) {
 		return angle(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
@@ -119,6 +120,8 @@ public:
 	static Vector2 reflect(Vector2 dir, Vector2 normal) {
 		return reflect(dir.x, dir.y, normal.x, normal.y);
 	}
+	// rotates the given x and y by theta. Note that this adds instead of setting,
+	// so calling this twice with PI as theta would result in the returned vector being the same as it was before, since it did a 360.
 	template <typename F>
 	static Vector2 rotate(T x, T y, F theta) {
 		return Vector2(
@@ -126,6 +129,8 @@ public:
 			(x * T(std::sin(theta))) + T(y * T(std::cos(theta)))
 		);
 	}
+	// rotates the given vector by theta. Note that this adds instead of setting,
+	// so calling this twice with PI as theta would result in the returned vector being the same as it was before, since it did a 360.
 	template <typename F>
 	static Vector2 rotate(Vector2 vector, F theta) {
 		return rotate(vector.x, vector.y, theta);
@@ -155,7 +160,7 @@ public:
 	// 2 --> Counterclockwise 
 	static uint16_t orientation(Vector2 p, Vector2 q, Vector2 r) {
 		// for details of below formula. 
-		int val = (q.y - p.y) * (r.x - q.x) -
+		T val = (q.y - p.y) * (r.x - q.x) -
 			(q.x - p.x) * (r.y - q.y);
 
 		if (val == 0) return 0;  // collinear 

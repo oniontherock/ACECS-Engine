@@ -17,7 +17,7 @@ void ConsoleHandler::consoleResetColor() {
 }
 
 void ConsoleHandler::consolePrintMessage(std::string message) {
-	std::cout << message << std::endl;
+	std::cout << message << "\n";
 }
 void ConsoleHandler::consolePrintColor(std::string message, const uint8_t colorId) {
 	consoleSetTextColor(colorId);
