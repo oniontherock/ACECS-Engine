@@ -75,6 +75,54 @@ namespace EntityManager {
 	*/
 	EntityId entityCreate(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, ComponentTemplateName templateName, EntityUpdateType updateType = EntityUpdateType::Frame);
 
+	/**
+	creates a new entity instance and returns a reference to it.
+
+	@param updateType: the update type of the entity
+	*/
+	Entity& entityCreateAndGet(EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it in a specified room, and returns a reference to it.
+
+	@param updateType: the update type of the entity
+	@param level: the LevelPosition of the level the entity should be placed in
+	*/
+	Entity& entityCreateAndGet(LevelPosition level, EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it in a specified room, and returns a reference to it.
+
+	@param updateType: the update type of the entity
+	@param levelX: the X coordinate of the level the entity should be placed in
+	@param levelY: the Y coordinate of the level the entity should be placed in
+	@param levelZ: the Z coordinate of the level the entity should be placed in
+	*/
+	Entity& entityCreateAndGet(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, applies a component template to it, and returns a reference to it.
+
+	@param templateName: the name of the component template to be applied to the entity
+	@param updateType: the update type of the entity
+	*/
+	Entity& entityCreateAndGet(ComponentTemplateName templateName, EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it in a specified room, applies a component template to it, and returns a reference to it.
+
+	@param templateName: the name of the component template to be applied to the entity
+	@param updateType: the update type of the entity
+	@param level: the LevelPosition of the level the entity should be placed in
+	*/
+	Entity& entityCreateAndGet(LevelPosition level, ComponentTemplateName templateName, EntityUpdateType updateType = EntityUpdateType::Frame);
+	/**
+	creates a new entity instance, places it in a specified room, applies a component template to it, and returns a reference to it.
+
+	@param templateName: the name of the component template to be applied to the entity
+	@param updateType: the update type of the entity
+	@param levelX: the X coordinate of the level the entity should be placed in
+	@param levelY: the Y coordinate of the level the entity should be placed in
+	@param levelZ: the Z coordinate of the level the entity should be placed in
+	*/
+	Entity& entityCreateAndGet(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, ComponentTemplateName templateName, EntityUpdateType updateType = EntityUpdateType::Frame);
+
 	void entityAddToRoom(EntityId entityId, LevelPosition level);
 	void entityAddToRoom(EntityId entityId, LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ);
 

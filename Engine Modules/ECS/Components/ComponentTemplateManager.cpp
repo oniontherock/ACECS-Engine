@@ -2,10 +2,10 @@
 #include "../../Auxiliary/ConsoleHandler.hpp"
 
 
-std::unordered_map<ComponentTemplateName, ComponentTemplate> ComponentTemplateManager::componentTemplates{};
+std::map<ComponentTemplateName, ComponentTemplate> ComponentTemplateManager::componentTemplates{};
 
 bool ComponentTemplateManager::componentTemplateExists(ComponentTemplateName templateName) {
-	return componentTemplates.count(templateName);
+	return componentTemplates.contains(templateName);
 }
 
 bool ComponentTemplateManager::componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName) {

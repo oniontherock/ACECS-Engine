@@ -30,6 +30,10 @@ void EntityManager::entityCreateWithId(EntityId id) {
 }
 EntityId EntityManager::entityCreate(EntityUpdateType updateType) {
 	
+	if (entityIdsSet.size() <= 0) {
+		ConsoleHandler::consolePrintErr("Engine entity max reached, please increase the \"MAX_ENTITIES\" constant");
+	}
+
 	EntityId id = *entityIdsSet.begin();
 	entityCreateWithId(id);
 
@@ -67,6 +71,26 @@ EntityId EntityManager::entityCreate(LevelCoordinate levelX, LevelCoordinate lev
 	EntityUpdateType updateType) {
 	return entityCreate(LevelPosition(levelX, levelY, levelZ), templateName, updateType);
 }
+
+Entity& EntityManager::entityCreateAndGet(EntityUpdateType updateType) {
+	return entityGet(entityCreate(updateType));
+}
+Entity& EntityManager::entityCreateAndGet(LevelPosition level, EntityUpdateType updateType) {
+	return entityGet(entityCreate(level, updateType));
+}
+Entity& EntityManager::entityCreateAndGet(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, EntityUpdateType updateType) {
+	return entityGet(entityCreate(levelX, levelY, levelZ, updateType));
+}
+Entity& EntityManager::entityCreateAndGet(ComponentTemplateName templateName, EntityUpdateType updateType) {
+	return entityGet(entityCreate(templateName, updateType));
+}
+Entity& EntityManager::entityCreateAndGet(LevelPosition level, ComponentTemplateName templateName, EntityUpdateType updateType) {
+	return entityGet(entityCreate(level, templateName, updateType));
+}
+Entity& EntityManager::entityCreateAndGet(LevelCoordinate levelX, LevelCoordinate levelY, LevelCoordinate levelZ, ComponentTemplateName templateName, EntityUpdateType updateType) {
+	return entityGet(entityCreate(levelX, levelY, levelZ, templateName, updateType));
+}
+
 
 void EntityManager::entityAddToRoom(EntityId entityId, LevelPosition level) {
 	LevelGrid<BaseLevel>::levelGet(level)->entityIdAdd(entityId);

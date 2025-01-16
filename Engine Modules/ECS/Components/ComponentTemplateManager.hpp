@@ -3,10 +3,10 @@
 
 #include "../Entities/Entity.hpp"
 #include "Component.hpp"
-#include <unordered_map>
+#include <map>
 
 // just the name of a component template
-typedef const char* ComponentTemplateName;
+typedef std::string ComponentTemplateName;
 // vector of component instances, this is a special type so it's easier to tell that something is specifically a template
 typedef std::vector<ComponentUniquePtr> ComponentTemplate;
 // vector of ComponentIndexInstancePairs, used when creating new templates so that the user doesn't have to create a full sized ComponentTemplate every time,
@@ -18,7 +18,7 @@ enum TemplateApplicationType {
 };
 
 namespace ComponentTemplateManager {
-	extern std::unordered_map<ComponentTemplateName, ComponentTemplate> componentTemplates;
+	extern std::map<ComponentTemplateName, ComponentTemplate> componentTemplates;
 
 	bool componentTemplateExists(ComponentTemplateName templateName);
 	bool componentTemplatesErrorIfNameTaken(ComponentTemplateName templateName);
