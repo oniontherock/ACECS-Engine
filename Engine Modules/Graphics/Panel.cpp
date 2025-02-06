@@ -2,15 +2,11 @@
 #include "../Input/InputInterface.hpp"
 
 Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor) :
-	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor), viewRectSizeOriginal(_viewRect.getSize())
+	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor), viewRectSizeOriginal(_viewRect.size), texture(sf::Vector2u(viewRect.size))
 {
-	textureCreate();
 	viewCreate();
 }
 
-void Panel::textureCreate() {
-	texture.create(unsigned int(screenRect.width), unsigned int(screenRect.height));
-}
 void Panel::viewCreate() {
 	view = PanelView(viewRect);
 }
@@ -25,7 +21,7 @@ void Panel::panelRender(sf::RenderWindow& renderWindowMain) {
 	texture.display();
 
 	sf::Sprite sprite(texture.getTexture());
-	sprite.setPosition(screenRect.getPosition());
+	sprite.setPosition(screenRect.position);
 
 	renderWindowMain.draw(sprite);
 }
@@ -36,8 +32,7 @@ void Panel::panelClear() {
 void Panel::viewZoomScale(float zoomFactor) {
 	viewZoom *= zoomFactor;
 
-	viewRect.left += (viewRect.getSize().x - (viewRect.getSize().x * zoomFactor)) / 2.f;
-	viewRect.top += (viewRect.getSize().y - (viewRect.getSize().y * zoomFactor)) / 2.f;
+	viewRect.position += (viewRect.size - (viewRect.size * zoomFactor)) / 2.f;
 }
 void Panel::viewZoomSet(float zoomValue) {
 	viewZoomScale(zoomValue / viewZoom);
@@ -46,12 +41,11 @@ float Panel::viewZoomGet() const {
 	return viewZoom;
 }
 
-void Panel::viewMove(float moveX, float moveY) {
-	viewRect.left += moveX;
-	viewRect.top += moveY;
-}
 void Panel::viewMove(sf::Vector2f moveVec) {
-	viewMove(moveVec.x, moveVec.y);
+	viewRect.position += moveVec;
+}
+void Panel::viewMove(float moveX, float moveY) {
+	viewMove(sf::Vector2f(moveX, moveY));
 }
 void Panel::viewSetRotation(float angle) {
 	viewRotation = angle;
@@ -64,12 +58,11 @@ void Panel::viewUpdate() {
 
 	sf::Vector2f newSize = viewRectSizeOriginal * viewZoom;
 
-	viewRect.width = newSize.x;
-	viewRect.height = newSize.y;
+	viewRect.size = newSize;
 
-	view.setCenter(viewRect.getPosition() + (viewRect.getSize() / 2.f));
-	view.setSize(viewRect.getSize());
-	view.setRotation(viewRotation);
+	view.setCenter(viewRect.getCenter());
+	view.setSize(viewRect.size);
+	view.setRotation(sf::radians(viewRotation));
 	texture.setView(view);
 }
 
@@ -84,21 +77,18 @@ float Panel::viewAspectRatioGet() {
 sf::Vector2f Panel::panelMousePositionGet() {
 	sf::Vector2f mousePos = sf::Vector2f(InputInterface::windowMousePositionGet());
 
-	return mousePos - screenRect.getPosition();
+	return mousePos - screenRect.position;
 }
 
 sf::Vector2f Panel::viewMousePositionGet() {
 	sf::Vector2f mousePos = panelMousePositionGet();
 
-	float ratioX = viewRect.getSize().x / screenRect.getSize().x;
-	float ratioY = viewRect.getSize().y / screenRect.getSize().y;
+	sf::Vector2f ratio = viewRect.size.componentWiseDiv(screenRect.size);
+	mousePos += viewRect.position;
 
-	sf::Vector2f viewCenter = viewRect.getPosition();
-	mousePos += viewCenter;
+	sf::Vector2f axis = mousePos - viewRect.position;
 
-	sf::Vector2f axis = mousePos - viewCenter;
-
-	mousePos = sf::Vector2f(viewCenter.x + (axis.x * ratioX), viewCenter.y + (axis.y * ratioY));
+	mousePos = viewRect.position + axis.componentWiseMul(ratio);
 
 	return mousePos;
 }

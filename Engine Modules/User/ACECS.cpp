@@ -23,8 +23,8 @@ void Engine::inputsRegister() {
 void Engine::panelsRegister() {
 	using namespace PanelManager;
 	panelAdd(PanelTypes::GameView, PanelPtr(new PanelGameView(
-		PanelRect(0, 0, 1280, 720), // screen coordinates
-		PanelRect(0, 0, 1280, 720), // world coordinates
+		PanelRect(sf::Vector2f(0, 0), sf::Vector2f(1280, 720)), // screen coordinates
+		PanelRect(sf::Vector2f(0, 0), sf::Vector2f(1280, 720)), // world coordinates
 		sf::Color::Black
 	)));
 }

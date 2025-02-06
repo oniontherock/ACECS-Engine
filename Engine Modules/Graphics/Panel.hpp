@@ -17,7 +17,6 @@ struct Panel {
 	Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor);
 	virtual ~Panel() {};
 
-	void textureCreate();
 	void viewCreate();
 
 	template <typename T>
@@ -55,12 +54,12 @@ struct Panel {
 	void viewUpdate();
 
 	// the Panel's position and dimensions on the screen
-	PanelRect screenRect{ 0, 0, 0, 0 };
+	PanelRect screenRect{ sf::Vector2f(0, 0), sf::Vector2f(0, 0) };
 
 	// the Panel's position and dimensions in it's drawn environment.
 	// as an example, if an object is drawn at 250x250, and the viewRect is 0x0x500x500,
 	// then the object will be drawn in the center of the screenRect
-	PanelRect viewRect{ 0, 0, 0, 0 };
+	PanelRect viewRect{ sf::Vector2f(0, 0), sf::Vector2f(0, 0) };
 	float viewRotation = 0.f;
 
 	// color used when clearing panel

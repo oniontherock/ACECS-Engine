@@ -65,27 +65,29 @@ void InputInterface::inputUpdate() {
 
 void InputInterface::eventsProcess(sf::RenderWindow& window) {
 
-	sf::Event event;
-
 	mouseScrollAmountUpdate(0);
 
-	while (window.pollEvent(event)) {
-		switch (event.type) {
-		case sf::Event::Closed:
+	while (const std::optional event = window.pollEvent()) {
+		if (event->is<sf::Event::Closed>()) {
 			window.close();
 			break;
-		case sf::Event::MouseMoved:
-			mousePositionUpdate(sf::Vector2i(window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y))));
+		}
+		else if (const auto* mouseMove = event->getIf<sf::Event::MouseMoved>()) {
+			mousePositionUpdate(sf::Vector2i(window.mapPixelToCoords(mouseMove->position)));
 			break;
-		case sf::Event::MouseWheelScrolled:
-			mouseScrollAmountUpdate(event.mouseWheelScroll.delta);
+		}
+		else if (const auto* mouseWheelScrol = event->getIf<sf::Event::MouseWheelScrolled>()) {
+			mouseScrollAmountUpdate(mouseWheelScrol->delta);
 			break;
-		case sf::Event::GainedFocus:
+		}
+		else if (event->is<sf::Event::FocusGained>()) {
 			InputManager::hasFocus = true;
 			break;
-		case sf::Event::LostFocus:
+		}
+		else if (event->is<sf::Event::FocusLost>()) {
 			InputManager::hasFocus = false;
 			break;
+
 		}
 	}
 }
