@@ -124,6 +124,7 @@ template <typename T>
 
 IntegerNumberGenerator<T> RNGi<T>::generator;
 
+using RNGi8 = RNGi<int8_t>;
 using RNGi16 = RNGi<int16_t>;
 using RNGi32 = RNGi<int32_t>;
 using RNGi64 = RNGi<int64_t>;
@@ -177,7 +178,63 @@ public:
 		return pools[poolIndex][poolIndexIncrementAndGet(poolIndex)];
 	}
 };
+template <typename T>
+class RNGiPool {
+private:
+	static inline std::vector<std::vector<T>> pools;
+	static inline std::vector<uint32_t> poolValueIndexes;
+	static inline uint16_t poolCount = 0;
+
+	static void poolIndexIncrement(uint16_t poolIndex) {
+		if ((++poolValueIndexes[poolIndex]) >= pools[poolIndex].size()) poolValueIndexes[poolIndex] = 0;
+	}
+	static uint32_t poolIndexIncrementAndGet(uint16_t poolIndex) {
+		poolIndexIncrement(poolIndex);
+		return poolValueIndexes[poolIndex];
+	}
+public:
+	// creates a new RNG pool and returns it's pool index
+	static uint16_t poolCreate(uint32_t size) {
+		pools.push_back(std::vector<T>(size, T(0)));
+		poolValueIndexes.push_back(0);
+		return poolCount++;
+	}
+
+	static void poolValueSetAtIndex(uint16_t poolIndex, uint32_t valueIndex, T value) {
+		pools[poolIndex][valueIndex] = value;
+	}
+
+	static void poolFill(uint16_t poolIndex) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNGi<T>::get();
+		}
+	}
+	static void poolFillRange(uint16_t poolIndex, T width) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNGi<T>::getRange(width);
+		}
+	}
+	static void poolFillRange(uint16_t poolIndex, T min, T max) {
+		for (uint32_t i = 0; i < pools[poolIndex].size(); i++) {
+			pools[poolIndex][i] = RNGi<T>::getRange(min, max);
+		}
+	}
+	static T poolValueGet(uint16_t poolIndex) {
+		return pools[poolIndex][poolIndexIncrementAndGet(poolIndex)];
+	}
+};
 
 using RNGfPool = RNGPool<float>;
+using RNGdPool = RNGPool<double>;
+
+using RNGi8Pool = RNGiPool<int8_t>;
+using RNGi16Pool = RNGiPool<int16_t>;
+using RNGi32Pool = RNGiPool<int32_t>;
+using RNGi64Pool = RNGiPool<int64_t>;
+
+using RNGu8Pool = RNGiPool<uint8_t>;
+using RNGu16Pool = RNGiPool<uint16_t>;
+using RNGu32Pool = RNGiPool<uint32_t>;
+using RNGu64Pool = RNGiPool<uint64_t>;
 
 #endif

@@ -47,5 +47,5 @@ float Cooldown::getRatio() const
 
 void Cooldown::reset()
 {
-	value = 0.0f;
+	value -= target;
 }

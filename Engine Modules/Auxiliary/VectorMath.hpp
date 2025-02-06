@@ -10,105 +10,105 @@ private:
 	typedef sf::Vector2<T> Vector2;
 public:
 
-	static R lengthSqrd(T x, T y) {
-		return (x * x) + (y * y);
+	inline static R lengthSqrd(T x, T y) {
+		return R((x * x) + (y * y));
 	}
 
-	static R lengthSqrd(Vector2 vec) {
+	inline static R lengthSqrd(Vector2 vec) {
 		return lengthSqrd(vec.x, vec.y);
 	}
 
-	static R length(T x, T y) {
+	inline static R length(T x, T y) {
 		return sqrt(lengthSqrd(x, y));
 	}
-	static R length(Vector2 vec) {
+	inline static R length(Vector2 vec) {
 		return length(vec.x, vec.y);
 	}
 
 	// gets the axis from (aX, aY) to (bX, bY)
-	static Vector2 axis(T aX, T aY, T bX, T bY) {
+	inline static Vector2 axis(T aX, T aY, T bX, T bY) {
 		return Vector2(bX - aX, bY - aY);
 	}
 	// gets the axis from vecA to vecB
-	static Vector2 axis(Vector2 vecA, Vector2 vecB) {
+	inline static Vector2 axis(Vector2 vecA, Vector2 vecB) {
 		return axis(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static R distSqrd(T aX, T aY, T bX, T bY) {
+	inline static R distSqrd(T aX, T aY, T bX, T bY) {
 		return lengthSqrd(axis(aX, aY, bX, bY));
 	}
-	static R distSqrd(Vector2 vecA, Vector2 vecB) {
+	inline static R distSqrd(Vector2 vecA, Vector2 vecB) {
 		return distSqrd(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static R dist(T aX, T aY, T bX, T bY) {
+	inline static R dist(T aX, T aY, T bX, T bY) {
 		return length(axis(aX, aY, bX, bY));
 	}
-	static R dist(Vector2 vecA, Vector2 vecB) {
+	inline static R dist(Vector2 vecA, Vector2 vecB) {
 		return dist(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static Vector2 normalize(Vector2 vec) {
+	inline static Vector2 normalize(Vector2 vec) {
 		return vec / length(vec);
 	}
-	static Vector2 normalize(T x, T y) {
+	inline static Vector2 normalize(T x, T y) {
 		return Vector2(x, y) / length(x, y);
 	}
 
-	static Vector2 lengthSet(T x, T y, float len) {
+	inline static Vector2 lengthSet(T x, T y, float len) {
 		return normalize(x, y) * len;
 	}
-	static Vector2 lengthSet(Vector2 vec, float len) {
+	inline static Vector2 lengthSet(Vector2 vec, float len) {
 		return lengthSet(vec.x, vec.y, len);
 	}
 
 
-	static Vector2 lengthLimit(T x, T y, float limit) {
+	inline static Vector2 lengthLimit(T x, T y, float limit) {
 		return (lengthSqrd(x, y) > limit * limit) ? (normalize(x, y) * limit) : Vector2(x, y);
 	}
-	static Vector2 lengthLimit(Vector2 vec, float limit) {
+	inline static Vector2 lengthLimit(Vector2 vec, float limit) {
 		return lengthLimit(vec.x, vec.y, limit);
 	}
 
 	// gets the direction from (aX, aY) to (bX, bY)
-	static Vector2 dir(T aX, T aY, T bX, T bY) {
+	inline static Vector2 dir(T aX, T aY, T bX, T bY) {
 		return normalize(axis(aX, aY, bX, bY));
 	}
 	// gets the direction from vecA to vecB
-	static Vector2 dir(Vector2 vecA, Vector2 vecB) {
+	inline static Vector2 dir(Vector2 vecA, Vector2 vecB) {
 		return dir(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
 	// returns the angle from (aX, aY) to (bX, bY)
-	static R angle(T aX, T aY, T bX, T bY) {
+	inline static R angle(T aX, T aY, T bX, T bY) {
 		auto vecAxis = axis(aX, aY, bX, bY);
 
 		return atan2(vecAxis.y, vecAxis.x);
 	}
 	// returns the angle from vecA to vecB
-	static R angle(Vector2 vecA, Vector2 vecB) {
+	inline static R angle(Vector2 vecA, Vector2 vecB) {
 		return angle(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static R dot(T aX, T aY, T bX, T bY) {
+	inline static R dot(T aX, T aY, T bX, T bY) {
 		return (aX * bX) + (aY * bY);
 	}
-	static R dot(Vector2 vecA, Vector2 vecB) {
+	inline static R dot(Vector2 vecA, Vector2 vecB) {
 		return dot(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static R angleDifference(T aX, T aY, T bX, T bY) {
+	inline static R angleDifference(T aX, T aY, T bX, T bY) {
 
 		R dotProduct = dot(aX, aY, bX, bY);
 		R combinedLength = length(aX, aY) * length(bX, bY);
 
 		return static_cast<R>(std::acos(dotProduct / combinedLength));
 	}
-	static R angleDifference(Vector2 vecA, Vector2 vecB) {
+	inline static R angleDifference(Vector2 vecA, Vector2 vecB) {
 		return angleDifference(vecA.x, vecA.y, vecB.x, vecB.y);
 	}
 
-	static Vector2 reflect(T dX, T dY, T nX, T nY) {
+	inline static Vector2 reflect(T dX, T dY, T nX, T nY) {
 
 		R dotProduct = dot(dX, dY, nX, nY);
 
@@ -117,13 +117,13 @@ public:
 
 		return Vector2(rX, rY);
 	}
-	static Vector2 reflect(Vector2 dir, Vector2 normal) {
+	inline static Vector2 reflect(Vector2 dir, Vector2 normal) {
 		return reflect(dir.x, dir.y, normal.x, normal.y);
 	}
 	// rotates the given x and y by theta. Note that this adds instead of setting,
 	// so calling this twice with PI as theta would result in the returned vector being the same as it was before, since it did a 360.
 	template <typename F>
-	static Vector2 rotate(T x, T y, F theta) {
+	inline static Vector2 rotate(T x, T y, F theta) {
 		return Vector2(
 			(x * T(std::cos(theta))) - (y * T(std::sin(theta))),
 			(x * T(std::sin(theta))) + T(y * T(std::cos(theta)))
@@ -132,20 +132,20 @@ public:
 	// rotates the given vector by theta. Note that this adds instead of setting,
 	// so calling this twice with PI as theta would result in the returned vector being the same as it was before, since it did a 360.
 	template <typename F>
-	static Vector2 rotate(Vector2 vector, F theta) {
+	inline static Vector2 rotate(Vector2 vector, F theta) {
 		return rotate(vector.x, vector.y, theta);
 	}
-	static Vector2 abs(T x, T y) {
+	inline static Vector2 abs(T x, T y) {
 		return Vector2(std::abs(x), std::abs(y));
 	}
-	static Vector2 abs(Vector2 vector) {
+	inline static Vector2 abs(Vector2 vector) {
 		return abs(vector.x, vector.y);
 	}
 
 
 	// Given three collinear points p, q, r, the function checks if 
 	// point q lies on line segment 'pr' 
-	static bool onSegment(Vector2 p, Vector2 q, Vector2 r)
+	inline static bool onSegment(Vector2 p, Vector2 q, Vector2 r)
 	{
 		if (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
 			q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y))
@@ -158,7 +158,7 @@ public:
 	// 0 --> p, q and r are collinear 
 	// 1 --> Clockwise 
 	// 2 --> Counterclockwise 
-	static uint16_t orientation(Vector2 p, Vector2 q, Vector2 r) {
+	inline static uint16_t orientation(Vector2 p, Vector2 q, Vector2 r) {
 		// for details of below formula. 
 		T val = (q.y - p.y) * (r.x - q.x) -
 			(q.x - p.x) * (r.y - q.y);
@@ -169,7 +169,7 @@ public:
 	}
 	// The main function that returns true if line segment 'p1q1' 
 	// and 'p2q2' intersect. 
-	static bool linesIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
+	inline static bool linesIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
 	{
 		// Find the four orientations needed for general and 
 		// special cases 
@@ -202,5 +202,49 @@ public:
 using Vector2fMath = Vector2Math<float, float>;
 using Vector2dMath = Vector2Math<double, double>;
 using Vector2iMath = Vector2Math<int, float>;
+
+template <typename T, typename R>
+class Vector3Math {
+private:
+	typedef sf::Vector2<T> Vector2;
+	typedef sf::Vector3<T> Vector3;
+public:
+	inline static Vector3 cross(T aX, T aY, T aZ, T bX, T bY, T bZ) {
+
+		Vector3 cross;
+
+		cross.x = aY * bZ - aZ * bY;
+		cross.y = aZ * bX - aX * bZ;
+		cross.z = aX * bY - aY * bX;
+
+		return cross;
+	}
+	inline static Vector3 cross(Vector3 vecA, Vector3 vecB) {
+		return cross(vecA.x, vecA.y, vecA.z, vecB.x, vecB.y, vecB.z);
+	}
+	inline static Vector3 tripleProduct(T aX, T aY, T aZ, T bX, T bY, T bZ, T cX, T cY, T cZ) {
+		Vector3 crossProduct = cross(aX, aY, aZ, bX, bY, bZ);
+
+		return cross(crossProduct.x, crossProduct.y, crossProduct.z, cX, cY, cZ);
+	}
+	inline static Vector3 tripleProduct(Vector3 vecA, Vector3 vecB, Vector3 vecC) {
+		return tripleProduct(vecA.x, vecA.y, vecA.z, vecB.x, vecB.y, vecB.z, vecC.x, vecC.y, vecC.z);
+	}
+	inline static Vector3 tripleProduct(Vector2 vecA, Vector2 vecB, Vector2 vecC) {
+		return tripleProduct(vecA.x, vecA.y, 0, vecB.x, vecB.y, 0, vecC.x, vecC.y, 0);
+	}
+
+	inline static R dot(T aX, T aY, T aZ, T bX, T bY, T bZ) {
+		return (aX * bX) + (aY * bY) + (aZ * bZ);
+	}
+	inline static R dot(Vector3 vecA, Vector3 vecB) {
+		return dot(vecA.x, vecA.y, vecA.z, vecB.x, vecB.y, vecB.z);
+	}
+};
+
+using Vector3fMath = Vector3Math<float, float>;
+using Vector3dMath = Vector3Math<double, double>;
+using Vector3iMath = Vector3Math<int, float>;
+
 
 #endif

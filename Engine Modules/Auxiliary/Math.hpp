@@ -20,7 +20,11 @@ public:
 	inline static T clamp(T v, T min, T max) {
 		return std::min(max, std::max(min, v));
 	}
-
+	inline static T lerp(T a, T b, T v) {
+		T diff = fmod(b - a, TAU);
+		T dist = fmod(2.0f * diff, TAU) - diff;
+		return a + dist * v;
+	}
 	inline static T slerp(T a, T b, T v) {
 		T diff = fmod(b - a, TAU);
 		T dist = fmod(2.0f * diff, TAU) - diff;
