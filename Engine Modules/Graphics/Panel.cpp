@@ -2,7 +2,7 @@
 #include "../Input/InputInterface.hpp"
 
 Panel::Panel(PanelRect _screenRect, PanelRect _viewRect, sf::Color _clearColor) :
-	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor), viewRectSizeOriginal(_viewRect.size), texture(sf::Vector2u(viewRect.size))
+	screenRect(_screenRect), viewRect(_viewRect), clearColor(_clearColor), viewRectSizeOriginal(_viewRect.size), texture(sf::Vector2u(screenRect.size))
 {
 	viewCreate();
 }
