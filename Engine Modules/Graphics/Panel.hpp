@@ -19,10 +19,17 @@ struct Panel {
 
 	void viewCreate();
 
+	// DEPRECATED: have the panel draw directly to the texture instead
 	template <typename T>
 	inline void objectDraw(const T& drawableObject) {
 		texture.draw(drawableObject);
 	}
+	// DEPRECATED: have the panel draw directly to the texture instead
+	template <typename T>
+	inline void objectDraw(const T& drawableObject, sf::StencilMode stencilMode) {
+		texture.draw(drawableObject, stencilMode);
+	}
+	// DEPRECATED: have the panel draw directly to the texture instead
 	inline void objectDraw(const sf::Drawable& drawableObject, sf::Shader& shader) {
 		texture.draw(drawableObject, &shader);
 	}
