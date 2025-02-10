@@ -17,16 +17,13 @@ BaseLevel::BaseLevel(LevelPosition _id) :
 {}
 
 void BaseLevel::entityIdAdd(EntityId id) {
-	bool frameUpdate = EntityManager::entityGet(id).updateType == EntityUpdateType::Frame;
-
-	if (frameUpdate) entities.push_back(id);
-	else entitiesNoUpdate.push_back(id);
+	if (EntityManager::entityGet(id).updateType == EntityUpdateType::Frame) entities.push_back(id);
+	else if (EntityManager::entityGet(id).updateType == EntityUpdateType::Never) entitiesNoUpdate.push_back(id);
+	else if (EntityManager::entityGet(id).updateType == EntityUpdateType::Observation) entitiesObservation.push_back(id);
 }
 void BaseLevel::entityIdRemove(const EntityId id) {
 
-	bool frameUpdate = EntityManager::entityGet(id).updateType == EntityUpdateType::Frame;
-
-	if (frameUpdate) {
+	if (EntityManager::entityGet(id).updateType == EntityUpdateType::Frame) {
 		// the position of the id in the entities vector
 		auto idVectorPosition = std::find(entities.begin(), entities.end(), id);
 
@@ -34,7 +31,7 @@ void BaseLevel::entityIdRemove(const EntityId id) {
 			entities.erase(idVectorPosition);
 		}
 	}
-	else {
+	else if (EntityManager::entityGet(id).updateType == EntityUpdateType::Never) {
 		// the position of the id in the entitiesNoUpdate vector
 		auto idVectorPosition = std::find(entitiesNoUpdate.begin(), entitiesNoUpdate.end(), id);
 
@@ -42,4 +39,14 @@ void BaseLevel::entityIdRemove(const EntityId id) {
 			entitiesNoUpdate.erase(idVectorPosition);
 		}
 	}
+	else if (EntityManager::entityGet(id).updateType == EntityUpdateType::Observation) {
+		// the position of the id in the entitiesObservation vector
+		auto idVectorPosition = std::find(entitiesObservation.begin(), entitiesObservation.end(), id);
+
+		if (idVectorPosition == entitiesObservation.end()) {
+			entitiesObservation.erase(idVectorPosition);
+		}
+	}
 }
+
+void BaseLevel::entitiesObservedUpdate() {};

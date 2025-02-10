@@ -10,9 +10,19 @@ void LevelUpdater::levelsUpdate() {
 
 		BaseLevel* levelActiveCur = LevelGrid<BaseLevel>::levelGet(levelActivePosition);
 		
+
+
 		if (levelActiveCur->isUpdating) {
 			for (uint32_t entityIdInd = 0; entityIdInd < levelActiveCur->entities.size(); entityIdInd++) {
 				EntityManager::entityUpdate(levelActiveCur->entities[entityIdInd]);
+			}
+
+			if (!levelActiveCur->entitiesObservation.empty()) {
+				levelActiveCur->entitiesObservedUpdate();
+
+				for (uint32_t entityIdInd = 0; entityIdInd < levelActiveCur->entitiesObserved.size(); entityIdInd++) {
+					EntityManager::entityUpdate(levelActiveCur->entitiesObserved[entityIdInd]);
+				}
 			}
 		}
 	}

@@ -20,10 +20,19 @@ struct BaseLevel {
 
 	bool isUpdating;
 
-	// list of EntityIDs belonging to this room 
+	// vector of EntityIDs belonging to this room whose update type is Frame
 	std::vector<EntityId> entities;
-	// list of EntityIDs belonging to this room whose update type is not Frame
+	// vector of EntityIDs belonging to this room whose update type is Never
 	std::vector<EntityId> entitiesNoUpdate;
+	// vector of EntityIDs belonging to this room whose update type is Observed
+	std::vector<EntityId> entitiesObservation;
+	// vector of EntityIDs belonging to this room who are currently being observed,
+	// the way this is updated is dependent on the project, so we have the entitiesObservedUpdate function for this purpose.
+	std::vector<EntityId> entitiesObserved;
+
+	// updates the entitiesObserved vector,
+	// this function's implementation in BaseLevel does nothing since it is meant to be defined by GameLevel dependant on the specific game.
+	virtual void entitiesObservedUpdate();
 };
 
 template <class Level>
