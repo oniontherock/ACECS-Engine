@@ -38,6 +38,10 @@ public:
 		return (v % 2) != 0;
 	}
 
+	inline static float snap(T v, T s) {
+		return std::round(v / s) * s;
+	}
+
 };
 
 using Mathf = Math<float>;

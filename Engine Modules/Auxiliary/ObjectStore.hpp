@@ -52,11 +52,19 @@ public:
 
 
 	// adds a object to the objectsUMap by copying the objectInstance, assigns it the specified name
-	void objectAddFromInstance(std::string name, T& objectInstance) {
+	void objectAddFromReference(std::string name, T& objectReference) {
+		objectsUMap.insert({ name, objectReference });
+	}
+	// adds a object to the objectsUMap by copying the objectInstance, assigns it the specified name
+	void objectAddFromReference(const char* name, T& objectReference) {
+		objectAddFromInstance(std::string(name), objectReference);
+	}
+	// adds a object to the objectsUMap by copying the objectInstance, assigns it the specified name
+	void objectAddFromInstance(std::string name, T objectInstance) {
 		objectsUMap.insert({ name, objectInstance });
 	}
 	// adds a object to the objectsUMap by copying the objectInstance, assigns it the specified name
-	void objectAddFromInstance(const char* name, T& objectInstance) {
+	void objectAddFromInstance(const char* name, T objectInstance) {
 		objectAddFromInstance(std::string(name), objectInstance);
 	}
 };
