@@ -53,7 +53,6 @@ namespace EntityComponents {
 	ComponentIndexInstancePair createComponentPairFromType(Args... args) {
 		return ComponentIndexInstancePair(ComponentIDs<T>::ID, ComponentSharedPtr(new T(args...)));
 	}
-
 };
 
 #endif
